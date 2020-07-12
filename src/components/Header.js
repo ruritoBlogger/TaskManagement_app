@@ -17,10 +17,10 @@ const styles = makeStyles({
     'text-align': 'left',
   },
   button: {
-    'padding' : '15px 0px',
+    'size' : '100% 100%',
+    'padding' : '15px 10px',
+    'margin' : '0px 10px',
     color: '#FFFFFF',
-    display: 'block',
-    'margin': 'auto',
   }
 });
 
@@ -32,8 +32,14 @@ export default function Header() {
         <Grid item xs={6}>
           <h1 className={classes.headerText}>Logo</h1>
         </Grid>
-        <Grid item xs={3}>
-          <Button className={classes.button}>Logoについて</Button>
+        <Grid item xs={2}>
+          <Button className={classes.button}>Logoとは</Button>
+        </Grid>
+        <Grid item xs={2}>
+          <Button className={classes.button}>始めてみる</Button>
+        </Grid>
+        <Grid item xs={2}>
+          <Button className={classes.button}>ログイン</Button>
         </Grid>
       </Grid>
     </Container>
