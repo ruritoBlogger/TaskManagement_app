@@ -12,7 +12,7 @@ const styles = makeStyles({
   },
   bottomText: {
     'text-align': 'center',
-    margin: '30px 0px',
+    margin: '30px 0px 0px 0px',
     'font-weight': '300',
   },
   box: {

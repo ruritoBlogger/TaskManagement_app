@@ -35,10 +35,10 @@ export default function Header() {
           <Button className={classes.button}>Logoとは</Button>
         </Grid>
         <Grid item xs={2}>
-          <Button className={classes.button}>始めてみる</Button>
+          <Button className={classes.button}>出来ること</Button>
         </Grid>
         <Grid item xs={2}>
-          <Button className={classes.button}>ログイン</Button>
+          <Button className={classes.button}>始めてみる</Button>
         </Grid>
       </Grid>
     </Container>
