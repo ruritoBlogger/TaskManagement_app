@@ -7,18 +7,24 @@ import Footer from './components/Footer.js';
 import { makeStyles } from '@material-ui/styles';
 
 const styles = makeStyles({
-  app: {
+  top: {
     backgroundColor: '#33DFEA',
   },
+  bottom: {
+    backgroundColor: '#FFFFFF',
+  }
 });
 
 export default function App() {
   const classes = styles();
   return (
-    <div className={classes.app}>
-      <Header />
-      <h2 className={classes.app}> Hellow World!</h2>
-      <Footer />
+    <div>
+      <div className={classes.top}>
+        <Header />
+      </div>
+      <div className={classes.bottom}>
+        <Footer />
+      </div>
     </div>
   );
 }
