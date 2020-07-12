@@ -5,10 +5,13 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 
 import { makeStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 
 const styles = makeStyles({
   top: {
     backgroundColor: '#33DFEA',
+    margin: '0px',
+    border: 'opx',
   },
   bottom: {
     backgroundColor: '#FFFFFF',
@@ -18,14 +21,14 @@ const styles = makeStyles({
 export default function App() {
   const classes = styles();
   return (
-    <div>
-      <div className={classes.top}>
+    <Box>
+      <Box className={classes.top}>
         <Header />
-      </div>
-      <div className={classes.bottom}>
+      </Box>
+      <Box className={classes.bottom}>
         <Footer />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
