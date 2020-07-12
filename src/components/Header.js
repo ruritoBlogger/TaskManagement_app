@@ -17,7 +17,6 @@ const styles = makeStyles({
     'text-align': 'left',
   },
   button: {
-    'size' : '100% 100%',
     'padding' : '15px 10px',
     'margin' : '0px 10px',
     color: '#FFFFFF',
