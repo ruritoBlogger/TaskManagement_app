@@ -4,16 +4,23 @@ import ReactDOM from 'react-dom';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <h2> Hellow World!</h2>
-        <Footer />
-      </div>
-    );
-  }
+import { makeStyles } from '@material-ui/styles';
+
+const styles = makeStyles({
+  app: {
+    backgroundColor: '#33DFEA',
+  },
+});
+
+export default function App() {
+  const classes = styles();
+  return (
+    <div className={classes.app}>
+      <Header />
+      <h2 className={classes.app}> Hellow World!</h2>
+      <Footer />
+    </div>
+  );
 }
 
 const app = document.getElementById('app');
