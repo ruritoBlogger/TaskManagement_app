@@ -36,8 +36,22 @@ const styles = makeStyles({
     width: '60%',
     height: 'auto',
     padding: '27px',
+  },
+  textBox: {
+    margin: 'auto',
+    padding: '0px 30px',
+    'text-align': 'center',
+  },
+  twitterText: {
+    color: '#00ACED',
+    'text-align': 'center',
+    'margin-top': '5px',
+  },
+  googleText: {
+    color: '#0266C8',
+    'text-align': 'center',
+    'margin-top': '0px',
   }
-
 });
 
 export default function Footer() {
@@ -56,13 +70,19 @@ export default function Footer() {
             <Grid item className={classes.pictureBox}>
               <img className={classes.twitterPicture} src={`${window.location.origin}/pictures/Twitter_Logo_Blue.png`} />
             </Grid>
-            <p>Tiwtter</p>
+            <Grid item className={classes.textBox}>
+              <h3 className={classes.twitterText}>Twitterとの連携</h3>
+            <p>Tiwtterとの連携によって<br />課題を消化するたびに<br />褒めてもらうことが出来ます</p>
+            </Grid>
           </Grid>
           <Grid item xs={6} direction="column" className={classes.box}>
             <Grid item className={classes.pictureBox}>
               <img className={classes.googlePicture} src={`${window.location.origin}/pictures/calender.png`} />
             </Grid>
-            <p>Google</p>
+            <Grid item className={classes.textBox}>
+              <h3 className={classes.googleText}>Googleとの連携</h3>
+              <p>Google calenderとの連携によって<br />課題がどれだけ溜まっているかを<br />確認出来ます</p>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
