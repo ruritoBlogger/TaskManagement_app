@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import firebase from '../../firebase';
+import firebase from '../firebase';
 
-export default function  Auth() {
+export default function Auth(props) {
   const history = useHistory();
-  const classes = styles();
+  //const classes = styles();
 
   const [user, setUser] = useState(null);
   const [signinCheck, setSiginCheck] = useState(false);
@@ -38,4 +38,6 @@ export default function  Auth() {
   function Logout() {
     firebase.auth().signOut();
   };
+
+  return props.children;
 }

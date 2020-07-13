@@ -40,6 +40,7 @@ const styles = makeStyles({
 });
 
 export default function Introduction() {
+  const classes = styles();
   return (
     <Auth>
       <Box>
