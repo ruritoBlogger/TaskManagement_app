@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import LoadingOverlay from 'react-loading-overlay';
 
 import firebase from '../firebase';
 
@@ -8,13 +9,19 @@ export default function Auth(props) {
   //const classes = styles();
 
   const [user, setUser] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [signinCheck, setSiginCheck] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     firebase.auth().onAuthStateChanged(user => {
       setUser(user);
       setSiginCheck(true);
     });
+
+    return function cleanup() {
+        setIsMounted(false);
+    }
   });
 
   function Login() {
@@ -39,5 +46,18 @@ export default function Auth(props) {
     firebase.auth().signOut();
   };
 
-  return props.children;
+  if( !signinCheck )
+  {
+    return(
+      <LoadingOverlay
+        active={true}
+        spinner
+        text='Loading...'
+    >
+      <div style={{ height: '100vh', width: '100vw' }}></div>
+    </LoadingOverlay>
+    )
+  } else {
+    return props.children;
+  }
 }
