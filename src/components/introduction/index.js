@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Header from './Header.js';
 import Footer from './Footer.js';
+import Auth from '../Auth.js';
 
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
@@ -39,29 +40,30 @@ const styles = makeStyles({
 });
 
 export default function Introduction() {
-  const classes = styles();
   return (
-    <Box>
-      <Box className={classes.top}>
-        <Header />
-        <Container className={classes.container}>
-          <Grid container direction="column">
-            <Grid item>
-              <h1 className={classes.topText}>
-                大学の課題と<br />
-                楽しく付き合おう<br />
-                そんな手助けをするアプリ
-              </h1>
+    <Auth>
+      <Box>
+        <Box className={classes.top}>
+          <Header />
+          <Container className={classes.container}>
+            <Grid container direction="column">
+              <Grid item>
+                <h1 className={classes.topText}>
+                  大学の課題と<br />
+                  楽しく付き合おう<br />
+                  そんな手助けをするアプリ
+                </h1>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" className={classes.button}>始めてみる</Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button variant="contained" className={classes.button}>始めてみる</Button>
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        </Box>
+        <Box className={classes.bottom}>
+          <Footer />
+        </Box>
       </Box>
-      <Box className={classes.bottom}>
-        <Footer />
-      </Box>
-    </Box>
+    </Auth>
   );
 }
