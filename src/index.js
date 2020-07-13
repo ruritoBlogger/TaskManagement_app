@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Introduction from './components/introduction/index';
+import Main from './components/main/index';
 
-export default function App() {
+export default function Undefined() {
   return (
     <div>
       <h1>未定義ページです</h1>
@@ -17,7 +18,8 @@ ReactDOM.render(
   <Router>
     <Switch>
       <Route exact path="/" component={Introduction}></Route>
-      <Route component={App}></Route>
+      <Route exact path="/main/" component={Main}></Route>
+      <Route component={Undefined}></Route>
     </Switch>
   </Router>,
 app);
