@@ -24,6 +24,7 @@ const styles = makeStyles({
 });
 
 export default function Header() {
+
   const classes = styles();
   return (
     <Container className={classes.container}>
