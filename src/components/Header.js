@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import firebase from '../firebase';
 
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
@@ -23,7 +25,24 @@ const styles = makeStyles({
   }
 });
 
+function Login() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithRedirect(provider);
+};
+
+function Logout() {
+  firebase.auth().signOut();
+}
+
 export default function Header() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      setUser(user);
+    });
+  });
+
   const classes = styles();
   return (
     <Container className={classes.container}>
@@ -38,7 +57,7 @@ export default function Header() {
           <Button className={classes.button}>出来ること</Button>
         </Grid>
         <Grid item xs={2}>
-          <Button className={classes.button}>始めてみる</Button>
+          <Button className={classes.button} onClick={Login}>始めてみる</Button>
         </Grid>
       </Grid>
     </Container>
