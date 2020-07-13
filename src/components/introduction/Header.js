@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import firebase from '../firebase';
+import firebase from '../../firebase';
 
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
