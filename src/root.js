@@ -13,7 +13,7 @@ export default function Root(props) {
       <Switch>
         <Route exact path="/" render={ () => <Introduction user={props.user} setUser={props.setUser} />} />
         <Route exact path="/main/" component={Main} />
-        <Route exact path="/schedule" render={ () => <Schedule user={props.user} setUser={props.setUser} />} />
+        <Route exact path="/schedule" render={ () => <Schedule user={props.user} />} />
         <Route component={Undefined} />
       </Switch>
     </Router>
