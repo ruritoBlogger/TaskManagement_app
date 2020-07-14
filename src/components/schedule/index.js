@@ -1,26 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import firebase from '../../firebase';
+import firebase, { db } from '../../firebase';
 
 import DefaultDialog from '../dialog';
-import DeleteDialog from '../deleteDialog';
 
 import Button from '@material-ui/core/Button';
+import { getDefaultNormalizer } from '@testing-library/react';
 
 export default function Schedule(props) {
+
+  const [scheduleList, setScheduleList] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    const data = async () => {
+      await getData();
+    };
+    data();
+  });
+
+  async function getData() {
+    const colRef = db.collection("schedule");
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map(doc => doc.data());
+    setScheduleList(docs);
+  }
 
   function MoveMain() {
     history.push("/main")
   }
 
+  function Debug() {
+    console.log(props.user);
+  }
+
   return (
     <div>
       <h1>ここは時間割ページ</h1>
+      <table>
+        <tbody>
+          {
+            scheduleList.map(item => (
+              <tr>
+                <td>{item.docId}</td>
+                <td>{item.title}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
       <Button variant="contained" onClick={MoveMain}>ホームページ</Button>
-      <DefaultDialog></DefaultDialog>
-      <DeleteDialog Button="削除" msg="うんち"></DeleteDialog>
+      <Button variant="contained" onClick={Debug}>デバッグ</Button>
+      <DefaultDialog user={props.user} />
     </div>
   );
 }
