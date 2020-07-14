@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import firebase, { db } from '../firebase';
 
@@ -14,7 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default function DefaultDialog(props) {
 
   const [open, setOpen] = useState(false);
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, control, errors } = useForm();
 
   function handleOpen() {
     setOpen(true);
@@ -28,14 +28,9 @@ export default function DefaultDialog(props) {
     handleClose();
   }
 
-  function typeOf(obj) {
-    var toString = Object.prototype.toString;
-    return toString.call(obj).slice(8, -1).toLowerCase();
-  }
-
-  function Submit(values) {
-    if (values.example) {
-      console.log(values);
+  function Submit(value) {
+    if (value.title) {
+      console.log(value.title);
       handleClose();
     }
   }
@@ -52,8 +47,7 @@ export default function DefaultDialog(props) {
         <DialogTitle>時間割を追加する</DialogTitle>
         <form onSubmit={handleSubmit(Submit)}>
           <DialogContent>
-              <input name="example" defaultValue="2020年春学期" ref={register} />
-
+            <TextField name="title" defaultValue="2020年春学期" inputRef={register} />
           </DialogContent>
 
           <DialogActions>
