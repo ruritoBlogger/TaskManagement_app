@@ -24,7 +24,13 @@ export default function Schedule(props) {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map(doc => doc.data());
-    setScheduleList(docs);
+    var result_data = [];
+    for (let i = 0; i < docs.length; i++) {
+      if( docs[i] && docs[i].uid === props.user ) {
+        result_data.push(docs[i]);
+      }
+    }
+    setScheduleList(result_data);
   }
 
   function MoveMain() {
