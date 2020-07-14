@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import firebase from '../firebase';
+import firebase, { db } from '../firebase';
 
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,9 +11,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function DefaultDialog() {
+export default function DefaultDialog(props) {
 
   const [open, setOpen] = useState(false);
+  const { register, handleSubmit, watch, errors } = useForm();
 
   function handleOpen() {
     setOpen(true);
@@ -25,8 +28,16 @@ export default function DefaultDialog() {
     handleClose();
   }
 
-  function Submit() {
-    handleClose();
+  function typeOf(obj) {
+    var toString = Object.prototype.toString;
+    return toString.call(obj).slice(8, -1).toLowerCase();
+  }
+
+  function Submit(values) {
+    if (values.example) {
+      console.log(values);
+      handleClose();
+    }
   }
 
   return (
@@ -38,15 +49,18 @@ export default function DefaultDialog() {
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
       >
-        <DialogTitle>登録画面</DialogTitle>
-        <DialogContent>
-          <h1>ここは新規時間割登録画面</h1>
-        </DialogContent>
+        <DialogTitle>時間割を追加する</DialogTitle>
+        <form onSubmit={handleSubmit(Submit)}>
+          <DialogContent>
+              <input name="example" defaultValue="2020年春学期" ref={register} />
 
-        <DialogActions>
-          <Button onClick={Exit}>中止</Button>
-          <Button onClick={Submit}>登録</Button>
-        </DialogActions>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={Exit}>中止</Button>
+            <Button onClick={Submit} type="submit">登録</Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
