@@ -13,8 +13,8 @@ export default function Introduction(props) {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      props.setUser(user);
       if (user) {
+        props.setUser(user.uid);
         history.push("/main")
       }
     });
