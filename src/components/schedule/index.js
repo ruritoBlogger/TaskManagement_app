@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 import firebase from '../../firebase';
 
 import DefaultDialog from '../dialog';
+import DeleteDialog from '../deleteDialog';
 
 import Button from '@material-ui/core/Button';
-import { DialogTitle } from '@material-ui/core';
 
-export default function Schedule() {
+export default function Schedule(props) {
   const history = useHistory();
 
   function MoveMain() {
@@ -20,6 +20,7 @@ export default function Schedule() {
       <h1>ここは時間割ページ</h1>
       <Button variant="contained" onClick={MoveMain}>ホームページ</Button>
       <DefaultDialog></DefaultDialog>
+      <DeleteDialog Button="削除" msg="うんち"></DeleteDialog>
     </div>
   );
 }
