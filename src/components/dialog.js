@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { useRadioGroup } from '@material-ui/core';
 
 export default function DefaultDialog(props) {
 
@@ -29,8 +30,18 @@ export default function DefaultDialog(props) {
   }
 
   function Submit(value) {
-    if (value.title) {
-      console.log(value.title);
+    if (value.title && props.user) {
+      const docId = db.collection("schedule").doc().id;
+      db.collection("schedule").doc(docId).set({
+        docId: docId,
+        uid: props.user,
+        title: value.title,
+        is_default: false,
+      });
+      handleClose();
+    } else if (value.title) {
+      console.log("ユーザーデータが未定義です");
+      console.log("再ログインしてください");
       handleClose();
     }
   }
