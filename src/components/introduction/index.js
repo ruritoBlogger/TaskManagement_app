@@ -10,14 +10,13 @@ export default function Introduction(props) {
   const history = useHistory();
   //const classes = styles();
 
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
+      props.setUser(user);
       if (user) {
         history.push("/main")
       }
-      setUser(user);
     });
 
   });
