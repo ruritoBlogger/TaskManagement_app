@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
-import firebase, { db } from '../firebase';
+import firebase, { db } from '../../firebase';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';

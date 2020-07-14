@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import firebase, { db } from '../../firebase';
 
-import DefaultDialog from '../dialog';
+import DefaultDialog from './dialog';
 
 import Button from '@material-ui/core/Button';
 import { getDefaultNormalizer } from '@testing-library/react';
@@ -24,12 +24,7 @@ export default function Schedule(props) {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map(doc => doc.data());
-    var result_data = [];
-    for (let i = 0; i < docs.length; i++) {
-      if( docs[i] && docs[i].uid === props.user ) {
-        result_data.push(docs[i]);
-      }
-    }
+    const result_data = docs.filter((item) => item.uid === props.user);
     setScheduleList(result_data);
   }
 
