@@ -27,12 +27,14 @@ const styles = makeStyles({
     'text-align': 'left',
   },
   logo_button: {
+    'min-height': '65px',
     'font-size': '35px',
     'padding' : '0px',
     color: '#FFFFFF',
   },
   button: {
-    'font-size': '17px',
+    'min-height': '65px',
+    'font-size': '20px',
     'padding' : '15px 10px',
     color: '#FFFFFF',
   }
@@ -77,7 +79,7 @@ export default function Header() {
             <Button onClick={MoveSchedulePage} className={classes.button}>時間割</Button>
           </Grid>
           <Grid item xs={2}>
-            <Button className={classes.button}>出来ること</Button>
+            <Button className={classes.button}>todo</Button>
           </Grid>
           <Grid item xs={2}>
             <Button onClick={handleClick} className={classes.button}><Icon>settings</Icon></Button>
