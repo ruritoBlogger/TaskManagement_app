@@ -66,7 +66,7 @@ export default function Schedule(props) {
           }
         </tbody>
       </table>
-      <DefaultDialog user={props.user} />
+      <DefaultDialog user={props.user} handleSubmit={handleChange} />
     </div>
   );
 }
