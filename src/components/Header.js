@@ -53,6 +53,7 @@ export default function Header() {
   }
 
   function Logout() {
+    setAnchorEL(null);
     firebase.auth().signOut();
     history.push("/");
   }
@@ -88,7 +89,7 @@ export default function Header() {
             >
               <MenuItem onClick={handleClose}>Twitter連携</MenuItem>
               <MenuItem onClick={handleClose}>Google連携</MenuItem>
-              <MenuItem onClick={handleClose}>ログアウト</MenuItem>
+              <MenuItem onClick={Logout}>ログアウト</MenuItem>
             </Menu>
           </Grid>
         </Grid>
