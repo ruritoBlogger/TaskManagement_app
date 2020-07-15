@@ -24,9 +24,14 @@ const styles = makeStyles({
     'padding-left' : '10px',
     'text-align': 'left',
   },
+  logo_button: {
+    'font-size': '35px',
+    'padding' : '0px',
+    color: '#FFFFFF',
+  },
   button: {
+    'font-size': '17px',
     'padding' : '15px 10px',
-    'margin' : '0px 10px',
     color: '#FFFFFF',
   }
 });
@@ -40,15 +45,23 @@ export default function Header() {
     history.push("/");
   }
 
+  function MoveHomePage() {
+    history.push("/main")
+  }
+
+  function MoveSchedulePage() {
+    history.push("/schedule")
+  }
+
   return (
     <Grid container alignItems="center" justify="center" className={classes.root}>
       <Container item xs={8} className={classes.container}>
         <Grid container direction="row">
           <Grid item xs={6}>
-            <h1 className={classes.headerText}>Logo</h1>
+            <Button onClick={MoveHomePage} className={classes.logo_button}>Logo</Button>
           </Grid>
           <Grid item xs={2}>
-            <Button className={classes.button}>Logoとは</Button>
+            <Button onClick={MoveSchedulePage} className={classes.button}>時間割</Button>
           </Grid>
           <Grid item xs={2}>
             <Button className={classes.button}>出来ること</Button>
