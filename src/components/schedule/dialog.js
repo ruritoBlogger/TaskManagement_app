@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form"
 
 import firebase, { db } from "../../firebase"
 
+import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import Dialog from "@material-ui/core/Dialog"
@@ -11,6 +12,19 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import { useRadioGroup } from "@material-ui/core"
+
+/** CSSを用いたスタイル定義 */
+const styles = makeStyles({
+  button: {
+    "padding" : "7px 40px",
+    "margin" : "30px",
+    color: "#FFFFFF",
+    background: "#EDC124",
+    "text-align": "center",
+    "font-size": "15px"
+  }
+})
+
 
 /**
  * 新しく時間割を登録するダイアログを表示する関数
@@ -25,6 +39,8 @@ export default function DefaultDialog(props) {
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm()
 
+  /** CSSを用いたスタイル定義 */
+  const classes = styles()
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
@@ -68,7 +84,7 @@ export default function DefaultDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>ダイアログ</Button>
+      <Button variant="contained" onClick={handleOpen} className={classes.button}>追加</Button>
       <Dialog
         open={open}
         onClose={handleClose}
