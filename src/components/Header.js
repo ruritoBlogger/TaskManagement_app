@@ -11,6 +11,7 @@ import Icon from '@material-ui/core/Icon';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+/** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   root: {
     'min-height': '75px',
@@ -40,30 +41,57 @@ const styles = makeStyles({
   }
 });
 
+/**
+ * ログイン後のページのHeaderを表示する関数
+ */
 export default function Header() {
 
+  /** setting部分のMenuがOpenかそうでないかを管理している */
   const [anchorEL, setAnchorEL] = useState(null);
+  /** CSSを用いたスタイル定義 */
   const classes = styles();
+  /** 画面遷移を担当 */
   const history = useHistory();
 
+  /**
+   * settingがクリックされた時に発火する
+   * MenuをOpenにする
+   */
   function handleClick(event) {
     setAnchorEL(event.currentTarget);
   }
 
+  /**
+   * settingがOpenの時に、setting以外の部分をクリックされた時に発火する
+   * MenuをCloseにする
+   */
   function handleClose() {
     setAnchorEL(null);
   }
 
+  /**
+   * MenuがOpenの時にログアウトボタンがクリックされた時に発火する
+   * ログアウトを行い紹介画面に遷移させる
+   * MenuをCloseにする
+   */
   function Logout() {
-    setAnchorEL(null);
+    handleClose();
     firebase.auth().signOut();
     history.push("/");
   }
 
+  /**
+   * Logoボタンをクリックされた時に発火する
+   * ホームページに遷移する
+   */
   function MoveHomePage() {
     history.push("/main")
   }
 
+  /**
+   * 時間割ボタンをクリックされた時に発火する
+   * 時間割ページに遷移する
+   */
   function MoveSchedulePage() {
     history.push("/schedule")
   }
