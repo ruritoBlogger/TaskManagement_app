@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from "react"
+import ReactDOM from "react-dom"
 
-import Root from './root';
+import Root from "./root"
 
 /**
  * 所謂神クラス
@@ -9,17 +9,17 @@ import Root from './root';
  */
 export default function God() {
   /** userの状態を管理 */
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
   return (
-  <div>
-    <Root
-      user={user}
-      setUser={setUser} />
-  </div>
-  );
+    <div>
+      <Root
+        user={user}
+        setUser={setUser} />
+    </div>
+  )
 }
 
-const app = document.getElementById('app');
+const app = document.getElementById("app")
 ReactDOM.render(
   <God />,
-app);
+  app)

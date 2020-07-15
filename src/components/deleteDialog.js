@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react"
 
-import firebase from '../firebase';
+import firebase from "../firebase"
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from "@material-ui/core/Button"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
 
 /**
  * 何かを削除するダイアログを表示する関数
@@ -19,14 +19,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default function DeleteDialog(props) {
 
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
   function handleOpen() {
-    setOpen(true);
+    setOpen(true)
   }
 
   /**
@@ -34,7 +34,7 @@ export default function DeleteDialog(props) {
    * ダイアログを閉じる
    */
   function handleClose() {
-    setOpen(false);
+    setOpen(false)
   }
 
   /**
@@ -42,7 +42,7 @@ export default function DeleteDialog(props) {
    * 該当の時間割を削除してダイアログを閉じる
    */
   function Submit() {
-    handleClose();
+    handleClose()
   }
 
   return (
@@ -52,7 +52,7 @@ export default function DeleteDialog(props) {
         open={open}
         fullWidth={true}
         onClose={handleClose}
-        maxWidth={'sm'}
+        maxWidth={"sm"}
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
       >
@@ -70,5 +70,5 @@ export default function DeleteDialog(props) {
         </DialogActions>
       </Dialog>
     </div>
-  );
+  )
 }

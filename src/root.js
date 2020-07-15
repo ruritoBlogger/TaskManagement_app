@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react"
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import Undefined from './undefined';
-import Introduction from './components/introduction/index';
-import Main from './components/main/index';
-import Schedule from './components/schedule/index';
+import Undefined from "./undefined"
+import Introduction from "./components/introduction/index"
+import Main from "./components/main/index"
+import Schedule from "./components/schedule/index"
 
 /**
  * urlによって表示する部分を切り替える部分を担当している

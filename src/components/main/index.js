@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react"
 
-import Header from '../Header';
+import Header from "../Header"
 
 export default function Main() {
 
@@ -9,5 +9,5 @@ export default function Main() {
       <Header />
       <h1>ここはメインページ</h1>
     </div>
-  );
+  )
 }
