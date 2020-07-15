@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import firebase, { db } from "../../firebase"
 
 import DefaultDialog from "./dialog"
+import Content from "./Content"
 import Header from "../Header"
 
 import Button from "@material-ui/core/Button"
@@ -66,6 +67,7 @@ export default function Schedule(props) {
           }
         </tbody>
       </table>
+      <Content scheduleList={scheduleList} />
       <DefaultDialog user={props.user} handleSubmit={handleChange} />
     </div>
   )
