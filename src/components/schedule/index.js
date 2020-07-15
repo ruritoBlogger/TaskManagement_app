@@ -42,6 +42,14 @@ export default function Schedule(props) {
     setScheduleList(result_data);
   }
 
+  /**
+   * 呼び出されると時間割listを更新する
+   * 具体的には時間割listを更新するかどうかを管理する状態を変更する
+   */
+  function handleChange() {
+    setNeedLoad(!needLoad);
+  }
+
   return (
     <div>
       <Header />

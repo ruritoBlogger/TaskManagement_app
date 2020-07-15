@@ -14,8 +14,9 @@ import { useRadioGroup } from '@material-ui/core';
 
 /**
  * 新しく時間割を登録するダイアログを表示する関数
- * @param {Object} props - ユーザーの情報を保持している
+ * @param {Object} props - ユーザーの情報や時間割を更新するイベントを管理
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
+ * @param {function} props.handleSubmit - 呼び出すと時間割listを取得し直す
  */
 export default function DefaultDialog(props) {
 
@@ -56,6 +57,7 @@ export default function DefaultDialog(props) {
         title: value.title,
         is_default: false,
       });
+      props.handleSubmit();
       handleClose();
     } else if (value.title) {
       console.log("ユーザーデータが未定義です");
