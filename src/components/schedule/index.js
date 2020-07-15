@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import firebase, { db } from '../../firebase';
 
 import DefaultDialog from './dialog';
+import Header from '../Header';
 
 import Button from '@material-ui/core/Button';
 import { getDefaultNormalizer } from '@testing-library/react';
@@ -38,6 +39,7 @@ export default function Schedule(props) {
 
   return (
     <div>
+      <Header />
       <h1>ここは時間割ページ</h1>
       <table>
         <tbody>
