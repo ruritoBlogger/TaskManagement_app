@@ -10,10 +10,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 /**
- * 時間割を削除するダイアログを表示する関数
- * @param {Object} props - UI部分に関係するいくつかの文字列を保持している
+ * 何かを削除するダイアログを表示する関数
+ * @param {Object} props - UI部分に関係する情報や削除後に発火させたいイベントを管理している
  * @param {string} props.Button - ダイアログを表示するかどうかを管理するボタンのtext
  * @param {string} props.msg - 削除する時間割の名前
+ * @param {function} props.handleSubmit - 削除した後に発火させたいイベント
  */
 export default function DeleteDialog(props) {
 
