@@ -8,9 +8,9 @@ import Content from './Content';
 
 /**
  * 紹介画面の内容を表示する関数
- * @param {function} props - userの状態が格納されている
- *                         - {user} Google認証後にはuseridが、そうでない場合はnull
- *                         - {setUser} userを更新する際に用いる
+ * @param {Object} props - userの状態が格納されている
+ *                       - {user} Google認証後にはuseridが、そうでない場合はnull
+ *                       - {setUser} userを更新する際に用いる
  */
 export default function Introduction(props) {
   /** 画面遷移を担当 */
