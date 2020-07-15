@@ -12,23 +12,41 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useRadioGroup } from '@material-ui/core';
 
+/**
+ * 新しく時間割を登録するダイアログを表示する関数
+ * @param {Object} props - ユーザーの情報を保持している
+ * @param {string} props.user - Google認証した際に得られるuseridを保持している
+ */
 export default function DefaultDialog(props) {
 
+  /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
+  /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
 
+  /**
+   * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
+   * ダイアログを表示する
+   */
   function handleOpen() {
     setOpen(true);
   }
 
+  /**
+   * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
+   * ダイアログを閉じる
+   */
   function handleClose() {
     setOpen(false);
   }
 
-  function Exit() {
-    handleClose();
-  }
-
+  /**
+   * ダイアログを表示している時に登録ボタンがクリックされた時に発火する
+   * 入力された情報を元に時間割を追加してダイアログを閉じる
+   *
+   * @param {Object} value - 入力された情報を保持している
+   * @param {string} value.title - 時間割のタイトル
+   */
   function Submit(value) {
     if (value.title && props.user) {
       const docId = db.collection("schedule").doc().id;
@@ -62,7 +80,7 @@ export default function DefaultDialog(props) {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={Exit}>中止</Button>
+            <Button onClick={handleClose}>中止</Button>
             <Button onClick={Submit} type="submit">登録</Button>
           </DialogActions>
         </form>
