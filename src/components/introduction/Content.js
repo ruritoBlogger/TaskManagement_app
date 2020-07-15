@@ -41,7 +41,8 @@ const styles = makeStyles({
 
 /**
  * 紹介画面の内容を表示する関数
- * @param {function} props - Google認証を行う関数{Login}が格納されている
+ * @param {Object} props Google認証にまつわるものが格納されている
+ * @param {function} props.Login - Google認証を行う関数
  */
 export default function Content(props) {
   /** CSSを用いたスタイル定義 */
