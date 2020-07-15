@@ -1,35 +1,35 @@
-import React from 'react';
+import React from "react"
 
-import { makeStyles } from '@material-ui/styles';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/styles"
+import Grid from "@material-ui/core/Grid"
+import Container from "@material-ui/core/Container"
+import Button from "@material-ui/core/Button"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   container: {
-    'max-width': '740px',
-    color: '#FFFFFF',
+    "max-width": "740px",
+    color: "#FFFFFF",
   },
   headerText: {
-    margin: '0px',
-    'padding-bottom': '7px',
-    'padding-left' : '10px',
-    'text-align': 'left',
+    margin: "0px",
+    "padding-bottom": "7px",
+    "padding-left" : "10px",
+    "text-align": "left",
   },
   button: {
-    'padding' : '15px 10px',
-    'margin' : '0px 10px',
-    color: '#FFFFFF',
+    "padding" : "15px 10px",
+    "margin" : "0px 10px",
+    color: "#FFFFFF",
   }
-});
+})
 
 /**
  * 紹介画面のHeaderを表示する関数
  */
 export default function Header() {
   /** CSSを用いたスタイル定義 */
-  const classes = styles();
+  const classes = styles()
   return (
     <Container className={classes.container}>
       <Grid container direction="row">

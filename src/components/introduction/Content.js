@@ -1,43 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react"
+import ReactDOM from "react-dom"
 
-import Header from './Header.js';
-import Footer from './Footer.js';
+import Header from "./Header.js"
+import Footer from "./Footer.js"
 
-import { makeStyles } from '@material-ui/styles';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/styles"
+import Grid from "@material-ui/core/Grid"
+import Box from "@material-ui/core/Box"
+import Container from "@material-ui/core/Container"
+import Button from "@material-ui/core/Button"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   top: {
-    backgroundColor: '#33DFEA',
-    margin: '0px',
-    border: 'opx',
+    backgroundColor: "#33DFEA",
+    margin: "0px",
+    border: "opx",
   },
   container: {
-    'max-width': '740px',
-    color: '#FFFFFF',
+    "max-width": "740px",
+    color: "#FFFFFF",
   },
   topText: {
-    'text-align': 'center',
-    margin: '30px 0px',
-    'font-weight': '300',
+    "text-align": "center",
+    margin: "30px 0px",
+    "font-weight": "300",
   },
   button: {
-    left: '38%',
-    'padding' : '5px 10px',
-    'margin' : '30px',
-    color: '#FFFFFF',
-    background: '#EDC124',
-    'text-align': 'center',
+    left: "38%",
+    "padding" : "5px 10px",
+    "margin" : "30px",
+    color: "#FFFFFF",
+    background: "#EDC124",
+    "text-align": "center",
   },
   bottom: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   }
-});
+})
 
 /**
  * 紹介画面の内容を表示する関数
@@ -46,7 +46,7 @@ const styles = makeStyles({
  */
 export default function Content(props) {
   /** CSSを用いたスタイル定義 */
-  const classes = styles();
+  const classes = styles()
   return (
     <Box>
       <Box className={classes.top}>
@@ -70,5 +70,5 @@ export default function Content(props) {
         <Footer />
       </Box>
     </Box>
-  );
+  )
 }

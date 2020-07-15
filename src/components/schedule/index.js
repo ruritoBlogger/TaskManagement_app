@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react"
 
-import firebase, { db } from '../../firebase';
+import firebase, { db } from "../../firebase"
 
-import DefaultDialog from './dialog';
-import Header from '../Header';
+import DefaultDialog from "./dialog"
+import Header from "../Header"
 
-import Button from '@material-ui/core/Button';
-import { getDefaultNormalizer } from '@testing-library/react';
+import Button from "@material-ui/core/Button"
+import { getDefaultNormalizer } from "@testing-library/react"
 
 /**
  * 時間割ページを表示する関数
@@ -16,30 +16,30 @@ import { getDefaultNormalizer } from '@testing-library/react';
 export default function Schedule(props) {
 
   /** 既に登録されている時間割list */
-  const [scheduleList, setScheduleList] = useState([]);
+  const [scheduleList, setScheduleList] = useState([])
   /** 時間割listを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = useState(true);
+  const [needLoad, setNeedLoad] = useState(true)
 
   /**
    * 既に登録されている時間割を取得している
    */
   useEffect(() => {
     const data = async () => {
-      await getData();
-    };
-    data();
-  }, [needLoad]);
+      await getData()
+    }
+    data()
+  }, [needLoad])
 
   /**
    * firestoreに存在している時間割を取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
-    const colRef = db.collection("schedule");
-    const snapshots = await colRef.get();
-    const docs = snapshots.docs.map(doc => doc.data());
-    const result_data = docs.filter((item) => item.uid === props.user);
-    setScheduleList(result_data);
+    const colRef = db.collection("schedule")
+    const snapshots = await colRef.get()
+    const docs = snapshots.docs.map(doc => doc.data())
+    const result_data = docs.filter((item) => item.uid === props.user)
+    setScheduleList(result_data)
   }
 
   /**
@@ -47,7 +47,7 @@ export default function Schedule(props) {
    * 具体的には時間割listを更新するかどうかを管理する状態を変更する
    */
   function handleChange() {
-    setNeedLoad(!needLoad);
+    setNeedLoad(!needLoad)
   }
 
   return (
@@ -68,5 +68,5 @@ export default function Schedule(props) {
       </table>
       <DefaultDialog user={props.user} handleSubmit={handleChange} />
     </div>
-  );
+  )
 }

@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 
-import firebase from '../firebase';
+import firebase from "../firebase"
 
-import { makeStyles } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Icon from '@material-ui/core/Icon';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from "@material-ui/styles"
+import Button from "@material-ui/core/Button"
+import Grid from "@material-ui/core/Grid"
+import Container from "@material-ui/core/Container"
+import Icon from "@material-ui/core/Icon"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   root: {
-    'min-height': '75px',
-    backgroundColor: '#33DFEA',
+    "min-height": "75px",
+    backgroundColor: "#33DFEA",
   },
   container: {
-    'max-width': '1200px',
-    color: '#FFFFFF',
+    "max-width": "1200px",
+    color: "#FFFFFF",
   },
   headerText: {
-    margin: '0px',
-    'padding-bottom': '7px',
-    'padding-left' : '10px',
-    'text-align': 'left',
+    margin: "0px",
+    "padding-bottom": "7px",
+    "padding-left" : "10px",
+    "text-align": "left",
   },
   logo_button: {
-    'min-height': '65px',
-    'font-size': '35px',
-    'padding' : '0px',
-    color: '#FFFFFF',
+    "min-height": "65px",
+    "font-size": "35px",
+    "padding" : "0px",
+    color: "#FFFFFF",
   },
   button: {
-    'min-height': '65px',
-    'font-size': '20px',
-    'padding' : '15px 10px',
-    color: '#FFFFFF',
+    "min-height": "65px",
+    "font-size": "20px",
+    "padding" : "15px 10px",
+    color: "#FFFFFF",
   }
-});
+})
 
 /**
  * ログイン後のページのHeaderを表示する関数
@@ -47,18 +47,18 @@ const styles = makeStyles({
 export default function Header() {
 
   /** setting部分のMenuがOpenかそうでないかを管理している */
-  const [anchorEL, setAnchorEL] = useState(null);
+  const [anchorEL, setAnchorEL] = useState(null)
   /** CSSを用いたスタイル定義 */
-  const classes = styles();
+  const classes = styles()
   /** 画面遷移を担当 */
-  const history = useHistory();
+  const history = useHistory()
 
   /**
    * settingがクリックされた時に発火する
    * MenuをOpenにする
    */
   function handleClick(event) {
-    setAnchorEL(event.currentTarget);
+    setAnchorEL(event.currentTarget)
   }
 
   /**
@@ -66,7 +66,7 @@ export default function Header() {
    * MenuをCloseにする
    */
   function handleClose() {
-    setAnchorEL(null);
+    setAnchorEL(null)
   }
 
   /**
@@ -75,9 +75,9 @@ export default function Header() {
    * MenuをCloseにする
    */
   function Logout() {
-    handleClose();
-    firebase.auth().signOut();
-    history.push("/");
+    handleClose()
+    firebase.auth().signOut()
+    history.push("/")
   }
 
   /**
@@ -125,5 +125,5 @@ export default function Header() {
         </Grid>
       </Container>
     </Grid>
-  );
+  )
 }
