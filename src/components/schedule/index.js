@@ -17,6 +17,8 @@ export default function Schedule(props) {
 
   /** 既に登録されている時間割list */
   const [scheduleList, setScheduleList] = useState([]);
+  /** 時間割listを取得しにいくべきかどうか */
+  const [needLoad, setNeedLoad] = useState(true);
 
   /**
    * 既に登録されている時間割を取得している
@@ -26,7 +28,7 @@ export default function Schedule(props) {
       await getData();
     };
     data();
-  });
+  }, [needLoad]);
 
   /**
    * firestoreに存在している時間割を取得している
