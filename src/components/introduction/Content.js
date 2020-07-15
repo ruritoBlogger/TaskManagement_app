@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
+/** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   top: {
     backgroundColor: '#33DFEA',
@@ -38,7 +39,12 @@ const styles = makeStyles({
   }
 });
 
+/**
+ * 紹介画面の内容を表示する関数
+ * @param {function} props - Google認証を行う関数{Login}が格納されている
+ */
 export default function Content(props) {
+  /** CSSを用いたスタイル定義 */
   const classes = styles();
   return (
     <Box>
