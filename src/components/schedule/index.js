@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import firebase, { db } from '../../firebase';
 
@@ -12,7 +11,6 @@ import { getDefaultNormalizer } from '@testing-library/react';
 export default function Schedule(props) {
 
   const [scheduleList, setScheduleList] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     const data = async () => {
@@ -27,14 +25,6 @@ export default function Schedule(props) {
     const docs = snapshots.docs.map(doc => doc.data());
     const result_data = docs.filter((item) => item.uid === props.user);
     setScheduleList(result_data);
-  }
-
-  function MoveMain() {
-    history.push("/main")
-  }
-
-  function Debug() {
-    console.log(props.user);
   }
 
   return (
@@ -53,8 +43,6 @@ export default function Schedule(props) {
           }
         </tbody>
       </table>
-      <Button variant="contained" onClick={MoveMain}>ホームページ</Button>
-      <Button variant="contained" onClick={Debug}>デバッグ</Button>
       <DefaultDialog user={props.user} />
     </div>
   );
