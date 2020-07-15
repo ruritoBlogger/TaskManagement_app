@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom';
 
 import Root from './root';
 
+/**
+ * 所謂神クラス
+ * ユーザーの情報を全ての関数からアクセス出来るようにするために用意した
+ */
 export default function God() {
+  /** userの状態を管理 */
   const [user, setUser] = useState(null);
   return (
   <div>

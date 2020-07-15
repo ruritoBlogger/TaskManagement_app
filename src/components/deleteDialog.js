@@ -9,22 +9,37 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+/**
+ * 時間割を削除するダイアログを表示する関数
+ * @param {Object} props - UI部分に関係するいくつかの文字列を保持している
+ * @param {string} props.Button - ダイアログを表示するかどうかを管理するボタンのtext
+ * @param {string} props.msg - 削除する時間割の名前
+ */
 export default function DeleteDialog(props) {
 
+  /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
+  /**
+   * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
+   * ダイアログを表示する
+   */
   function handleOpen() {
     setOpen(true);
   }
 
+  /**
+   * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
+   * ダイアログを閉じる
+   */
   function handleClose() {
     setOpen(false);
   }
 
-  function Exit() {
-    handleClose();
-  }
-
+  /**
+   * ダイアログを表示している時に削除ボタンがクリックされた時に発火する
+   * 該当の時間割を削除してダイアログを閉じる
+   */
   function Submit() {
     handleClose();
   }
@@ -49,7 +64,7 @@ export default function DeleteDialog(props) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={Exit}>中止</Button>
+          <Button onClick={handleClose}>中止</Button>
           <Button onClick={Submit}>削除</Button>
         </DialogActions>
       </Dialog>

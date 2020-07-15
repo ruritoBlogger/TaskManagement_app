@@ -2,6 +2,9 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
+/** firebaseと連携する際に必要となる情報を管理している
+ * APIKEYなどは.envにて管理している
+ */
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

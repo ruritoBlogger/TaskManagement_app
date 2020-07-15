@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
+/** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   container: {
     'max-width': '740px',
@@ -23,8 +24,11 @@ const styles = makeStyles({
   }
 });
 
+/**
+ * 紹介画面のHeaderを表示する関数
+ */
 export default function Header() {
-
+  /** CSSを用いたスタイル定義 */
   const classes = styles();
   return (
     <Container className={classes.container}>
