@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import firebase from '../firebase';
@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Icon from '@material-ui/core/Icon';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = makeStyles({
   root: {
@@ -37,8 +39,18 @@ const styles = makeStyles({
 });
 
 export default function Header() {
+
+  const [anchorEL, setAnchorEL] = useState(null);
   const classes = styles();
   const history = useHistory();
+
+  function handleClick(event) {
+    setAnchorEL(event.currentTarget);
+  }
+
+  function handleClose() {
+    setAnchorEL(null);
+  }
 
   function Logout() {
     firebase.auth().signOut();
@@ -67,7 +79,17 @@ export default function Header() {
             <Button className={classes.button}>出来ること</Button>
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={Logout} className={classes.button}><Icon>settings</Icon></Button>
+            <Button onClick={handleClick} className={classes.button}><Icon>settings</Icon></Button>
+            <Menu
+              anchorEl={anchorEL}
+              keepMounted
+              open={Boolean(anchorEL)}
+              onClick={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Twitter連携</MenuItem>
+              <MenuItem onClick={handleClose}>Google連携</MenuItem>
+              <MenuItem onClick={handleClose}>ログアウト</MenuItem>
+            </Menu>
           </Grid>
         </Grid>
       </Container>
