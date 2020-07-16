@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Scrollbars } from "react-custom-scrollbars"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
@@ -27,9 +28,18 @@ const styles = makeStyles({
     "max-height": "500px",
   },
   OtherScheduleList: {
-    "margin": "0px 10px",
+    "margin": "20px 30px",
+    "min-height": "50px",
+    "position": "relative",
+  },
+  OtherScheduleListText: {
     "text-align": "center",
-  }
+    "margin": "0px",
+    "position": "absolute",
+    "top": "50%",
+    "left": "50%",
+    "transform": "translate(-50%, -50%)",
+  },
 })
 
 /**
@@ -52,7 +62,7 @@ export default function Content(props) {
 
   useEffect(() => {
     let tmp = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 10; i++) {
       let tmp2 = {}
       tmp2.docId = "test"
       tmp2.title = "タイトル"
@@ -83,11 +93,13 @@ export default function Content(props) {
           <h2 className={classes.OtherScheduleTitle}>他の時間割</h2>
         </Grid>
         <Grid item direction="column" alignItems="center" justify="center" className={classes.OtherScheduleContent}>
-          {tmpList.map(item => (
-            <Paper elevation={3} className={classes.OtherScheduleList}>
-              <h3>{item.title}</h3>
-            </Paper>
-          ))}
+          <Scrollbars className={classes.OtherScheduleContent}>
+            {tmpList.map(item => (
+              <Paper elevation={3} className={classes.OtherScheduleList}>
+                <p className={classes.OtherScheduleListText}>{item.title}</p>
+              </Paper>
+            ))}
+          </Scrollbars>
         </Grid>
       </Grid>
     </Grid>
