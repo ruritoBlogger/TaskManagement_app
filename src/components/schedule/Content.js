@@ -48,8 +48,7 @@ const styles = makeStyles({
   },
   OtherScheduleContent: {
     "background-color": "#CBCBCB",
-    "min-height": "300px",
-    "max-height": "500px",
+    "height": "425px",
   },
   OtherScheduleList: {
     "margin": "20px 30px",
