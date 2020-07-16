@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
 import firebase, { db } from "../../firebase"
@@ -52,19 +52,47 @@ export default function LessonDialog(props) {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false)
 
+  /** firestoreから持ってきた色データを管理する */
+  const [colors, setColors] = useState([])
+
   /** 選ばれた色を管理 */
   const [color, setColor] = useState("")
+  /** 選ばれた時間を管理 */
+  const [date, setDate] = useState("")
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm()
 
-  let ColorData = []
-  let tmp = {}
-  tmp.id = 1
-  tmp.ColorName = "red"
-  ColorData.push(tmp)
+  let Date = []
+  let tmp2 = {}
+  tmp2.id = 1
+  tmp2.name = "月曜3限目"
+  Date.push(tmp2)
   /** CSSを用いたスタイル定義 */
   const classes = styles()
+
+  /**
+   * firestoreに存在する色データを取得している
+   */
+  useEffect(() => {
+    const data = async () => {
+      await getData()
+    }
+    data()
+  }, [open])
+
+  /**
+   * firestoreに存在している色データを取得している
+   * ダイアログが開いた時に取得するようにしている
+   */
+  async function getData() {
+    const colRef = db.collection("color")
+    const snapshots = await colRef.get()
+    const docs = snapshots.docs.map(doc => doc.data())
+    setColors(docs)
+  }
+
+
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
@@ -85,8 +113,16 @@ export default function LessonDialog(props) {
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function  handleChange(event) {
+  function  handleColorChange(event) {
     setColor(event.target.value)
+  }
+
+  /**
+   * ダイアログを表示している時に時間帯選択部分で状態が変化発火する
+   * 選択された時間を状態に登録する
+   */
+  function  handleDateChange(event) {
+    setDate(event.target.value)
   }
 
   /**
@@ -111,6 +147,7 @@ export default function LessonDialog(props) {
       console.log("ユーザーデータが未定義です")
       console.log("再ログインしてください")
       console.log(color)
+      console.log(date)
       handleClose()
     }
   }
@@ -141,14 +178,31 @@ export default function LessonDialog(props) {
                   <InputLabel id="color-label">色</InputLabel>
                   <Select
                     labelId="color-label"
-                    name="color"
                     value={color}
-                    onChange={handleChange}
+                    onChange={handleColorChange}
                   >
                     {
-                      ColorData.map(item => (
+                      colors.map(item => (
                         <MenuItem value={item.id}>
-                          {item.ColorName}
+                          {item.name}
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid className={classes.Content}>
+                <FormControl>
+                  <InputLabel id="date-label">時間帯</InputLabel>
+                  <Select
+                    labelId="date-label"
+                    value={date}
+                    onChange={handleDateChange}
+                  >
+                    {
+                      Date.map(item => (
+                        <MenuItem value={item.id}>
+                          {item.name}
                         </MenuItem>
                       ))
                     }
