@@ -23,7 +23,11 @@ const styles = makeStyles({
     background: "#EDC124",
     "text-align": "center",
     "font-size": "15px"
-  }
+  },
+  SubmitButton: {
+    color: "#FFFFFF",
+    background: "#EDC124",
+  },
 })
 
 
@@ -88,6 +92,8 @@ export default function LessonDialog(props) {
       <Button variant="contained" onClick={handleOpen} className={classes.button}>追加</Button>
       <Dialog
         open={open}
+        fullWidth={true}
+        maxWidth={"sm"}
         onClose={handleClose}
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
@@ -102,7 +108,7 @@ export default function LessonDialog(props) {
 
           <DialogActions>
             <Button onClick={handleClose}>中止</Button>
-            <Button onClick={Submit} type="submit">登録</Button>
+            <Button onClick={Submit} type="submit" className={classes.SubmitButton}>登録</Button>
           </DialogActions>
         </form>
       </Dialog>

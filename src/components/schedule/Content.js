@@ -26,7 +26,7 @@ const styles = makeStyles({
   },
   FocusScheduleTitle: {
     "margin-left": "150px",
-    "margin-right": "100px",
+    "margin-right": "150px",
   },
   FocusScheduleTitleText: {
     "font-weight": "300",
@@ -38,6 +38,9 @@ const styles = makeStyles({
     "background-color": "#CBCBCB",
     "min-height": "300px",
     "max-height": "500px",
+  },
+  FocusScheduleContentGraph: {
+    "margin": "20px 30px",
   },
   OtherScheduleTitle: {
     "text-align": "center",
@@ -102,7 +105,7 @@ export default function Content(props) {
 
   return (
     <Grid container row alignItems="center" justify="center">
-      <Grid container item direction="column" xs={5} className={classes.FocusSchedule}>
+      <Grid container item direction="column" xs={6} className={classes.FocusSchedule}>
         {
           (() => {
             if (focusSchedule) {
@@ -126,7 +129,9 @@ export default function Content(props) {
           })()
         }
         <Grid item className={classes.FocusScheduleContent}>
-          <ShowSchedule schedule={focusSchedule}  />
+          <Paper elevation={3} className={classes.FocusScheduleContentGraph}>
+            <ShowSchedule schedule={focusSchedule}  />
+          </Paper>
         </Grid>
       </Grid>
 
