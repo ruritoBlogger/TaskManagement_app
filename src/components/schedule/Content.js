@@ -75,7 +75,6 @@ export default function Content(props) {
 
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null)
-  const [tmpList, setTmpList] = useState([])
 
   /** CSSを用いたスタイル定義 */
   const classes = styles()
@@ -85,15 +84,7 @@ export default function Content(props) {
    */
 
   useEffect(() => {
-    let tmp = []
-    for (let i = 0; i < 10; i++) {
-      let tmp2 = {}
-      tmp2.docId = "test"
-      tmp2.title = "2020年度春学期"
-      tmp.push(tmp2)
-    }
-    setTmpList(tmp)
-    setFocusSchedule(tmp[0])
+    setFocusSchedule(props.scheduleList[0])
   }, [props])
 
   /**
@@ -130,7 +121,7 @@ export default function Content(props) {
         }
         <Grid item className={classes.FocusScheduleContent}>
           <Paper elevation={3} className={classes.FocusScheduleContentGraph}>
-            <ShowSchedule schedule={props.scheduleList[0]}  />
+            <ShowSchedule schedule={focusSchedule}  />
           </Paper>
         </Grid>
       </Grid>
@@ -142,7 +133,7 @@ export default function Content(props) {
         <Grid item direction="column" alignItems="center" justify="center" className={classes.OtherScheduleContent}>
           <Scrollbars className={classes.OtherScheduleContent}>
             {
-              tmpList.map(item => (
+              props.scheduleList.map(item => (
                 <Paper elevation={3} className={classes.OtherScheduleList}>
                   <p className={classes.OtherScheduleListText}>{item.title}</p>
                 </Paper>
