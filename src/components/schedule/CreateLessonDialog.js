@@ -21,12 +21,10 @@ import { useRadioGroup } from "@material-ui/core"
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   button: {
-    "padding" : "7px 40px",
-    "margin" : "30px",
-    color: "#FFFFFF",
-    background: "#EDC124",
-    "text-align": "center",
-    "font-size": "15px"
+    "width": "121px",
+    "height": "50px",
+    "margin" : "0px",
+    "background": "#FFFFFF",
   },
   Content: {
     "margin-bottom": "20px",
@@ -146,7 +144,7 @@ export default function CreateLessonDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen} className={classes.button}>追加</Button>
+      <Button variant="contained" onClick={handleOpen} className={classes.button}></Button>
       <Dialog
         open={open}
         fullWidth={true}

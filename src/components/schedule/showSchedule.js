@@ -48,7 +48,7 @@ export default function ShowSchedule(props) {
 
   /** 時間割の時間部分 */
   const TimeList = ["   ", "1限目", "2限目", "3限目", "4限目", "5限目", "6限目"]
-  
+
   /** 時間割の曜日部分 */
   const DayList = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"]
 
@@ -86,6 +86,7 @@ export default function ShowSchedule(props) {
       tmp_lesson.classroom = "   "
       tmp_lesson.color="#FFFFFF"
       tmp_lesson.date = i
+      tmp_lesson.docId = -1
       tmp_list[i] = tmp_lesson
     }
 
@@ -131,12 +132,20 @@ export default function ShowSchedule(props) {
                   </Paper>
                 )
                 for(let j = 0; j < 6; j++) {
-                  day_data.push(
-                    <Paper elevation={3} className={classes.LessonBlock}>
-                      <h4 className={classes.LessonBlockText}>{lessonList[i*6+j].title}</h4>
-                      <p className={classes.LessonBlockText}>{lessonList[i*6+j].classroom}</p>
-                    </Paper>
-                  )
+                  if( lessonList[i*6+j].docId === -1 ) {
+                    day_data.push(
+                      <Paper elevation={3} className={classes.LessonBlock}>
+                        <CreateLessonDialog schedule={props.schedule} handleSubmit={handleChange} />
+                      </Paper>
+                    )
+                  } else {
+                    day_data.push(
+                      <Paper elevation={3} className={classes.LessonBlock}>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+j].title}</p>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+j].classroom}</p>
+                      </Paper>
+                    )
+                  }
                 }
                 result_data.push(
                   <Grid item direction="column" className={classes.DayBlock}>
@@ -149,7 +158,6 @@ export default function ShowSchedule(props) {
           })()
         }
       </Grid>
-      <CreateLessonDialog schedule={props.schedule} handleSubmit={handleChange} />
     </Grid>
   )
 }
