@@ -23,7 +23,7 @@ const styles = makeStyles({
     "padding-top": "13px",
   },
   LessonBlock: {
-    "width": "130px",
+    "width": "121px",
     "height": "50px",
     "margin": "0px 1px 5px 1px",
   },
@@ -45,6 +45,9 @@ export default function ShowSchedule(props) {
 
   /** 授業listを更新するかどうかの状態 */
   const [needLoad, setNeedLoad] = useState(false)
+
+  /** 時間割の曜日部分 */
+  const DayList = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"]
 
   /** CSSを用いたスタイル定義 */
   const classes = styles()
@@ -107,6 +110,9 @@ export default function ShowSchedule(props) {
               result_data.push(
                 <Grid item direction="column" className={classes.DayBlock}>
                   <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>   </p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
                     <p className={classes.GuideBlockText}>1限目</p>
                   </Paper>
                   <Paper elevation={1} className={classes.GuideBlock}>
@@ -129,6 +135,9 @@ export default function ShowSchedule(props) {
               for(let i = 0; i < 5; i++) {
                   result_data.push(
                     <Grid item direction="column" className={classes.DayBlock}>
+                    <Paper elevation={3} className={classes.LessonBlock}>
+                        <p className={classes.GuideBlockText}>{DayList[i]}</p>
+                      </Paper>
                       <Paper elevation={3} className={classes.LessonBlock}>
                         <h4 className={classes.LessonBlockText}>{lessonList[i*6].title}</h4>
                         <p className={classes.LessonBlockText}>{lessonList[i*6].classroom}</p>
