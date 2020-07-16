@@ -8,12 +8,13 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-dom": "^16.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint ./src/",
+    "auto_fix": "eslint --fix ./src/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,9 +36,16 @@
   "devDependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/styles": "^4.10.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.3",
     "firebase": "^7.16.0",
+    "jsdoc": "^3.6.4",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-hook-form": "^6.0.5",
     "react-loading-overlay": "^1.0.1",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1"
   }
 }

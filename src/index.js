@@ -1,18 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState } from "react"
+import ReactDOM from "react-dom"
 
-import Undefined from './undefined';
-import Introduction from './components/introduction/index';
-import Main from './components/main/index';
+import Root from "./root"
 
-const app = document.getElementById('app');
+/**
+ * 所謂神クラス
+ * ユーザーの情報を全ての関数からアクセス出来るようにするために用意した
+ */
+export default function God() {
+  /** userの状態を管理 */
+  const [user, setUser] = useState(null)
+  return (
+    <div>
+      <Root
+        user={user}
+        setUser={setUser} />
+    </div>
+  )
+}
+
+const app = document.getElementById("app")
 ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route exact path="/" component={Introduction}></Route>
-      <Route exact path="/main/" component={Main}></Route>
-      <Route component={Undefined}></Route>
-    </Switch>
-  </Router>,
-app);
+  <God />,
+  app)

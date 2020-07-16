@@ -1,61 +1,66 @@
-import React from 'react';
+import React from "react"
 
-import { makeStyles } from '@material-ui/styles';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
+import { makeStyles } from "@material-ui/styles"
+import Grid from "@material-ui/core/Grid"
+import Box from "@material-ui/core/Box"
+import Container from "@material-ui/core/Container"
 
+/** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   container: {
-    'max-width': '740px',
-    color: '#484848',
+    "max-width": "740px",
+    color: "#484848",
   },
   bottomText: {
-    'text-align': 'center',
-    margin: '30px 0px 0px 0px',
-    'font-weight': '300',
+    "text-align": "center",
+    margin: "30px 0px 0px 0px",
+    "font-weight": "300",
   },
   box: {
-    margin: '0px 0px 0px 0px',
+    margin: "0px 0px 0px 0px",
   },
   pictureBox: {
-    display: 'block',
-    margin: 'auto',
+    display: "block",
+    margin: "auto",
   },
   twitterPicture: {
-    display: 'block',
-    margin: 'auto',
-    'text-align': 'center',
-    width: '75%',
-    height: 'auto',
+    display: "block",
+    margin: "auto",
+    "text-align": "center",
+    width: "75%",
+    height: "auto",
   },
   googlePicture: {
-    display: 'block',
-    margin: 'auto',
-    'text-align': 'center',
-    width: '60%',
-    height: 'auto',
-    padding: '27px',
+    display: "block",
+    margin: "auto",
+    "text-align": "center",
+    width: "60%",
+    height: "auto",
+    padding: "27px",
   },
   textBox: {
-    margin: 'auto',
-    padding: '0px 30px',
-    'text-align': 'center',
+    margin: "auto",
+    padding: "0px 30px",
+    "text-align": "center",
   },
   twitterText: {
-    color: '#00ACED',
-    'text-align': 'center',
-    'margin-top': '5px',
+    color: "#00ACED",
+    "text-align": "center",
+    "margin-top": "5px",
   },
   googleText: {
-    color: '#0266C8',
-    'text-align': 'center',
-    'margin-top': '0px',
+    color: "#0266C8",
+    "text-align": "center",
+    "margin-top": "0px",
   }
-});
+})
 
+/**
+ * 紹介画面のメリット部分を表示する関数
+ */
 export default function Footer() {
-  const classes = styles();
+  /** CSSを用いたスタイル定義 */
+  const classes = styles()
   return (
     <Container className={classes.container}>
       <Grid container direction="column">
@@ -72,7 +77,7 @@ export default function Footer() {
             </Grid>
             <Grid item className={classes.textBox}>
               <h3 className={classes.twitterText}>Twitterとの連携</h3>
-            <p>Tiwtterとの連携によって<br />課題を消化するたびに<br />褒めてもらうことが出来ます</p>
+              <p>Tiwtterとの連携によって<br />課題を消化するたびに<br />褒めてもらうことが出来ます</p>
             </Grid>
           </Grid>
           <Grid item xs={6} direction="column" className={classes.box}>
