@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Scrollbars } from "react-custom-scrollbars"
 
 import ShowSchedule from "./showSchedule"
+import DeleteDialog from "../deleteDialog"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
@@ -19,6 +20,11 @@ const styles = makeStyles({
     margin: "30px 0px",
     "padding-right": "150px",
     "font-weight": "400",
+  },
+  FocusScheduleContent: {
+    "background-color": "#CBCBCB",
+    "min-height": "300px",
+    "max-height": "500px",
   },
   OtherScheduleTitle: {
     "text-align": "center",
@@ -74,11 +80,45 @@ export default function Content(props) {
     setFocusSchedule(tmp[0])
   }, [props])
 
+  /**
+   * 呼び出されると時間割を削除する
+   */
+  function deleteSchedule() {
+    //setNeedLoad(!needLoad)
+  }
+
   return (
     <Grid container row alignItems="center" justify="center">
-      <Grid item xs={5} className={classes.MainSchedule}>
-        <ShowSchedule schedule={focusSchedule} />
+      <Grid container item direction="column" xs={5}>
+        <Grid item direction="column">
+          {
+            (() => {
+              if (focusSchedule) {
+                return(
+                  <Grid>
+                    <Grid item>
+                      {focusSchedule.title}
+                    </Grid>
+                    <Grid item>
+                      <DeleteDialog Button="削除" msg={focusSchedule.title} handleSubmit={deleteSchedule} />
+                    </Grid>
+                  </Grid>
+                )
+              } else {
+                return(
+                <Grid>
+                  <p>読み込めてない</p>
+                </Grid>
+              )
+              }
+            })()
+          }
+        </Grid>
+        <Grid item className={classes.FocusScheduleContent}>
+          <ShowSchedule schedule={focusSchedule}  />
+        </Grid>
       </Grid>
+
       <Grid container item direction="column" xs={3}>
         <Grid item>
           <h2 className={classes.OtherScheduleTitle}>他の時間割</h2>

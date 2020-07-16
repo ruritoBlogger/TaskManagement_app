@@ -22,41 +22,8 @@ export default function ShowSchedule(props) {
     //setNeedLoad(!needLoad)
   }
 
-  /**
-   * 呼び出されると時間割を削除する
-   */
-  function deleteSchedule() {
-    //setNeedLoad(!needLoad)
-  }
-
   return (
     <div>
-      <Grid container>
-        <Grid item>
-          {
-            (() => {
-              if (props.schedule) {
-                return(<p>{props.schedule.title}</p>)
-              } else {
-                return(<p>読み込めてない</p>)
-              }
-            })()
-          }
-        </Grid>
-        <Grid item>
-          {
-            (() => {
-              if (props.schedule) {
-                return(
-                  <DeleteDialog Button="削除" msg={props.schedule.title} handleSubmit={deleteSchedule} />
-                )
-              } else {
-                return(<p>読み込めてない</p>)
-              }
-            })()
-          }
-        </Grid>
-      </Grid>
       <LessonDialog user={props.user} handleSubmit={handleChange} />
     </div>
   )
