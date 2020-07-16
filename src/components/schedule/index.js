@@ -61,7 +61,8 @@ export default function Schedule(props) {
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
-    const result_data = docs.filter((item) => item.uid === props.user)
+    const tmp = docs.filter((item) => item.uid === props.user)
+    const result_data = [...tmp]
     setScheduleList(result_data)
   }
 

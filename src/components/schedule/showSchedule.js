@@ -97,8 +97,8 @@ export default function ShowSchedule(props) {
     docs.map(item => (
       tmp_list[item.date] = item
     ))
-    tmp_list = [...tmp_list]
-    setLessonList(tmp_list)
+    const return_list = [...tmp_list]
+    setLessonList(return_list)
   }
 
   /**
