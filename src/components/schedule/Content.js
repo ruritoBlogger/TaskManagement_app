@@ -87,6 +87,9 @@ export default function Content(props) {
     setFocusSchedule(props.scheduleList[0])
   }, [props])
 
+  useEffect(() => {
+    console.log(focusSchedule)
+  }, [focusSchedule])
   /**
    * 呼び出されると時間割を削除する
    */
