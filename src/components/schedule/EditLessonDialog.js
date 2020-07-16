@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
 import firebase, { db } from "../../firebase"
+import DeleteDialog from "../deleteDialog"
 
 import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
@@ -17,6 +18,7 @@ import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
 import NativeSelect from "@material-ui/core/NativeSelect"
 import MenuItem from "@material-ui/core/MenuItem"
+import Icon from "@material-ui/core/Icon"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -35,6 +37,9 @@ const styles = makeStyles({
   },
   Content: {
     "margin-bottom": "20px",
+  },
+  DeleteButton: {
+    "margin-right": "200px",
   },
   SubmitButton: {
     color: "#FFFFFF",
@@ -108,11 +113,21 @@ export default function EditLessonDialog(props) {
   }
 
   /**
-   * ダイアログを表示している時に色選択部分で状態が変化発火する
+   * ダイアログを表示している時に色選択部分で状態が変化すると発火する
    * 選択された色を状態に登録する
    */
   function  handleChange(event) {
     setColor(event.target.value)
+  }
+
+  /**
+   * ダイアログを表示している時に削除ボタンがクリックされた時発火する
+   * 選択された授業を削除しダイアログを閉じる
+   */
+  function  DeleteLesson() {
+    db.collection("schedule").doc(props.schedule_docId).collection("lesson").doc(props.lesson.docId).delete();
+    props.handleSubmit()
+    handleClose()
   }
 
   /**
@@ -148,7 +163,9 @@ export default function EditLessonDialog(props) {
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
       >
-        <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
+        <DialogTitle>
+          {props.lesson.title}を編集する
+        </DialogTitle>
         <form onSubmit={handleSubmit(Update)}>
           <DialogContent>
             <Grid direction="column">
@@ -180,6 +197,9 @@ export default function EditLessonDialog(props) {
           </DialogContent>
 
           <DialogActions>
+            <Grid className={classes.DeleteButton}>
+              <DeleteDialog Button="削除" msg={props.lesson.title} handleSubmit={DeleteLesson} />
+            </Grid>
             <Button onClick={handleClose}>中止</Button>
             <Button onClick={Update} type="submit" className={classes.SubmitButton}>更新</Button>
           </DialogActions>

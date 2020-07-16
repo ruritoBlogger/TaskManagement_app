@@ -15,6 +15,7 @@ import DialogTitle from "@material-ui/core/DialogTitle"
  * @param {string} props.Button - ダイアログを表示するかどうかを管理するボタンのtext
  * @param {string} props.msg - 削除する時間割の名前
  * @param {function} props.handleSubmit - 削除した後に発火させたいイベント
+ * @param {boolean} props.isIcon - ボタンをIconを用いて表示するかどうか
  */
 export default function DeleteDialog(props) {
 
@@ -39,9 +40,10 @@ export default function DeleteDialog(props) {
 
   /**
    * ダイアログを表示している時に削除ボタンがクリックされた時に発火する
-   * 該当の時間割を削除してダイアログを閉じる
+   * 該当のものを削除してダイアログを閉じる
    */
   function Submit() {
+    props.handleSubmit()
     handleClose()
   }
 
