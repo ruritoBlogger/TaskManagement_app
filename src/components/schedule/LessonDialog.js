@@ -40,12 +40,9 @@ const styles = makeStyles({
 
 /**
  * 新しく授業を登録するダイアログを表示する関数
- * @param {Object} props - ユーザーの情報や授業を追加する際に必要な情報・時間割を更新するイベントを管理
- * @param {string} props.user - Google認証した際に得られるuseridを保持している
+ * @param {Object} props - 時間割や時間割を更新するイベントを管理
+ * @param {Object} props.schedule - 授業を追加したい時間割
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
- * @param {Object} props.lesson - 授業を追加する際に必要な情報の集合体
- * @param {list} props.lesson.ColorData - 授業を追加する際に登録する色データのList
- * @param {list} props.lesson.DateData - 授業を追加する際に登録する日時のList
  */
 export default function LessonDialog(props) {
 
@@ -133,11 +130,10 @@ export default function LessonDialog(props) {
    * @param {string} value.title - 時間割のタイトル
    */
   function Submit(value) {
-    if (value.title) {
-      const docId = db.collection("lesson").doc().id
-      db.collection("lesson").doc(docId).set({
+    if (value.title && props.schedule) {
+      const docId = db.collection("schedule").doc(props.schedule.docId).collection("lesson").doc().id
+      db.collection("schedule").doc(props.schedule.docId).collection("lesson").doc(docId).set({
         docId: docId,
-        schedule_id: props.schedule.docId,
         title: value.title,
         classroom: value.classroom,
         color: color,
