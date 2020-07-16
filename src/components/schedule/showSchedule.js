@@ -135,7 +135,7 @@ export default function ShowSchedule(props) {
                   if( lessonList[i*6+j].docId === -1 ) {
                     day_data.push(
                       <Paper elevation={3} className={classes.LessonBlock}>
-                        <CreateLessonDialog schedule={props.schedule} handleSubmit={handleChange} />
+                        <CreateLessonDialog schedule={props.schedule} date={i*6+j} handleSubmit={handleChange} />
                       </Paper>
                     )
                   } else {

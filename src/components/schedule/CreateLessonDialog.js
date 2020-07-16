@@ -40,6 +40,7 @@ const styles = makeStyles({
  * 新しく授業を登録するダイアログを表示する関数
  * @param {Object} props - 時間割や時間割を更新するイベントを管理
  * @param {Object} props.schedule - 授業を追加したい時間割
+ * @param {int} props.date - クリックされた授業がどの時間帯か
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
 export default function CreateLessonDialog(props) {
@@ -52,17 +53,10 @@ export default function CreateLessonDialog(props) {
 
   /** 選ばれた色を管理 */
   const [color, setColor] = useState("")
-  /** 選ばれた時間を管理 */
-  const [date, setDate] = useState("")
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm()
 
-  let Date = []
-  let tmp2 = {}
-  tmp2.id = 1
-  tmp2.name = "月曜3限目"
-  Date.push(tmp2)
   /** CSSを用いたスタイル定義 */
   const classes = styles()
 
@@ -108,16 +102,8 @@ export default function CreateLessonDialog(props) {
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function  handleColorChange(event) {
+  function  handleChange(event) {
     setColor(event.target.value)
-  }
-
-  /**
-   * ダイアログを表示している時に時間帯選択部分で状態が変化発火する
-   * 選択された時間を状態に登録する
-   */
-  function  handleDateChange(event) {
-    setDate(event.target.value)
   }
 
   /**
@@ -135,7 +121,7 @@ export default function CreateLessonDialog(props) {
         title: value.title,
         classroom: value.classroom,
         color: color,
-        date: date,
+        date: props.date,
       })
       props.handleSubmit()
       handleClose()
@@ -169,28 +155,10 @@ export default function CreateLessonDialog(props) {
                   <Select
                     labelId="color-label"
                     value={color}
-                    onChange={handleColorChange}
+                    onChange={handleChange}
                   >
                     {
                       colors.map(item => (
-                        <MenuItem value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid className={classes.Content}>
-                <FormControl>
-                  <InputLabel id="date-label">時間帯</InputLabel>
-                  <Select
-                    labelId="date-label"
-                    value={date}
-                    onChange={handleDateChange}
-                  >
-                    {
-                      Date.map(item => (
                         <MenuItem value={item.id}>
                           {item.name}
                         </MenuItem>
