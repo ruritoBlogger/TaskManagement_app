@@ -6,18 +6,30 @@ import firebase, { db } from "../../firebase"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   DayBlock: {
     "margin": "0px",
   },
-  LessonBlock: {
-    "width": "132px",
+  GuideBlock: {
+    "height": "50px",
+    "margin": "0px 1px 5px 1px",
+  },
+  GuideBlockText: {
+    "text-align": "center",
     "margin": "0px",
+    "padding-top": "13px",
+  },
+  LessonBlock: {
+    "width": "130px",
+    "height": "50px",
+    "margin": "0px 1px 5px 1px",
   },
   LessonBlockText: {
     "margin": "0px",
+    "text-align": "center",
   },
 })
 
@@ -36,12 +48,6 @@ export default function ShowSchedule(props) {
 
   /** CSSを用いたスタイル定義 */
   const classes = styles()
-
-  /** 曜日の順番 */
-  const day_list = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"]
-
-  /** 時間帯の順番 */
-  const time_list = ["1限目", "2限目", "3限目", "4限目", "5限目", "6限目"]
 
   /**
    * firestoreに存在する色データを取得している
@@ -98,29 +104,55 @@ export default function ShowSchedule(props) {
           (() => {
             if( lessonList[29] ) {
               let result_data = []
+              result_data.push(
+                <Grid item direction="column" className={classes.DayBlock}>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>1限目</p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>2限目</p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>3限目</p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>4限目</p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>5限目</p>
+                  </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>6限目</p>
+                  </Paper>
+                </Grid>
+              )
               for(let i = 0; i < 5; i++) {
                   result_data.push(
                     <Grid item direction="column" className={classes.DayBlock}>
-                      <Grid item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i].classroom}</p>
-                      </Grid>
-                      <Grid item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i+1].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i+1].classroom}</p>
-                      </Grid>
-                      <Grid item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i+2].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i+2].classroom}</p>
-                      </Grid>
-                      <Grid item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i+3].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i+3].classroom}</p>
-                      </Grid>
-                      <Grid item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i+4].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i+4].classroom}</p>
-                      </Grid>
+                      <Paper elevation={3} className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6].classroom}</p>
+                      </Paper>
+                      <Paper elevation={3} item className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+1].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+1].classroom}</p>
+                      </Paper>
+                      <Paper elevation={3} item className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+2].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+2].classroom}</p>
+                      </Paper>
+                      <Paper elevation={3} item className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+3].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+3].classroom}</p>
+                      </Paper>
+                      <Paper elevation={3} item className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+4].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+4].classroom}</p>
+                      </Paper>
+                      <Paper elevation={3} item className={classes.LessonBlock}>
+                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+5].title}</h4>
+                        <p className={classes.LessonBlockText}>{lessonList[i*6+5].classroom}</p>
+                      </Paper>
                     </Grid>
                   )
               }
