@@ -101,7 +101,7 @@ export default function ShowSchedule(props) {
    * 具体的には授業listを更新するかどうかを管理する状態を変更する
    */
   function handleChange() {
-    //setNeedLoad(!needLoad)
+    setNeedLoad(!needLoad)
   }
 
   return (
