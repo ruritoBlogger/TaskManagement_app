@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { Scrollbars } from "react-custom-scrollbars"
 
+import ShowSchedule from "./showSchedule"
+
 import { makeStyles } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
@@ -65,28 +67,17 @@ export default function Content(props) {
     for (let i = 0; i < 10; i++) {
       let tmp2 = {}
       tmp2.docId = "test"
-      tmp2.title = "タイトル"
+      tmp2.title = "2020年度春学期"
       tmp.push(tmp2)
     }
     setTmpList(tmp)
+    setFocusSchedule(tmp[0])
   }, [props])
 
   return (
     <Grid container row alignItems="center" justify="center">
       <Grid item xs={5} className={classes.MainSchedule}>
-        <p>test</p>
-        <table>
-          <tbody>
-            {
-              tmpList.map(item => (
-                <tr>
-                  <td>{item.docId}</td>
-                  <td>{item.title}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <ShowSchedule schedule={focusSchedule} />
       </Grid>
       <Grid container item direction="column" xs={3}>
         <Grid item>
