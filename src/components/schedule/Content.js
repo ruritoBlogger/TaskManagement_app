@@ -21,6 +21,19 @@ const styles = makeStyles({
     "padding-right": "150px",
     "font-weight": "400",
   },
+  FocusSchedule: {
+    "margin-right": "30px",
+  },
+  FocusScheduleTitle: {
+    "margin-left": "150px",
+    "margin-right": "100px",
+  },
+  FocusScheduleTitleText: {
+    "font-weight": "300",
+  },
+  FocusScheduleButton: {
+    "margin-top": "20px",
+  },
   FocusScheduleContent: {
     "background-color": "#CBCBCB",
     "min-height": "300px",
@@ -89,31 +102,29 @@ export default function Content(props) {
 
   return (
     <Grid container row alignItems="center" justify="center">
-      <Grid container item direction="column" xs={5}>
-        <Grid item direction="column">
-          {
-            (() => {
-              if (focusSchedule) {
-                return(
-                  <Grid>
-                    <Grid item>
-                      {focusSchedule.title}
-                    </Grid>
-                    <Grid item>
-                      <DeleteDialog Button="削除" msg={focusSchedule.title} handleSubmit={deleteSchedule} />
-                    </Grid>
+      <Grid container item direction="column" xs={5} className={classes.FocusSchedule}>
+        {
+          (() => {
+            if (focusSchedule) {
+              return(
+                <Grid container item direction="row">
+                  <Grid item className={classes.FocusScheduleTitle}>
+                    <h2 className={classes.FocusScheduleTitleText}>{focusSchedule.title}</h2>
                   </Grid>
-                )
-              } else {
-                return(
+                  <Grid item className={classes.FocusScheduleButton}>
+                    <DeleteDialog Button="削除" msg={focusSchedule.title} handleSubmit={deleteSchedule} />
+                  </Grid>
+                </Grid>
+              )
+            } else {
+              return(
                 <Grid>
                   <p>読み込めてない</p>
                 </Grid>
               )
-              }
-            })()
-          }
-        </Grid>
+            }
+          })()
+        }
         <Grid item className={classes.FocusScheduleContent}>
           <ShowSchedule schedule={focusSchedule}  />
         </Grid>
@@ -125,11 +136,13 @@ export default function Content(props) {
         </Grid>
         <Grid item direction="column" alignItems="center" justify="center" className={classes.OtherScheduleContent}>
           <Scrollbars className={classes.OtherScheduleContent}>
-            {tmpList.map(item => (
-              <Paper elevation={3} className={classes.OtherScheduleList}>
-                <p className={classes.OtherScheduleListText}>{item.title}</p>
-              </Paper>
-            ))}
+            {
+              tmpList.map(item => (
+                <Paper elevation={3} className={classes.OtherScheduleList}>
+                  <p className={classes.OtherScheduleListText}>{item.title}</p>
+                </Paper>
+              ))
+            }
           </Scrollbars>
         </Grid>
       </Grid>
