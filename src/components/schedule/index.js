@@ -23,6 +23,9 @@ const styles = makeStyles({
     "padding-right": "150px",
     "font-weight": "400",
   },
+  content: {
+    "min-width": "1440px",
+  },
 })
 
 /**
@@ -82,7 +85,9 @@ export default function Schedule(props) {
         </Grid>
       </Grid>
       <Grid container alignItems="center" justify="center">
-        <Content scheduleList={scheduleList} />
+        <Grid  className={classes.content}>
+          <Content scheduleList={scheduleList} />
+        </Grid>
       </Grid>
     </Grid>
   )
