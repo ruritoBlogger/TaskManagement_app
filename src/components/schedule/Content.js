@@ -56,9 +56,16 @@ const styles = makeStyles({
     "min-height": "50px",
     "position": "relative",
   },
+  OtherScheduleButton: {
+    "min-height": "50px",
+    "width": "300px",
+  },
   OtherScheduleListText: {
     "text-align": "center",
     "margin": "0px",
+    "overflow": "hidden",
+    "white-space": "nowrap",
+    "text-overflow": "ellipsis",
     "position": "absolute",
     "top": "50%",
     "left": "50%",
@@ -76,6 +83,9 @@ export default function Content(props) {
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null)
 
+  /** メインで表示する時間割の更新を管理 */
+  const [needLoad, setNeedLoad] = useState(false)
+
   /** CSSを用いたスタイル定義 */
   const classes = styles()
 
@@ -84,18 +94,26 @@ export default function Content(props) {
    */
 
   useEffect(() => {
-    setFocusSchedule(props.scheduleList[0])
-  }, [props])
+    if( !focusSchedule ) {
+      setFocusSchedule(props.scheduleList[0])
+    }
+  }, [needLoad])
 
-  useEffect(() => {
-    console.log(focusSchedule)
-  }, [focusSchedule])
   /**
    * 呼び出されると時間割を削除する
    */
   function deleteSchedule() {
     //setNeedLoad(!needLoad)
   }
+
+  /**
+   * 呼び出されるとメインで表示する時間割を変更する
+   */
+  function ChangeFocusSchedule(schedule) {
+    setFocusSchedule(schedule)
+    setNeedLoad(!needLoad)
+  }
+
 
   return (
     <Grid container row alignItems="center" justify="center">
@@ -138,7 +156,9 @@ export default function Content(props) {
             {
               props.scheduleList.map(item => (
                 <Paper elevation={3} className={classes.OtherScheduleList}>
-                  <p className={classes.OtherScheduleListText}>{item.title}</p>
+                  <Button onClick={() => ChangeFocusSchedule(item)} className={classes.OtherScheduleButton}>
+                    <p className={classes.OtherScheduleListText}>{item.title}</p>
+                  </Button>
                 </Paper>
               ))
             }
