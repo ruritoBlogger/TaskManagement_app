@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import LessonDialog from "./LessonDialog"
+import CreateLessonDialog from "./CreateLessonDialog"
 import DeleteDialog from "../deleteDialog"
 import firebase, { db } from "../../firebase"
 
@@ -149,7 +149,7 @@ export default function ShowSchedule(props) {
           })()
         }
       </Grid>
-      <LessonDialog schedule={props.schedule} handleSubmit={handleChange} />
+      <CreateLessonDialog schedule={props.schedule} handleSubmit={handleChange} />
     </Grid>
   )
 }

@@ -44,7 +44,7 @@ const styles = makeStyles({
  * @param {Object} props.schedule - 授業を追加したい時間割
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
-export default function LessonDialog(props) {
+export default function CreateLessonDialog(props) {
 
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false)
