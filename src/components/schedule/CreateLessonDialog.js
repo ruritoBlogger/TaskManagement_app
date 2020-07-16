@@ -130,7 +130,7 @@ export default function CreateLessonDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen} className={classes.button}></Button>
+      <Button onClick={handleOpen} className={classes.button}></Button>
       <Dialog
         open={open}
         fullWidth={true}

@@ -136,7 +136,7 @@ export default function EditLessonDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen} className={classes.button}>
+      <Button onClick={handleOpen} className={classes.button}>
         <p className={classes.ButtonText}>{props.lesson.title}</p>
         <p className={classes.ButtonText}>{props.lesson.classroom}</p>
       </Button>
