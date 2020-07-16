@@ -15,8 +15,8 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import FormControl from "@material-ui/core/FormControl"
 import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
+import NativeSelect from "@material-ui/core/NativeSelect"
 import MenuItem from "@material-ui/core/MenuItem"
-import { useRadioGroup } from "@material-ui/core"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -61,7 +61,7 @@ export default function EditLessonDialog(props) {
   const [colors, setColors] = useState([])
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = useState("")
+  const [color, setColor] = useState(props.lesson.color)
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm()
@@ -161,11 +161,11 @@ export default function EditLessonDialog(props) {
               <Grid className={classes.Content}>
                 <FormControl>
                   <InputLabel id="color-label">色</InputLabel>
-                  <Select
-                    labelId="color-label"
-                    value={color}
-                    onChange={handleChange}
-                  >
+                    <Select
+                      labelId="color-label"
+                      value={color}
+                      onChange={handleChange}
+                    >
                     {
                       colors.map(item => (
                         <MenuItem value={item.id}>
