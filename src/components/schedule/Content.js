@@ -76,6 +76,7 @@ export default function Content(props) {
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null)
   const [tmpList, setTmpList] = useState([])
+  const [tmpLessonList, setTmpLessonList] = useState({})
 
   /** CSSを用いたスタイル定義 */
   const classes = styles()
@@ -94,6 +95,29 @@ export default function Content(props) {
     }
     setTmpList(tmp)
     setFocusSchedule(tmp[0])
+
+    let ColorData = []
+    let DateData = []
+    for (let i = 0; i < 2; i++) {
+      let tmp2 = {}
+      tmp2.id = i
+      tmp2.color_key = "test"
+      ColorData[i] = tmp2
+
+      tmp2 = {}
+      tmp2.id = i
+      tmp2.date_key = "test"
+      DateData[i] = tmp2
+    }
+
+    /* tmpLessonList = { ColorData: 配列 } */
+    console.log(ColorData[0]) /** [ 連想配列, 連想配列] */
+    let lesson = {}
+    lesson["ColorData"] = ColorData
+    lesson["DateData"] = DateData
+    setTmpLessonList(lesson)
+    console.log(lesson.ColorData[0]) /** 連想配列 */
+    console.log(tmpLessonList.ColorData[0]) /** undefined */
   }, [props])
 
   /**
@@ -130,7 +154,7 @@ export default function Content(props) {
         }
         <Grid item className={classes.FocusScheduleContent}>
           <Paper elevation={3} className={classes.FocusScheduleContentGraph}>
-            <ShowSchedule schedule={focusSchedule}  />
+            <ShowSchedule schedule={focusSchedule} lesson={tmpLessonList}  />
           </Paper>
         </Grid>
       </Grid>
