@@ -6,6 +6,7 @@ import Undefined from "./undefined"
 import Introduction from "./components/introduction/index"
 import Main from "./components/main/index"
 import Schedule from "./components/schedule/index"
+import Todo from "./components/todo/index"
 
 /**
  * urlによって表示する部分を切り替える部分を担当している
@@ -20,6 +21,7 @@ export default function Root(props) {
         <Route exact path="/" render={ () => <Introduction user={props.user} setUser={props.setUser} />} />
         <Route exact path="/main/" component={Main} />
         <Route exact path="/schedule" render={ () => <Schedule user={props.user} />} />
+        <Route exact path="/todo" render={ () => <Todo user={props.user} />} />
         <Route component={Undefined} />
       </Switch>
     </Router>
