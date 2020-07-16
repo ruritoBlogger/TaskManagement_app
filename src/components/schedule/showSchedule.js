@@ -19,11 +19,11 @@ const styles = makeStyles({
   },
   GuideBlockText: {
     "text-align": "center",
-    "margin": "0px",
+    "margin": "0px 5px",
     "padding-top": "13px",
   },
   LessonBlock: {
-    "width": "121px",
+    "width": "119px",
     "height": "50px",
     "margin": "0px 1px 5px 1px",
   },

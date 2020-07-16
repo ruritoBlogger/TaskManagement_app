@@ -21,7 +21,7 @@ import { useRadioGroup } from "@material-ui/core"
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   button: {
-    "width": "121px",
+    "width": "119px",
     "height": "50px",
     "margin" : "0px",
     "background": "#FFFFFF",
