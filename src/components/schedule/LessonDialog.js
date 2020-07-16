@@ -133,21 +133,17 @@ export default function LessonDialog(props) {
    * @param {string} value.title - 時間割のタイトル
    */
   function Submit(value) {
-    if (value.title && props.user) {
+    if (value.title) {
       const docId = db.collection("lesson").doc().id
       db.collection("lesson").doc(docId).set({
         docId: docId,
-        uid: props.user,
+        schedule_id: props.schedule.docId,
         title: value.title,
-        is_default: false,
+        classroom: value.classroom,
+        color: color,
+        date: date,
       })
       props.handleSubmit()
-      handleClose()
-    } else if (value.title) {
-      console.log("ユーザーデータが未定義です")
-      console.log("再ログインしてください")
-      console.log(color)
-      console.log(date)
       handleClose()
     }
   }

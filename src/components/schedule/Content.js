@@ -130,7 +130,7 @@ export default function Content(props) {
         }
         <Grid item className={classes.FocusScheduleContent}>
           <Paper elevation={3} className={classes.FocusScheduleContentGraph}>
-            <ShowSchedule schedule={focusSchedule}  />
+            <ShowSchedule schedule={props.scheduleList[0]}  />
           </Paper>
         </Grid>
       </Grid>

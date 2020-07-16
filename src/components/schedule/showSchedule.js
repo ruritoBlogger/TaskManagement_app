@@ -24,7 +24,7 @@ export default function ShowSchedule(props) {
 
   return (
     <div>
-      <LessonDialog user={props.user} handleSubmit={handleChange} />
+      <LessonDialog schedule={props.schedule} handleSubmit={handleChange} />
     </div>
   )
 }
