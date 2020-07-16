@@ -96,7 +96,7 @@ export default function Content(props) {
     if( !focusSchedule ) {
       setFocusSchedule(props.scheduleList[0])
     }
-  }, [needLoad])
+  }, [props || needLoad])
 
   /**
    * 呼び出されると時間割を削除する
