@@ -16,7 +16,13 @@ const styles = makeStyles({
   ContentHeader: {
     "text-align": "center",
     "max-width": "1080px",
-  }
+  },
+  text: {
+    "text-align": "center",
+    margin: "30px 0px",
+    "padding-right": "150px",
+    "font-weight": "400",
+  },
 })
 
 /**
@@ -68,26 +74,16 @@ export default function Schedule(props) {
     <Grid>
       <Header />
       <Grid container alignItems="center" justify="center">
-        <Grid item xs={6}>
-          <h1>時間割</h1>
+        <Grid item xs={5}>
+          <h1 className={classes.text}>時間割</h1>
         </Grid>
         <Grid item xs={2}>
           <DefaultDialog user={props.user} handleSubmit={handleChange} />
         </Grid>
       </Grid>
-      <table>
-        <tbody>
-          {
-            scheduleList.map(item => (
-              <tr>
-                <td>{item.docId}</td>
-                <td>{item.title}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-      <Content scheduleList={scheduleList} />
+      <Grid container alignItems="center" justify="center">
+        <Content scheduleList={scheduleList} />
+      </Grid>
     </Grid>
   )
 }
