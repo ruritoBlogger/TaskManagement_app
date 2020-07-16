@@ -46,6 +46,9 @@ export default function ShowSchedule(props) {
   /** 授業listを更新するかどうかの状態 */
   const [needLoad, setNeedLoad] = useState(false)
 
+  /** 時間割の時間部分 */
+  const TimeList = ["   ", "1限目", "2限目", "3限目", "4限目", "5限目", "6限目"]
+  
   /** 時間割の曜日部分 */
   const DayList = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"]
 
@@ -79,8 +82,8 @@ export default function ShowSchedule(props) {
     let tmp_list = new Array(30).fill(null)
     for(let i = 0; i < 30; i++) {
       let tmp_lesson = {}
-      tmp_lesson.title = "未登録"
-      tmp_lesson.classroom = "未登録"
+      tmp_lesson.title = "   "
+      tmp_lesson.classroom = "   "
       tmp_lesson.color="#FFFFFF"
       tmp_lesson.date = i
       tmp_list[i] = tmp_lesson
@@ -107,63 +110,39 @@ export default function ShowSchedule(props) {
           (() => {
             if( lessonList[29] ) {
               let result_data = []
+              let guide_data = []
+              for(let i = 0; i < 7; i++){
+                guide_data.push(
+                    <Paper elevation={1} className={classes.GuideBlock}>
+                      <p className={classes.GuideBlockText}>{TimeList[i]}</p>
+                    </Paper>
+                )
+              }
               result_data.push(
                 <Grid item direction="column" className={classes.DayBlock}>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>   </p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>1限目</p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>2限目</p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>3限目</p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>4限目</p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>5限目</p>
-                  </Paper>
-                  <Paper elevation={1} className={classes.GuideBlock}>
-                    <p className={classes.GuideBlockText}>6限目</p>
-                  </Paper>
+                  {guide_data}
                 </Grid>
               )
               for(let i = 0; i < 5; i++) {
-                  result_data.push(
-                    <Grid item direction="column" className={classes.DayBlock}>
+                let day_data = []
+                day_data.push(
+                  <Paper elevation={3} className={classes.LessonBlock}>
+                      <p className={classes.GuideBlockText}>{DayList[i]}</p>
+                  </Paper>
+                )
+                for(let j = 0; j < 6; j++) {
+                  day_data.push(
                     <Paper elevation={3} className={classes.LessonBlock}>
-                        <p className={classes.GuideBlockText}>{DayList[i]}</p>
-                      </Paper>
-                      <Paper elevation={3} className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6].classroom}</p>
-                      </Paper>
-                      <Paper elevation={3} item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+1].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+1].classroom}</p>
-                      </Paper>
-                      <Paper elevation={3} item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+2].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+2].classroom}</p>
-                      </Paper>
-                      <Paper elevation={3} item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+3].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+3].classroom}</p>
-                      </Paper>
-                      <Paper elevation={3} item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+4].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+4].classroom}</p>
-                      </Paper>
-                      <Paper elevation={3} item className={classes.LessonBlock}>
-                        <h4 className={classes.LessonBlockText}>{lessonList[i*6+5].title}</h4>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+5].classroom}</p>
-                      </Paper>
-                    </Grid>
+                      <h4 className={classes.LessonBlockText}>{lessonList[i*6+j].title}</h4>
+                      <p className={classes.LessonBlockText}>{lessonList[i*6+j].classroom}</p>
+                    </Paper>
                   )
+                }
+                result_data.push(
+                  <Grid item direction="column" className={classes.DayBlock}>
+                    {day_data}
+                  </Grid>
+                )
               }
               return result_data
             }
