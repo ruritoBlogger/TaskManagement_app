@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 
 import CreateLessonDialog from "./CreateLessonDialog"
+import EditLessonDialog from "./EditLessonDialog"
 import DeleteDialog from "../deleteDialog"
 import firebase, { db } from "../../firebase"
 
@@ -144,8 +145,11 @@ export default function ShowSchedule(props) {
                   } else {
                     day_data.push(
                       <Paper elevation={3} className={classes.LessonBlock}>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+j].title}</p>
-                        <p className={classes.LessonBlockText}>{lessonList[i*6+j].classroom}</p>
+                        <EditLessonDialog
+                          schedule_docId={props.schedule.docId}
+                          lesson={lessonList[i*6+j]}
+                          handleSubmit={handleChange}
+                        />
                       </Paper>
                     )
                   }
