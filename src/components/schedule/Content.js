@@ -116,7 +116,7 @@ export default function Content(props) {
             } else {
               return(
                 <Grid>
-                  <p>読み込めてない</p>
+                  <h2 className={classes.FocusScheduleTitleText}>読み込めてない</h2>
                 </Grid>
               )
             }
