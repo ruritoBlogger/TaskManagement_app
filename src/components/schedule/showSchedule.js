@@ -30,6 +30,9 @@ const styles = makeStyles({
   LessonBlockText: {
     "margin": "0px",
     "text-align": "center",
+    "overflow": "hidden",
+    "white-space": "nowrap",
+    "text-overflow": "ellipsis",
   },
 })
 
