@@ -26,6 +26,10 @@ const styles = makeStyles({
     "min-height": "300px",
     "max-height": "500px",
   },
+  OtherScheduleList: {
+    "margin": "0px 10px",
+    "text-align": "center",
+  }
 })
 
 /**
@@ -37,6 +41,7 @@ export default function Content(props) {
 
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null)
+  const [tmpList, setTmpList] = useState([])
 
   /** CSSを用いたスタイル定義 */
   const classes = styles()
@@ -45,11 +50,16 @@ export default function Content(props) {
    * メインで表示する時間割を切り替える
    */
 
-   /*
   useEffect(() => {
-    
-  })
-  */
+    let tmp = []
+    for (let i = 0; i < 3; i++) {
+      let tmp2 = {}
+      tmp2.docId = "test"
+      tmp2.title = "タイトル"
+      tmp.push(tmp2)
+    }
+    setTmpList(tmp)
+  }, [props])
 
   return (
     <Grid container row alignItems="center" justify="center">
@@ -58,7 +68,7 @@ export default function Content(props) {
         <table>
           <tbody>
             {
-              props.scheduleList.map(item => (
+              tmpList.map(item => (
                 <tr>
                   <td>{item.docId}</td>
                   <td>{item.title}</td>
@@ -73,12 +83,11 @@ export default function Content(props) {
           <h2 className={classes.OtherScheduleTitle}>他の時間割</h2>
         </Grid>
         <Grid item direction="column" alignItems="center" justify="center" className={classes.OtherScheduleContent}>
-          {props.scheduleList.map(item => (
-            <Paper elevation={3}>
+          {tmpList.map(item => (
+            <Paper elevation={3} className={classes.OtherScheduleList}>
               <h3>{item.title}</h3>
             </Paper>
           ))}
-          <p>中身</p>
         </Grid>
       </Grid>
     </Grid>
