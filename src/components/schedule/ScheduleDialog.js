@@ -32,7 +32,7 @@ const styles = makeStyles({
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  * @param {function} props.handleSubmit - 呼び出すと時間割listを取得し直す
  */
-export default function DefaultDialog(props) {
+export default function ScheduleDialog(props) {
 
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false)

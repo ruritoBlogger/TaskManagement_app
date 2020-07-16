@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import firebase, { db } from "../../firebase"
 
-import DefaultDialog from "./dialog"
+import ScheduleDialog from "./ScheduleDialog"
 import Content from "./Content"
 import Header from "../Header"
 
@@ -81,7 +81,7 @@ export default function Schedule(props) {
           <h1 className={classes.text}>時間割</h1>
         </Grid>
         <Grid item xs={2}>
-          <DefaultDialog user={props.user} handleSubmit={handleChange} />
+          <ScheduleDialog user={props.user} handleSubmit={handleChange} />
         </Grid>
       </Grid>
       <Grid container alignItems="center" justify="center">
