@@ -22,7 +22,11 @@ const styles = makeStyles({
     background: "#EDC124",
     "text-align": "center",
     "font-size": "15px"
-  }
+  },
+  SubmitButton: {
+    color: "#FFFFFF",
+    background: "#EDC124",
+  },
 })
 
 
@@ -87,6 +91,8 @@ export default function ScheduleDialog(props) {
       <Button variant="contained" onClick={handleOpen} className={classes.button}>追加</Button>
       <Dialog
         open={open}
+        fullWidth={true}
+        maxWidth={"xs"}
         onClose={handleClose}
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
@@ -94,12 +100,12 @@ export default function ScheduleDialog(props) {
         <DialogTitle>時間割を追加する</DialogTitle>
         <form onSubmit={handleSubmit(Submit)}>
           <DialogContent>
-            <TextField name="title" defaultValue="2020年春学期" inputRef={register} />
+            <TextField name="title" label="時間割名" defaultValue="2020年春学期" inputRef={register} />
           </DialogContent>
 
           <DialogActions>
             <Button onClick={handleClose}>中止</Button>
-            <Button onClick={Submit} type="submit">登録</Button>
+            <Button onClick={Submit} className={classes.SubmitButton} type="submit">登録</Button>
           </DialogActions>
         </form>
       </Dialog>
