@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import firebase, { db } from "../../firebase"
 
 import Header from "../Header"
+import CreateTodoDialog from "./CreateTodoDialog"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
@@ -11,6 +12,10 @@ import { getDefaultNormalizer } from "@testing-library/react"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
+  TitleText: {
+    "text-align": "center",
+    "font-weight": "400",
+  },
 })
 
 /**
@@ -26,7 +31,7 @@ export default function Todo(props) {
   const [needLoad, setNeedLoad] = useState(true)
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles();
+  const classes = styles()
 
   /**
    * 既に登録されているtodoを取得している
@@ -64,7 +69,17 @@ export default function Todo(props) {
   return (
     <Grid>
       <Header />
-      <p>todo page</p>
+      <Grid container row alignItems="center" justify="center">
+        <Grid item xs={4}>
+          <h1 className={classes.TitleText}>Todo</h1>
+        </Grid>
+        <Grid item xs={4}>
+          <h1 className={classes.TitleText}>切り替えボタン</h1>
+        </Grid>
+        <Grid item xs={4}>
+          <CreateTodoDialog handleSubmit={handleChange} user={props.user} />
+        </Grid>
+      </Grid>
     </Grid>
   )
 }
