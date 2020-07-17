@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react"
+import { Scrollbars } from "react-custom-scrollbars"
 
 import firebase, { db } from "../../firebase"
-
-import Header from "../Header"
-import CreateTodoDialog from "./CreateTodoDialog"
-import ShowTodoList from "./ShowTodoList"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
-import { getDefaultNormalizer } from "@testing-library/react"
+import Paper from "@material-ui/core/Paper"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -20,11 +17,13 @@ const styles = makeStyles({
 })
 
 /**
- * todoページを表示する関数
- * @param {Object} props - ユーザーの情報を保持している
+ * todoListを表示する関数
+ * @param {Object} props - ユーザーの情報やTodoListのsort条件を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
+ * @param {string} props.msg - 期限順 or 重さ順
+ * @param {boolean} props.isSortDate - 期限順でソートするかどうか(trueなら期限順、falseなら重さ順)
  */
-export default function Todo(props) {
+export default function ShowTodoList(props) {
 
   /** 既に登録されているtodolist */
   const [todoList, setTodoList] = useState([])
@@ -68,26 +67,20 @@ export default function Todo(props) {
   }
 
   return (
-    <Grid direction="column">
-      <Header />
-      <Grid item container row alignItems="center" justify="center">
-        <Grid item xs={4}>
-          <h1 className={classes.TitleText}>Todo</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <h1 className={classes.TitleText}>切り替えボタン</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <CreateTodoDialog handleSubmit={handleChange} user={props.user} />
-        </Grid>
+    <Grid container alignItems="center" justify="center">
+      <Grid item>
+        <h2 className={classes.TitleText}>{props.msg}</h2>
       </Grid>
-      <Grid item container row alignItems="center" justify="center">
-        <Grid item>
-          <ShowTodoList user={props.user} msg="期限順" isSortDate={true} />
-        </Grid>
-        <Grid item>
-          <ShowTodoList user={props.user} msg="重さ順" isSortDate={false} />
-        </Grid>
+      <Grid item alignItems="center" justify="center" className={classes.List}>
+        <Scrollbars className={classes.ListBlock}>
+          {
+            todoList.map(item => (
+              <Paper elevation={3} className={classes.ListContent}>
+                <p className={classes.ListText}>{item.title}</p>
+              </Paper>
+            ))
+          }
+        </Scrollbars>
       </Grid>
     </Grid>
   )
