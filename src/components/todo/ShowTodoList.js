@@ -31,8 +31,8 @@ const styles = makeStyles({
     "margin": "20px 30px",
   },
   ListContentTextBlock: {
-    "width": "340px",
-    "margin": "0px",
+    "width": "360px",
+    "margin": "10px",
   },
   ListContentTextTitle: {
     "margin": "0px 0px 30px 10px",
@@ -41,7 +41,7 @@ const styles = makeStyles({
     "margin": "0px",
   },
   ListContentButtonBlock: {
-    "width": "100px",
+    "width": "60px",
     "margin": "0px",
   },
 })
@@ -114,6 +114,15 @@ export default function ShowTodoList(props) {
     setNeedLoad(!needLoad)
   }
 
+  /**
+   * 引数の時間を日時に変更する
+   */
+  function toDateTime(secs){
+    let t = new Date(1970, 0, 1)
+    t.setSeconds(secs)
+    return t.toISOString()
+  }
+
   return (
     <Grid container direction="column" alignItems="center" justify="center">
       <Grid item>
@@ -127,7 +136,7 @@ export default function ShowTodoList(props) {
                 <Grid container direction="row">
                   <Grid item className={classes.ListContentTextBlock}>
                     <h2 className={classes.ListContentTextTitle}>{item.title}</h2>
-                    <p className={classes.ListContentTextContent}>{item.limit.seconds}</p>
+                    <p className={classes.ListContentTextContent}>{toDateTime(item.limit.seconds)}</p>
                   </Grid>
                   <Grid item container direction="column" className={classes.ListContentButtonBlock}>
                     <Grid item>
