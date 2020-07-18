@@ -1,17 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState } from "react"
+import ReactDOM from "react-dom"
 
+import Root from "./root"
+
+/**
+ * 所謂神クラス
+ * ユーザーの情報を全ての関数からアクセス出来るようにするために用意した
+ */
+export default function God() {
+  /** userの状態を管理 */
+  const [user, setUser] = useState(null)
+  return (
+    <div>
+      <Root
+        user={user}
+        setUser={setUser} />
+    </div>
+  )
+}
+
+const app = document.getElementById("app")
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  <God />,
+  app)
