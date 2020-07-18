@@ -9,6 +9,12 @@ import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import Paper from "@material-ui/core/Paper"
 import Icon from "@material-ui/core/Icon"
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -31,7 +37,7 @@ const styles = makeStyles({
     "margin": "20px 30px",
   },
   ListContentTextBlock: {
-    "width": "360px",
+    "width": "280px",
     "margin": "10px",
   },
   ListContentTextTitle: {
@@ -41,7 +47,7 @@ const styles = makeStyles({
     "margin": "0px",
   },
   ListContentButtonBlock: {
-    "width": "60px",
+    "width": "50px",
     "margin": "0px",
   },
 })
@@ -133,20 +139,35 @@ export default function ShowTodoList(props) {
           {
             todoList.map(item => (
               <Paper elevation={3} className={classes.ListContent}>
-                <Grid container direction="row">
-                  <Grid item className={classes.ListContentTextBlock}>
-                    <h2 className={classes.ListContentTextTitle}>{item.title}</h2>
-                    <p className={classes.ListContentTextContent}>{toDateTime(item.limit.seconds)}</p>
-                  </Grid>
-                  <Grid item container direction="column" className={classes.ListContentButtonBlock}>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>
+                      <Grid container direction="row">
+                        <Grid item className={classes.ListContentTextBlock}>
+                          <h2 className={classes.ListContentTextTitle}>{item.title}</h2>
+                          <p className={classes.ListContentTextContent}>{toDateTime(item.limit.seconds)}</p>
+                        </Grid>
+                        <Grid item container direction="column" className={classes.ListContentButtonBlock}>
+                          <Grid item>
+                            <IconButton aria-label="delete"><Icon>done</Icon></IconButton>
+                          </Grid>
+                          <Grid item>
+                            <IconButton aria-label="delete"><Icon>delete</Icon></IconButton>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
                     <Grid item>
-                      <IconButton aria-label="delete"><Icon>done</Icon></IconButton>
+                      <p className={classes.ListContentTextContent}>{item.content}</p>
                     </Grid>
-                    <Grid item>
-                      <IconButton aria-label="delete"><Icon>delete</Icon></IconButton>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                  </AccordionDetails>
+                </Accordion>
               </Paper>
             ))
           }
