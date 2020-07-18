@@ -64,6 +64,9 @@ export default function ShowTodoList(props) {
   /** CSSを用いたスタイル定義 */
   const classes = styles()
 
+  /** Todoの重さを定義している */
+  const heavy_list = ["とても軽い", "軽い", "普通", "重い","とても重い"]
+
   /**
    * 削除ボタンがクリックされると発火する
    * クリックされたTodoを削除する
@@ -112,7 +115,8 @@ export default function ShowTodoList(props) {
                     <Typography>
                       <Grid container direction="row">
                         <Grid item className={classes.ListContentTextBlock}>
-                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}: [{item.todo.heavy}]</h2>
+                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}</h2>
+                          <p className={classes.ListContentTextContent}>重さ: {heavy_list[item.todo.heavy]}</p>
                           <p className={classes.ListContentTextContent}>{toDateTime(item.todo.limit.seconds)}</p>
                         </Grid>
                         <Grid item container direction="column" className={classes.ListContentButtonBlock}>
