@@ -1,4 +1,4 @@
-# TaskManagementApp
+# Todos
 このアプリはReact + firebaseを用いて制作された、**大学の時間割とtodoを効率よく管理するアプリ**です。<br>
 
 具体的な機能としては
