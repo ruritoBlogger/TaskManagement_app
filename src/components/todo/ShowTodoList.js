@@ -54,14 +54,30 @@ export default function ShowTodoList(props) {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
-    /*
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
-    const tmp = docs.filter((item) => item.uid === props.user)
-    const result_data = [...tmp]
-    setTodoList(result_data)
-    */
+    const schedules = docs.filter((item) => item.uid === props.user)
+
+    const result_list = []
+
+    for(let i = 0; i < schedules.length; i++){
+      const subRef = db.collection("schedule").doc(schedules[i].docId).collection("lesson")
+      const subSnapshots = await subRef.get()
+      const lessons = subSnapshots.docs.map(doc => doc.data())
+
+      for(let j = 0; j < lessons.length; j++){
+        const subsubRef = db.collection("schedule")
+                            .doc(schedules[i].docId)
+                            .collection("lesson")
+                            .doc(lessons[j].docId)
+                            .collection("todo")
+        const subsubSnapshots = await subsubRef.get()
+        subsubSnapshots.docs.map(doc => result_list.push(doc.data()) )
+      }
+    }
+    console.log(result_list)
+    setTodoList(result_list)
   }
 
   /**
@@ -72,14 +88,13 @@ export default function ShowTodoList(props) {
     setNeedLoad(!needLoad)
   }
 
-
-
   return (
-    <Grid container alignItems="center" justify="center">
+    <Grid container direction="column" alignItems="center" justify="center">
       <Grid item>
         <h2 className={classes.TitleText}>{props.msg}</h2>
       </Grid>
       <Grid item alignItems="center" justify="center" className={classes.List}>
+        <p>test</p>
         <Scrollbars className={classes.ListBlock}>
           {
             todoList.map(item => (
@@ -90,7 +105,6 @@ export default function ShowTodoList(props) {
           }
         </Scrollbars>
       </Grid>
-      
     </Grid>
   )
 }
