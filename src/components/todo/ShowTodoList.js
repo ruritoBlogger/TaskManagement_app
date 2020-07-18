@@ -87,6 +87,27 @@ export default function ShowTodoList(props) {
   }
 
   /**
+   * 完了ボタンがクリックされると発火する
+   * クリックされたTodoを更新する
+   * @param {object} data - 更新したいtodoなどが格納されている
+   * @param {object} data.schedule - 更新したいtodoが登録されている時間割
+   * @param {object} data.lesson - 更新したいtodoが登録されている授業
+   * @param {object} data.todo - 更新したいtodo
+   */
+  async function DoneTodo(data){
+    await db.collection("schedule")
+            .doc(data.schedule.docId)
+            .collection("lesson")
+            .doc(data.lesson.docId)
+            .collection("todo")
+            .doc(data.todo.docId)
+            .update({
+              done: true,
+            })
+    props.handleChange()
+  }
+
+  /**
    * 引数の時間を日時に変更する
    * @param {int} secs - 1970年0月1日からの経過時間
    */
@@ -121,7 +142,7 @@ export default function ShowTodoList(props) {
                         </Grid>
                         <Grid item container direction="column" className={classes.ListContentButtonBlock}>
                           <Grid item>
-                            <IconButton aria-label="delete"><Icon>done</Icon></IconButton>
+                            <IconButton onClick={() => DoneTodo(item)} aria-label="delete"><Icon>done</Icon></IconButton>
                           </Grid>
                           <Grid item>
                             <IconButton onClick={() => DeleteTodo(item)} aria-label="delete"><Icon>delete</Icon></IconButton>

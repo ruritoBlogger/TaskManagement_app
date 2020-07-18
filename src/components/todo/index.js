@@ -69,11 +69,13 @@ export default function Todo(props) {
                             .collection("todo")
         const subsubSnapshots = await subsubRef.get()
         subsubSnapshots.docs.map( doc => {
-          let tmp = {}
-          tmp.todo = doc.data()
-          tmp.lesson = lessons[j]
-          tmp.schedule = schedules[i]
-          result_list.push(tmp)
+          if(!doc.data().done){
+            let tmp = {}
+            tmp.todo = doc.data()
+            tmp.lesson = lessons[j]
+            tmp.schedule = schedules[i]
+            result_list.push(tmp)
+          }
         })
       }
     }
