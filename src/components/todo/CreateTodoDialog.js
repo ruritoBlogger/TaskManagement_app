@@ -16,6 +16,12 @@ import FormControl from "@material-ui/core/FormControl"
 import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
+import DateFnsUtils from '@date-io/date-fns'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers'
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -61,6 +67,8 @@ export default function CreateTodoDialog(props) {
   const [schedule, setSchedule] = useState(null)
   /** 選択された授業 */
   const [lesson, setLesson] = useState(null)
+  /** 選択された日時 */
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm()
@@ -156,6 +164,13 @@ export default function CreateTodoDialog(props) {
   }
 
   /**
+   * 期限の入力が行われた時発火する
+   */
+  function handleDateChange(date) {
+    setSelectedDate(date)
+  }
+
+  /**
    * ダイアログを表示している時に登録ボタンがクリックされた時に発火する
    * 入力された情報を元に授業を追加してダイアログを閉じる
    *
@@ -164,16 +179,15 @@ export default function CreateTodoDialog(props) {
    */
   function Submit(value) {
     if (value.title) {
-      console.log(schedule)
       const docId = db.collection("schedule").doc(schedule.docId).collection("lesson").doc(lesson.docId).collection("todo").doc().id
       db.collection("schedule").doc(schedule.docId).collection("lesson").doc(lesson.docId).collection("todo").doc(docId).set({
         docId: docId,
         title: value.title,
         content: value.content,
         heavy: heavy,
+        limit: selectedDate,
       })
       props.handleSubmit()
-     console.log(value)
       handleClose()
     }
   }
@@ -270,6 +284,25 @@ export default function CreateTodoDialog(props) {
                     }
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid className={classes.Content}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid justify="space-around">
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="date-picker-inline"
+                      label="締め切り"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
               </Grid>
             </Grid>
           </DialogContent>
