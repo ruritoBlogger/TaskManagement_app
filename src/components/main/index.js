@@ -2,9 +2,18 @@ import React, { useState, useEffect } from "react"
 
 import firebase, { db } from "../../firebase"
 import Header from "../Header"
-import ShowTodoList from "../todo//ShowTodoList"
+import ShowTodoList from "../todo/ShowTodoList"
+import ShowSchedule from "../schedule/showSchedule"
 
+import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
+
+/** CSSを用いたスタイル定義 */
+const styles = makeStyles({
+  Schedule: {
+    "width": "800px",
+  },
+})
 
 /**
  * homeページを表示する関数
@@ -19,6 +28,8 @@ export default function Main(props) {
   /** todolistを取得しにいくべきかどうか */
   const [needLoad, setNeedLoad] = useState(true)
 
+  /** CSSを用いたスタイル定義 */
+  const classes = styles()
   /**
    * 既に登録されている時間割を取得している
    */
@@ -96,7 +107,29 @@ export default function Main(props) {
   return (
     <Grid direction="column">
       <Header />
-      <Grid item container row spacing={10} alignItems="center" justify="center">
+      <Grid item container direction="row" spacing={10} alignItems="center" justify="center">
+        <Grid item container direction="column" className={classes.Schedule}>
+          {
+            (() => {
+              if(schedule){
+                return(
+                  <Grid item>
+                    <h2>{schedule.title}</h2>
+                  </Grid>
+                )
+              } else {
+                return(
+                  <Grid item>
+                    <h2>読み込み中</h2>
+                  </Grid>
+                )
+              }
+            })
+          }
+          <Grid item>
+            <ShowSchedule schedule={schedule} needLoad={needLoad} />
+          </Grid>
+        </Grid>
         <Grid item>
           <ShowTodoList
             todoList={[...todoList.sort((a,b) => {
@@ -106,7 +139,7 @@ export default function Main(props) {
             })]}
             handleChange={handleChange}
             user={props.user}
-            msg="期限順"
+            msg="Todo"
           />
         </Grid>
       </Grid>
