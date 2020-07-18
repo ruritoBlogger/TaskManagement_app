@@ -186,6 +186,7 @@ export default function CreateTodoDialog(props) {
         content: value.content,
         heavy: heavy,
         limit: selectedDate,
+        done: false,
       })
       props.handleSubmit()
       handleClose()

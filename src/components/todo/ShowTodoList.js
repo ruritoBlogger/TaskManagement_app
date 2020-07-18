@@ -84,13 +84,13 @@ export default function ShowTodoList(props) {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
-    setTodoList([])
+    const result_list = []
+    setTodoList(result_list)
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
     const schedules = docs.filter((item) => item.uid === props.user)
 
-    const result_list = []
 
     for(let i = 0; i < schedules.length; i++){
       const subRef = db.collection("schedule").doc(schedules[i].docId).collection("lesson")
@@ -104,12 +104,16 @@ export default function ShowTodoList(props) {
                             .doc(lessons[j].docId)
                             .collection("todo")
         const subsubSnapshots = await subsubRef.get()
-        subsubSnapshots.docs.map( doc => result_list.push(doc.data()) )
+        subsubSnapshots.docs.map( doc => {
+          let tmp = {}
+          tmp.todo = doc.data()
+          tmp.lesson = lessons[j]
+          tmp.schedule = schedules[i]
+          result_list.push(tmp)
+        })
       }
     }
-    result_list.map(todo => todoList.push(todo))
-    setTodoList([...todoList])
-    console.log(todoList)
+    setTodoList([...result_list])
   }
 
   /**
@@ -121,7 +125,27 @@ export default function ShowTodoList(props) {
   }
 
   /**
+   * 削除ボタンがクリックされると発火する
+   * クリックされたTodoを削除する
+   * @param {object} data - 削除したいtodoなどが格納されている
+   * @param {object} data.schedule - 削除したいtodoが登録されている時間割
+   * @param {object} data.lesson - 削除したいtodoが登録されている授業
+   * @param {object} data.todo - 削除したいtodo
+   */
+  async function DeleteTodo(data){
+    await db.collection("schedule")
+            .doc(data.schedule.docId)
+            .collection("lesson")
+            .doc(data.lesson.docId)
+            .collection("todo")
+            .doc(data.todo.docId)
+            .delete()
+    handleChange()
+  }
+
+  /**
    * 引数の時間を日時に変更する
+   * @param {int} secs - 1970年0月1日からの経過時間
    */
   function toDateTime(secs){
     let t = new Date(1970, 0, 1)
@@ -148,15 +172,15 @@ export default function ShowTodoList(props) {
                     <Typography>
                       <Grid container direction="row">
                         <Grid item className={classes.ListContentTextBlock}>
-                          <h2 className={classes.ListContentTextTitle}>{item.title}</h2>
-                          <p className={classes.ListContentTextContent}>{toDateTime(item.limit.seconds)}</p>
+                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}</h2>
+                          <p className={classes.ListContentTextContent}>{toDateTime(item.todo.limit.seconds)}</p>
                         </Grid>
                         <Grid item container direction="column" className={classes.ListContentButtonBlock}>
                           <Grid item>
                             <IconButton aria-label="delete"><Icon>done</Icon></IconButton>
                           </Grid>
                           <Grid item>
-                            <IconButton aria-label="delete"><Icon>delete</Icon></IconButton>
+                            <IconButton onClick={() => DeleteTodo(item)} aria-label="delete"><Icon>delete</Icon></IconButton>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -164,7 +188,7 @@ export default function ShowTodoList(props) {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid item>
-                      <p className={classes.ListContentTextContent}>{item.content}</p>
+                      <p className={classes.ListContentTextContent}>{item.todo.content}</p>
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
