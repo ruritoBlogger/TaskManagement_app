@@ -9,18 +9,18 @@ import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import Paper from "@material-ui/core/Paper"
 import Icon from "@material-ui/core/Icon"
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
+import Accordion from "@material-ui/core/Accordion"
+import AccordionSummary from "@material-ui/core/AccordionSummary"
+import AccordionDetails from "@material-ui/core/AccordionDetails"
+import Typography from "@material-ui/core/Typography"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
-import DateFnsUtils from '@date-io/date-fns'
+import DateFnsUtils from "@date-io/date-fns"
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers'
+} from "@material-ui/pickers"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -77,12 +77,12 @@ export default function ShowTodoList(props) {
    */
   async function DeleteTodo(data){
     await db.collection("schedule")
-            .doc(data.schedule.docId)
-            .collection("lesson")
-            .doc(data.lesson.docId)
-            .collection("todo")
-            .doc(data.todo.docId)
-            .delete()
+      .doc(data.schedule.docId)
+      .collection("lesson")
+      .doc(data.lesson.docId)
+      .collection("todo")
+      .doc(data.todo.docId)
+      .delete()
     props.handleChange()
   }
 
@@ -96,14 +96,14 @@ export default function ShowTodoList(props) {
    */
   async function DoneTodo(data){
     await db.collection("schedule")
-            .doc(data.schedule.docId)
-            .collection("lesson")
-            .doc(data.lesson.docId)
-            .collection("todo")
-            .doc(data.todo.docId)
-            .update({
-              done: true,
-            })
+      .doc(data.schedule.docId)
+      .collection("lesson")
+      .doc(data.lesson.docId)
+      .collection("todo")
+      .doc(data.todo.docId)
+      .update({
+        done: true,
+      })
     props.handleChange()
   }
 

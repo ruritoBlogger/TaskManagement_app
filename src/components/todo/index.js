@@ -63,10 +63,10 @@ export default function Todo(props) {
 
       for(let j = 0; j < lessons.length; j++){
         const subsubRef = db.collection("schedule")
-                            .doc(schedules[i].docId)
-                            .collection("lesson")
-                            .doc(lessons[j].docId)
-                            .collection("todo")
+          .doc(schedules[i].docId)
+          .collection("lesson")
+          .doc(lessons[j].docId)
+          .collection("todo")
         const subsubSnapshots = await subsubRef.get()
         subsubSnapshots.docs.map( doc => {
           if(!doc.data().done){
@@ -105,7 +105,7 @@ export default function Todo(props) {
       <Grid item container row spacing={10} alignItems="center" justify="center">
         <Grid item>
           <ShowTodoList
-            todoList={[...todoList.sort(function(a,b){
+            todoList={[...todoList.sort((a,b) => {
               if(a.todo.limit.seconds<b.todo.limit.seconds) return -1
               if(a.todo.limit.seconds>b.todo.limit.seconds) return 1
               return 0
@@ -116,14 +116,14 @@ export default function Todo(props) {
         </Grid>
         <Grid item>
           <ShowTodoList
-            todoList={[...todoList.sort(function(a,b){
+            todoList={[...todoList.sort((a,b) => {
               if(a.todo.heavy>b.todo.heavy) return -1
               if(a.todo.heavy<b.todo.heavy) return 1
               return 0
             })]}
-          handleChange={handleChange}
-          user={props.user}
-          msg="重さ順" />
+            handleChange={handleChange}
+            user={props.user}
+            msg="重さ順" />
         </Grid>
       </Grid>
     </Grid>

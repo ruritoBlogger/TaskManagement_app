@@ -16,12 +16,12 @@ import FormControl from "@material-ui/core/FormControl"
 import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
-import DateFnsUtils from '@date-io/date-fns'
+import DateFnsUtils from "@date-io/date-fns"
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers'
+} from "@material-ui/pickers"
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -93,12 +93,12 @@ export default function CreateTodoDialog(props) {
    * firestoreに存在している授業データを取得している
    */
 
-   useEffect(() => {
-     const data = async () => {
-       await getLessonData()
-     }
-     data()
-   }, [schedule])
+  useEffect(() => {
+    const data = async () => {
+      await getLessonData()
+    }
+    data()
+  }, [schedule])
 
   /**
    * firestoreに存在している時間割データを取得している
@@ -299,7 +299,7 @@ export default function CreateTodoDialog(props) {
                       value={selectedDate}
                       onChange={handleDateChange}
                       KeyboardButtonProps={{
-                        'aria-label': 'change date',
+                        "aria-label": "change date",
                       }}
                     />
                   </Grid>
