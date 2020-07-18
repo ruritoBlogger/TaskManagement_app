@@ -93,11 +93,8 @@ export default function Todo(props) {
     <Grid direction="column">
       <Header />
       <Grid item container row alignItems="center" justify="center">
-        <Grid item xs={4}>
+        <Grid item xs={8}>
           <h1 className={classes.TitleText}>Todo</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <h1 className={classes.TitleText}>切り替えボタン</h1>
         </Grid>
         <Grid item xs={4}>
           <CreateTodoDialog handleSubmit={handleChange} user={props.user} />
