@@ -125,7 +125,7 @@ export default function EditLessonDialog(props) {
    * 選択された授業を削除しダイアログを閉じる
    */
   function  DeleteLesson() {
-    db.collection("schedule").doc(props.schedule_docId).collection("lesson").doc(props.lesson.docId).delete();
+    db.collection("schedule").doc(props.schedule_docId).collection("lesson").doc(props.lesson.docId).delete()
     props.handleSubmit()
     handleClose()
   }
@@ -178,11 +178,11 @@ export default function EditLessonDialog(props) {
               <Grid className={classes.Content}>
                 <FormControl>
                   <InputLabel id="color-label">色</InputLabel>
-                    <Select
-                      labelId="color-label"
-                      value={color}
-                      onChange={handleChange}
-                    >
+                  <Select
+                    labelId="color-label"
+                    value={color}
+                    onChange={handleChange}
+                  >
                     {
                       colors.map(item => (
                         <MenuItem value={item.id}>

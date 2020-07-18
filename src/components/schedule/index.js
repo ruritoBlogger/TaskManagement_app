@@ -41,7 +41,7 @@ export default function Schedule(props) {
   const [needLoad, setNeedLoad] = useState(true)
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles();
+  const classes = styles()
 
   /**
    * 既に登録されている時間割を取得している

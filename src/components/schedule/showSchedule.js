@@ -120,9 +120,9 @@ export default function ShowSchedule(props) {
               let guide_data = []
               for(let i = 0; i < 7; i++){
                 guide_data.push(
-                    <Paper elevation={1} className={classes.GuideBlock}>
-                      <p className={classes.GuideBlockText}>{TimeList[i]}</p>
-                    </Paper>
+                  <Paper elevation={1} className={classes.GuideBlock}>
+                    <p className={classes.GuideBlockText}>{TimeList[i]}</p>
+                  </Paper>
                 )
               }
               result_data.push(
@@ -134,7 +134,7 @@ export default function ShowSchedule(props) {
                 let day_data = []
                 day_data.push(
                   <Paper elevation={3} className={classes.LessonBlock}>
-                      <p className={classes.GuideBlockText}>{DayList[i]}</p>
+                    <p className={classes.GuideBlockText}>{DayList[i]}</p>
                   </Paper>
                 )
                 for(let j = 0; j < 6; j++) {

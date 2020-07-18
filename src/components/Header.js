@@ -96,6 +96,14 @@ export default function Header() {
     history.push("/schedule")
   }
 
+  /**
+   * Todoボタンをクリックされた時に発火する
+   * Todoページに遷移する
+   */
+  function MoveTodoPage() {
+    history.push("/todo")
+  }
+
   return (
     <Grid container alignItems="center" justify="center" className={classes.root}>
       <Container item xs={8} className={classes.container}>
@@ -107,7 +115,7 @@ export default function Header() {
             <Button onClick={MoveSchedulePage} className={classes.button}>時間割</Button>
           </Grid>
           <Grid item xs={2}>
-            <Button className={classes.button}>todo</Button>
+            <Button onClick={MoveTodoPage} className={classes.button}>todo</Button>
           </Grid>
           <Grid item xs={2}>
             <Button onClick={handleClick} className={classes.button}><Icon>settings</Icon></Button>
