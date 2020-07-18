@@ -112,7 +112,7 @@ export default function ShowTodoList(props) {
                     <Typography>
                       <Grid container direction="row">
                         <Grid item className={classes.ListContentTextBlock}>
-                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}</h2>
+                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}: [{item.todo.heavy}]</h2>
                           <p className={classes.ListContentTextContent}>{toDateTime(item.todo.limit.seconds)}</p>
                         </Grid>
                         <Grid item container direction="column" className={classes.ListContentButtonBlock}>

@@ -118,8 +118,8 @@ export default function Todo(props) {
         <Grid item>
           <ShowTodoList
             todoList={[...todoList.sort(function(a,b){
-              if(a.todo.heavy<b.todo.heavy) return -1
-              if(a.todo.heavy>b.todo.heavy) return 1
+              if(a.todo.heavy>b.todo.heavy) return -1
+              if(a.todo.heavy<b.todo.heavy) return 1
               return 0
             })]}
           handleChange={handleChange}
