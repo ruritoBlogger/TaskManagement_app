@@ -54,11 +54,10 @@ const styles = makeStyles({
 
 /**
  * todoListを表示する関数
- * @param {Object} props - ユーザーやTodoListの情報やTodoListのsort条件を保持している
+ * @param {Object} props - ユーザーやTodoListの情報やTodoListの更新条件を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  * @param {Array} props.todoList - Google認証した際に得られるuseridを保持している
  * @param {string} props.msg - 期限順 or 重さ順
- * @param {boolean} props.isSortDate - 期限順でソートするかどうか(trueなら期限順、falseなら重さ順)
  * @param {function} props.handleChange - TodoListを更新する時に呼び出す
  */
 export default function ShowTodoList(props) {

@@ -105,10 +105,26 @@ export default function Todo(props) {
       </Grid>
       <Grid item container row spacing={10} alignItems="center" justify="center">
         <Grid item>
-          <ShowTodoList todoList={todoList} handleChange={handleChange} user={props.user} msg="期限順" isSortDate={true} />
+          <ShowTodoList
+            todoList={[...todoList.sort(function(a,b){
+              if(a.todo.limit.seconds<b.todo.limit.seconds) return -1
+              if(a.todo.limit.seconds>b.todo.limit.seconds) return 1
+              return 0
+            })]}
+            handleChange={handleChange}
+            user={props.user}
+            msg="期限順" />
         </Grid>
         <Grid item>
-          <ShowTodoList todoList={todoList} handleChange={handleChange} user={props.user} msg="重さ順" isSortDate={false} />
+          <ShowTodoList
+            todoList={[...todoList.sort(function(a,b){
+              if(a.todo.heavy<b.todo.heavy) return -1
+              if(a.todo.heavy>b.todo.heavy) return 1
+              return 0
+            })]}
+          handleChange={handleChange}
+          user={props.user}
+          msg="重さ順" />
         </Grid>
       </Grid>
     </Grid>
