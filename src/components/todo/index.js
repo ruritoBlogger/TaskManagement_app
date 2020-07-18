@@ -49,14 +49,36 @@ export default function Todo(props) {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
-    /*
+    const result_list = []
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
-    const tmp = docs.filter((item) => item.uid === props.user)
-    const result_data = [...tmp]
-    setTodoList(result_data)
-    */
+    const schedules = docs.filter((item) => item.uid === props.user)
+
+
+    for(let i = 0; i < schedules.length; i++){
+      const subRef = db.collection("schedule").doc(schedules[i].docId).collection("lesson")
+      const subSnapshots = await subRef.get()
+      const lessons = subSnapshots.docs.map(doc => doc.data())
+
+      for(let j = 0; j < lessons.length; j++){
+        const subsubRef = db.collection("schedule")
+                            .doc(schedules[i].docId)
+                            .collection("lesson")
+                            .doc(lessons[j].docId)
+                            .collection("todo")
+        const subsubSnapshots = await subsubRef.get()
+        subsubSnapshots.docs.map( doc => {
+          let tmp = {}
+          tmp.todo = doc.data()
+          tmp.lesson = lessons[j]
+          tmp.schedule = schedules[i]
+          result_list.push(tmp)
+        })
+      }
+    }
+    setTodoList([])
+    setTodoList([...result_list])
   }
 
   /**
@@ -83,10 +105,10 @@ export default function Todo(props) {
       </Grid>
       <Grid item container row spacing={10} alignItems="center" justify="center">
         <Grid item>
-          <ShowTodoList user={props.user} msg="期限順" isSortDate={true} />
+          <ShowTodoList todoList={todoList} handleChange={handleChange} user={props.user} msg="期限順" isSortDate={true} />
         </Grid>
         <Grid item>
-          <ShowTodoList user={props.user} msg="重さ順" isSortDate={false} />
+          <ShowTodoList todoList={todoList} handleChange={handleChange} user={props.user} msg="重さ順" isSortDate={false} />
         </Grid>
       </Grid>
     </Grid>
