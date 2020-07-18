@@ -1,68 +1,89 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TaskManagementApp
+このアプリはReact + firebaseを用いて制作された、**大学の時間割とtodoを効率よく管理するアプリ**です。<br>
 
-## Available Scripts
+具体的な機能としては
 
-In the project directory, you can run:
+- **時間割を管理することが出来る**。具体的にはユーザーの時間割を登録・編集・削除する機能を持っています。また時間割には当然授業の情報を登録することも出来ます。
 
-### `npm start`
+- **todoを管理することが出来る**。大学の膨大な課題に対応するためこのアプリでは時間割・授業に紐付いたtodoを登録・編集・削除する機能をもっています。またこのtodoには**重さ**という概念が存在します。これはそのtodoをこなすためにどれだけの労力が必要になるかという情報を表します。これは今までになかった*重い順にtodoを表示する機能*を実現しました。
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 導入
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+このアプリの導入手順は以下に記載されています。
 
-### `npm test`
+- [githubからコードを入手する](#github)
+- [npmを用いてパッケージを導入する](#npm)
+- [firebaseのAPIKeyを設定する](#firebase)
+- [開発環境で動かす](#develop)
+- [本番環境で動かす](#production)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h3 id="github">githubからコードを入手する</h3>
+git cloneなどを用いてコードを入手してください。
+それだけ。
 
-### `npm run build`
+<h3 id="npm">npmを用いてパッケージを導入する</h3>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+パッケージを導入する方法はとても簡単です。
+```
+npm install
+```
+コマンドを用いてパッケージを導入することが出来ます(多分)
+現状だとyarnに対応していません...
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<h3 id="firebase">firebaseのAPIKeyを設定する</h3>
+firebaseのAPIKeyは外部に公開するとセキュリティ上の問題が発生します。
+よってこのプロジェクトのAPIKeyは公開されていません
+よって自分で用意したfirebaseのAPIKeyを用いる必要があります
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+設定方法は
+- .envファイルを作成する
+- sec/firebase.jsを参考に.envファイルにAPIKeyを記述する
 
-### `npm run eject`
+<h3 id="develop">開発環境で動かす</h3>
+このプロジェクトを開発環境で動かす方法は簡単です
+```
+npm run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<h3 id="production">本番環境で動かす</h3>
+このプロジェクトを本番環境で動かすにはJSコードをトランスコンパイルする必要があります。
+トランスコンパイルは
+```
+npm run build
+```
+で行うことが出来ます。
+コンパイル後は
+```
+firebase serve --only hosting
+```
+で本番環境を起動することが出来ます
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## ファイル構成
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### src/
+JSコードが格納されています。このコード群は大体のブラウザに対応していますが、全てのブラウザには対応していません。よってこのプロジェクトでは**babel**を用いてJSコードをトランスコンパイルしています。srcディレクトリ以下は
+- components/: 各ページを表示するJSファイルが格納されている
+- index.js: htmlファイルに読み込まれている最上位のJSファイル
+- root.js: index.js内部で呼び出されているreact-router部分を担当しています
+- undefined.js: 実装されていないページにアクセスされた場合表示されます
+- firebase.js: firebaseのAPIKeyなどの設定が記述されています。
 
-## Learn More
+### src/components/
+componentsディレクトリ以下は
+- introduction/: ログインしていない時にアクセス出来るページを構成するjsファイル群
+- main/: ログイン成功時にリダイレクトされるホームページを構成するjsファイル群
+- schedule/: 時間割ページを構成するjsファイル群
+- todo/: todoページを構成するjsファイル群
+- Header.js: ログイン後に表示されるページ群で用いられているHeaderを構成するjsファイル
+- DeleteDialog.js: 削除ボタンを押した場合に表示する警告ダイアログを構成するjsファイル
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### build/
+babelを用いてトランスコンパイルされたJSコードや後に紹介する */public* コードなどが格納されています。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### public/
+babelを用いてトランスコンパイルする必要のないコードが格納されています。主にhtmlファイルや画像などが格納されています。
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## この開発に参加したい
+特に制限はありません。ぜひこのプロジェクトをよりよいものにしていきましょう！
+あなたのプルリク・Issueをお待ちしています。
