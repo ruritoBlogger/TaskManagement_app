@@ -32,12 +32,14 @@ const styles = makeStyles({
     "font-size": "35px",
     "padding" : "0px",
     color: "#FFFFFF",
+    textTransform: "none",
   },
   button: {
     "min-height": "65px",
     "font-size": "20px",
     "padding" : "15px 10px",
     color: "#FFFFFF",
+    textTransform: "none",
   }
 })
 
@@ -109,7 +111,7 @@ export default function Header() {
       <Container item xs={8} className={classes.container}>
         <Grid container direction="row">
           <Grid item xs={6}>
-            <Button onClick={MoveHomePage} className={classes.logo_button}>Logo</Button>
+            <Button onClick={MoveHomePage} className={classes.logo_button}>Todos</Button>
           </Grid>
           <Grid item xs={2}>
             <Button onClick={MoveSchedulePage} className={classes.button}>時間割</Button>

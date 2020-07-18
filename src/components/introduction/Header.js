@@ -21,6 +21,7 @@ const styles = makeStyles({
     "padding" : "15px 10px",
     "margin" : "0px 10px",
     color: "#FFFFFF",
+    textTransform: "none",
   }
 })
 
@@ -33,11 +34,11 @@ export default function Header() {
   return (
     <Container className={classes.container}>
       <Grid container direction="row">
-        <Grid item xs={6}>
-          <h1 className={classes.headerText}>Logo</h1>
+        <Grid item xs={5}>
+          <h1 className={classes.headerText}>Todos</h1>
         </Grid>
-        <Grid item xs={2}>
-          <Button className={classes.button}>Logoとは</Button>
+        <Grid item xs={3}>
+          <Button className={classes.button}>Todosとは</Button>
         </Grid>
         <Grid item xs={2}>
           <Button className={classes.button}>出来ること</Button>
