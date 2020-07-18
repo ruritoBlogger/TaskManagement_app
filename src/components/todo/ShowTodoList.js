@@ -6,7 +6,9 @@ import firebase, { db } from "../../firebase"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
 import Paper from "@material-ui/core/Paper"
+import Icon from "@material-ui/core/Icon"
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -21,11 +23,26 @@ const styles = makeStyles({
     "font-weight": "400",
   },
   ListBlock: {
-    "height": "400px",
-    "width": "300px",
+    "background-color": "#CBCBCB",
+    "height": "600px",
+    "width": "500px",
   },
   ListContent: {
-    "min-height": "50px",
+    "margin": "20px 30px",
+  },
+  ListContentTextBlock: {
+    "width": "340px",
+    "margin": "0px",
+  },
+  ListContentTextTitle: {
+    "margin": "0px 0px 30px 10px",
+  },
+  ListContentTextContent: {
+    "margin": "0px",
+  },
+  ListContentButtonBlock: {
+    "width": "100px",
+    "margin": "0px",
   },
 })
 
@@ -86,6 +103,7 @@ export default function ShowTodoList(props) {
     }
     result_list.map(todo => todoList.push(todo))
     setTodoList([...todoList])
+    console.log(todoList)
   }
 
   /**
@@ -102,13 +120,24 @@ export default function ShowTodoList(props) {
         <h2 className={classes.TitleText}>{props.msg}</h2>
       </Grid>
       <Grid item alignItems="center" justify="center" className={classes.ListBlock}>
-        <p>test</p>
-        <Scrollbars className={classes.ListContent}>
+        <Scrollbars >
           {
             todoList.map(item => (
-              <Paper elevation={3}>
-                <h2>{item.title}</h2>
-                <p>{item.content}</p>
+              <Paper elevation={3} className={classes.ListContent}>
+                <Grid container direction="row">
+                  <Grid item className={classes.ListContentTextBlock}>
+                    <h2 className={classes.ListContentTextTitle}>{item.title}</h2>
+                    <p className={classes.ListContentTextContent}>{item.limit.seconds}</p>
+                  </Grid>
+                  <Grid item container direction="column" className={classes.ListContentButtonBlock}>
+                    <Grid item>
+                      <IconButton aria-label="delete"><Icon>done</Icon></IconButton>
+                    </Grid>
+                    <Grid item>
+                      <IconButton aria-label="delete"><Icon>delete</Icon></IconButton>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Paper>
             ))
           }

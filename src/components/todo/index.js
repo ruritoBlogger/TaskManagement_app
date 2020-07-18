@@ -81,7 +81,7 @@ export default function Todo(props) {
           <CreateTodoDialog handleSubmit={handleChange} user={props.user} />
         </Grid>
       </Grid>
-      <Grid item container row alignItems="center" justify="center">
+      <Grid item container row spacing={10} alignItems="center" justify="center">
         <Grid item>
           <ShowTodoList user={props.user} msg="期限順" isSortDate={true} />
         </Grid>
