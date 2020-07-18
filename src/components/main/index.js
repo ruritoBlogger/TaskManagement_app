@@ -13,6 +13,16 @@ const styles = makeStyles({
   Schedule: {
     "width": "800px",
   },
+  ScheduleTitle: {
+    "font-weight": "400",
+    "text-align": "center",
+  },
+  ScheduleContentBox: {
+    "background-color": "#CBCBCB",
+  },
+  ScheduleContent: {
+    "margin": "40px 30px",
+  },
 })
 
 /**
@@ -109,25 +119,22 @@ export default function Main(props) {
       <Header />
       <Grid item container direction="row" spacing={10} alignItems="center" justify="center">
         <Grid item container direction="column" className={classes.Schedule}>
-          {
-            (() => {
-              if(schedule){
-                return(
-                  <Grid item>
-                    <h2>{schedule.title}</h2>
-                  </Grid>
-                )
-              } else {
-                return(
-                  <Grid item>
-                    <h2>読み込み中</h2>
-                  </Grid>
-                )
-              }
-            })
-          }
           <Grid item>
-            <ShowSchedule schedule={schedule} needLoad={needLoad} />
+            {
+              (() => {
+                console.log(schedule)
+                if(schedule){
+                  return(<h2 className={classes.ScheduleTitle}>{schedule.title}</h2>)
+                } else {
+                  return(<h2 className={classes.ScheduleTitle}>読み込み中</h2>)
+                }
+              })()
+            }
+          </Grid>
+          <Grid item className={classes.ScheduleContentBox}>
+            <Grid item className={classes.ScheduleContent}>
+              <ShowSchedule schedule={schedule} needLoad={needLoad} />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item>
