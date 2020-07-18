@@ -20,6 +20,13 @@ const styles = makeStyles({
     "text-align": "center",
     "font-weight": "400",
   },
+  ListBlock: {
+    "height": "400px",
+    "width": "300px",
+  },
+  ListContent: {
+    "min-height": "50px",
+  },
 })
 
 /**
@@ -54,6 +61,7 @@ export default function ShowTodoList(props) {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
+    setTodoList([])
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
@@ -73,11 +81,11 @@ export default function ShowTodoList(props) {
                             .doc(lessons[j].docId)
                             .collection("todo")
         const subsubSnapshots = await subsubRef.get()
-        subsubSnapshots.docs.map(doc => result_list.push(doc.data()) )
+        subsubSnapshots.docs.map( doc => result_list.push(doc.data()) )
       }
     }
-    console.log(result_list)
-    setTodoList(result_list)
+    result_list.map(todo => todoList.push(todo))
+    setTodoList([...todoList])
   }
 
   /**
@@ -93,13 +101,14 @@ export default function ShowTodoList(props) {
       <Grid item>
         <h2 className={classes.TitleText}>{props.msg}</h2>
       </Grid>
-      <Grid item alignItems="center" justify="center" className={classes.List}>
+      <Grid item alignItems="center" justify="center" className={classes.ListBlock}>
         <p>test</p>
-        <Scrollbars className={classes.ListBlock}>
+        <Scrollbars className={classes.ListContent}>
           {
             todoList.map(item => (
-              <Paper elevation={3} className={classes.ListContent}>
-                <p className={classes.ListText}>{item.title}</p>
+              <Paper elevation={3}>
+                <h2>{item.title}</h2>
+                <p>{item.content}</p>
               </Paper>
             ))
           }
