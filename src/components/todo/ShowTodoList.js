@@ -85,7 +85,6 @@ export default function ShowTodoList(props) {
    */
   async function getData() {
     const result_list = []
-    setTodoList(result_list)
     const colRef = db.collection("schedule")
     const snapshots = await colRef.get()
     const docs = snapshots.docs.map(doc => doc.data())
@@ -113,6 +112,7 @@ export default function ShowTodoList(props) {
         })
       }
     }
+    setTodoList([])
     setTodoList([...result_list])
   }
 
