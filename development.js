@@ -1,11 +1,13 @@
 import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const src  = path.resolve(__dirname, 'src')
+const public  = path.resolve(__dirname, 'public')
 const dist = path.resolve(__dirname, 'dist')
 
 export default {
   mode: 'development',
-  entry: src + '/index.jsx',
+  entry: src + '/index.js',
 
   output: {
     path: dist,
@@ -25,6 +27,11 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-
-  plugins: []
+  
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: public + '/index.html',
+      filename: 'index.html'
+    })
+  ]
 }
