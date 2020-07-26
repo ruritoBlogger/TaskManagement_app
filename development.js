@@ -2,15 +2,14 @@ import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const src  = path.resolve(__dirname, 'src')
-const public  = path.resolve(__dirname, 'public')
-const dist = path.resolve(__dirname, 'dist')
+const pub  = path.resolve(__dirname, 'public')
 
 export default {
   mode: 'development',
   entry: src + '/index.js',
 
   output: {
-    path: dist,
+    path: pub,
     filename: 'bundle.js'
   },
 
@@ -30,7 +29,7 @@ export default {
   
   plugins: [
     new HtmlWebpackPlugin({
-      template: public + '/index.html',
+      template: pub + '/index.html',
       filename: 'index.html'
     })
   ]
