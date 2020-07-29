@@ -8,7 +8,8 @@ import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import Paper from "@material-ui/core/Paper"
-import Icon from "@material-ui/core/Icon"
+import DeleteButton from "@material-ui/icons/Delete"
+import DoneButton from "@material-ui/icons/Done"
 import Accordion from "@material-ui/core/Accordion"
 import AccordionSummary from "@material-ui/core/AccordionSummary"
 import AccordionDetails from "@material-ui/core/AccordionDetails"
@@ -142,10 +143,10 @@ export default function ShowTodoList(props) {
                         </Grid>
                         <Grid item container direction="column" className={classes.ListContentButtonBlock}>
                           <Grid item>
-                            <IconButton onClick={() => DoneTodo(item)} aria-label="delete"><Icon>done</Icon></IconButton>
+                            <Button onClick={() => DoneTodo(item)}><DoneButton /></Button>
                           </Grid>
                           <Grid item>
-                            <IconButton onClick={() => DeleteTodo(item)} aria-label="delete"><Icon>delete</Icon></IconButton>
+                            <Button onClick={() => DeleteTodo(item)}><DeleteButton /></Button>
                           </Grid>
                         </Grid>
                       </Grid>
