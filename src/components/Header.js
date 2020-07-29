@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/styles"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Container from "@material-ui/core/Container"
-import Icon from "@material-ui/core/Icon"
+import SettingsButton from "@material-ui/icons/Settings"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 
@@ -120,7 +120,7 @@ export default function Header() {
             <Button onClick={MoveTodoPage} className={classes.button}>todo</Button>
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={handleClick} className={classes.button}><Icon>settings</Icon></Button>
+            <Button onClick={handleClick} className={classes.button}><SettingsButton /></Button>
             <Menu
               anchorEl={anchorEL}
               keepMounted
