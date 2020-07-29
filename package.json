@@ -11,7 +11,7 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "./node_modules/.bin/webpack-dev-server --hot --inline --watch-content-base",
     "build": "react-scripts build",
     "lint": "eslint ./src/",
     "auto_fix": "eslint --fix ./src/",
