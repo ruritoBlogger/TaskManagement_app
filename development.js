@@ -1,6 +1,7 @@
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
+const Dotenv = require('dotenv-webpack');
 const src  = path.resolve(__dirname, 'src')
 const pub  = path.resolve(__dirname, 'public')
 
@@ -16,7 +17,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
@@ -31,6 +32,7 @@ export default {
     new HtmlWebpackPlugin({
       template: pub + '/index.html',
       filename: 'index.html'
-    })
+    }),
+    new Dotenv()
   ]
 }
