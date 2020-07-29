@@ -19,7 +19,7 @@ export default {
       {
         test: /\.tsx$/,
         exclude: /node_modules/,
-        loader: 'ts-loader'
+        loader: ['babel-loader', 'ts-loader']
       }
     ]
   },
