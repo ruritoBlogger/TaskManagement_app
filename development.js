@@ -26,6 +26,7 @@ export default {
 
   devServer: {
     contentBase: pub,
+    historyApiFallback: true,
   },
 
   resolve: {
