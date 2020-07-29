@@ -24,6 +24,10 @@ export default {
     ]
   },
 
+  devServer: {
+    contentBase: pub,
+  },
+
   resolve: {
     extensions: ['.js', '.jsx']
   },
