@@ -7,6 +7,7 @@ import ShowSchedule from "../schedule/showSchedule";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -25,12 +26,16 @@ const styles = makeStyles({
   },
 });
 
+interface IMainProps {
+  user: string | null;
+}
+
 /**
  * homeページを表示する関数
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export default function Main(props) {
+export const Main: React.FC<IMainProps> = props => {
   /** メイン表示する時間割 */
   const [schedule, setSchedule] = useState(null);
   /** 既に登録されているtodolist */
@@ -63,21 +68,26 @@ export default function Main(props) {
    * firestoreに存在しているtodoを取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData() {
+  async function getData(): void {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
     const schedules = docs.filter((item) => item.uid === props.user);
     setSchedule(schedules[0]);
   }
+  interface ITodoData {
+    todo: any;
+    lesson: any;
+    schedule: any;
+  }
 
   /**
    * firestoreに存在しているtodoを取得している
    * メイン時間割が更新されると発火する
    */
-  async function getTodoData() {
+  async function getTodoData(): void {
     if (schedule) {
-      const result_list = [];
+      const result_list: ITodoData[]  = [];
       const subRef = db
         .collection("schedule")
         .doc(schedule.docId)
@@ -95,7 +105,7 @@ export default function Main(props) {
         const subsubSnapshots = await subsubRef.get();
         subsubSnapshots.docs.map((doc) => {
           if (!doc.data().done) {
-            let tmp = {};
+            let tmp: ITodoData = {};
             tmp.todo = doc.data();
             tmp.lesson = lessons[j];
             tmp.schedule = schedule;
