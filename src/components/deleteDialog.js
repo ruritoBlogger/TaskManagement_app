@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import firebase from "../firebase"
+import firebase from "../firebase";
 
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 /**
  * 何かを削除するダイアログを表示する関数
@@ -18,16 +18,15 @@ import DialogTitle from "@material-ui/core/DialogTitle"
  * @param {boolean} props.isIcon - ボタンをIconを用いて表示するかどうか
  */
 export default function DeleteDialog(props) {
-
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
   function handleOpen() {
-    setOpen(true)
+    setOpen(true);
   }
 
   /**
@@ -35,7 +34,7 @@ export default function DeleteDialog(props) {
    * ダイアログを閉じる
    */
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   /**
@@ -43,13 +42,15 @@ export default function DeleteDialog(props) {
    * 該当のものを削除してダイアログを閉じる
    */
   function Submit() {
-    props.handleSubmit()
-    handleClose()
+    props.handleSubmit();
+    handleClose();
   }
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>{props.Button}</Button>
+      <Button variant="contained" onClick={handleOpen}>
+        {props.Button}
+      </Button>
       <Dialog
         open={open}
         fullWidth={true}
@@ -72,5 +73,5 @@ export default function DeleteDialog(props) {
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }

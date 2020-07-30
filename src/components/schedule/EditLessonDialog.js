@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 
-import firebase, { db } from "../../firebase"
-import DeleteDialog from "../deleteDialog"
+import firebase, { db } from "../../firebase";
+import DeleteDialog from "../deleteDialog";
 
-import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import FormControl from "@material-ui/core/FormControl"
-import InputLabel from "@material-ui/core/InputLabel"
-import Select from "@material-ui/core/Select"
-import NativeSelect from "@material-ui/core/NativeSelect"
-import MenuItem from "@material-ui/core/MenuItem"
-import Icon from "@material-ui/core/Icon"
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import MenuItem from "@material-ui/core/MenuItem";
+import Icon from "@material-ui/core/Icon";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   button: {
-    "width": "119px",
-    "height": "50px",
-    "margin" : "0px",
-    "background": "#FFFFFF",
+    width: "119px",
+    height: "50px",
+    margin: "0px",
+    background: "#FFFFFF",
   },
   ButtonText: {
-    "margin": "0px",
+    margin: "0px",
     "text-align": "center",
-    "overflow": "hidden",
+    overflow: "hidden",
     "white-space": "nowrap",
     "text-overflow": "ellipsis",
   },
@@ -45,8 +45,7 @@ const styles = makeStyles({
     color: "#FFFFFF",
     background: "#EDC124",
   },
-})
-
+});
 
 /**
  * 授業情報を編集・todoを表示するダイアログを表示する関数
@@ -58,50 +57,48 @@ const styles = makeStyles({
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
 export default function EditLessonDialog(props) {
-
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = useState([])
+  const [colors, setColors] = useState([]);
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = useState(props.lesson.color)
+  const [color, setColor] = useState(props.lesson.color);
 
   /** react hook formで用意された変数群 */
-  const { register, handleSubmit, control, errors } = useForm()
+  const { register, handleSubmit, control, errors } = useForm();
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /**
    * firestoreに存在する色データを取得している
    */
   useEffect(() => {
     const data = async () => {
-      await getData()
-    }
-    data()
-  }, [open])
+      await getData();
+    };
+    data();
+  }, [open]);
 
   /**
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
   async function getData() {
-    const colRef = db.collection("color")
-    const snapshots = await colRef.get()
-    const docs = snapshots.docs.map(doc => doc.data())
-    setColors(docs)
+    const colRef = db.collection("color");
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    setColors(docs);
   }
-
 
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
   function handleOpen() {
-    setOpen(true)
+    setOpen(true);
   }
 
   /**
@@ -109,25 +106,29 @@ export default function EditLessonDialog(props) {
    * ダイアログを閉じる
    */
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   /**
    * ダイアログを表示している時に色選択部分で状態が変化すると発火する
    * 選択された色を状態に登録する
    */
-  function  handleChange(event) {
-    setColor(event.target.value)
+  function handleChange(event) {
+    setColor(event.target.value);
   }
 
   /**
    * ダイアログを表示している時に削除ボタンがクリックされた時発火する
    * 選択された授業を削除しダイアログを閉じる
    */
-  function  DeleteLesson() {
-    db.collection("schedule").doc(props.schedule_docId).collection("lesson").doc(props.lesson.docId).delete()
-    props.handleSubmit()
-    handleClose()
+  function DeleteLesson() {
+    db.collection("schedule")
+      .doc(props.schedule_docId)
+      .collection("lesson")
+      .doc(props.lesson.docId)
+      .delete();
+    props.handleSubmit();
+    handleClose();
   }
 
   /**
@@ -139,13 +140,17 @@ export default function EditLessonDialog(props) {
    */
   function Update(value) {
     if (value.title) {
-      db.collection("schedule").doc(props.schedule_docId).collection("lesson").doc(props.lesson.docId).update({
-        title: value.title,
-        classroom: value.classroom,
-        color: color,
-      })
-      props.handleSubmit()
-      handleClose()
+      db.collection("schedule")
+        .doc(props.schedule_docId)
+        .collection("lesson")
+        .doc(props.lesson.docId)
+        .update({
+          title: value.title,
+          classroom: value.classroom,
+          color: color,
+        });
+      props.handleSubmit();
+      handleClose();
     }
   }
 
@@ -163,17 +168,25 @@ export default function EditLessonDialog(props) {
         aria-labelledby="common-dialog-title"
         aria-describedby="common-dialog-description"
       >
-        <DialogTitle>
-          {props.lesson.title}を編集する
-        </DialogTitle>
+        <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
         <form onSubmit={handleSubmit(Update)}>
           <DialogContent>
             <Grid direction="column">
               <Grid className={classes.Content}>
-                <TextField name="title" label="授業名" defaultValue={props.lesson.title} inputRef={register} />
+                <TextField
+                  name="title"
+                  label="授業名"
+                  defaultValue={props.lesson.title}
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
-                <TextField name="classroom" label="教室名" defaultValue={props.lesson.classroom} inputRef={register} />
+                <TextField
+                  name="classroom"
+                  label="教室名"
+                  defaultValue={props.lesson.classroom}
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
                 <FormControl>
@@ -183,13 +196,9 @@ export default function EditLessonDialog(props) {
                     value={color}
                     onChange={handleChange}
                   >
-                    {
-                      colors.map(item => (
-                        <MenuItem value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))
-                    }
+                    {colors.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -198,13 +207,23 @@ export default function EditLessonDialog(props) {
 
           <DialogActions>
             <Grid className={classes.DeleteButton}>
-              <DeleteDialog Button="削除" msg={props.lesson.title} handleSubmit={DeleteLesson} />
+              <DeleteDialog
+                Button="削除"
+                msg={props.lesson.title}
+                handleSubmit={DeleteLesson}
+              />
             </Grid>
             <Button onClick={handleClose}>中止</Button>
-            <Button onClick={Update} type="submit" className={classes.SubmitButton}>更新</Button>
+            <Button
+              onClick={Update}
+              type="submit"
+              className={classes.SubmitButton}
+            >
+              更新
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
     </div>
-  )
+  );
 }

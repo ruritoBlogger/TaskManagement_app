@@ -1,6 +1,6 @@
-import firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/firestore"
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 /** firebaseと連携する際に必要となる情報を管理している
  * APIKEYなどは.envにて管理している
@@ -14,9 +14,9 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-}
+};
 
-firebase.initializeApp(firebaseConfig)
-export default firebase
+firebase.initializeApp(firebaseConfig);
+export default firebase;
 
-export const db = firebase.firestore()
+export const db = firebase.firestore();

@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
-import { makeStyles } from "@material-ui/styles"
-import Grid from "@material-ui/core/Grid"
-import Container from "@material-ui/core/Container"
-import Button from "@material-ui/core/Button"
+import { makeStyles } from "@material-ui/styles";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -14,23 +14,23 @@ const styles = makeStyles({
   headerText: {
     margin: "0px",
     "padding-bottom": "7px",
-    "padding-left" : "10px",
+    "padding-left": "10px",
     "text-align": "left",
   },
   button: {
-    "padding" : "15px 10px",
-    "margin" : "0px 10px",
+    padding: "15px 10px",
+    margin: "0px 10px",
     color: "#FFFFFF",
     textTransform: "none",
-  }
-})
+  },
+});
 
 /**
  * 紹介画面のHeaderを表示する関数
  */
 export default function Header() {
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
   return (
     <Container className={classes.container}>
       <Grid container direction="row">
@@ -48,5 +48,5 @@ export default function Header() {
         </Grid>
       </Grid>
     </Container>
-  )
+  );
 }

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-import firebase, { db } from "../../firebase"
+import firebase, { db } from "../../firebase";
 
-import ScheduleDialog from "./ScheduleDialog"
-import Content from "./Content"
-import Header from "../Header"
+import ScheduleDialog from "./ScheduleDialog";
+import Content from "./Content";
+import Header from "../Header";
 
-import { makeStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import { getDefaultNormalizer } from "@testing-library/react"
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import { getDefaultNormalizer } from "@testing-library/react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -26,7 +26,7 @@ const styles = makeStyles({
   content: {
     "min-width": "1440px",
   },
-})
+});
 
 /**
  * 時間割ページを表示する関数
@@ -34,36 +34,35 @@ const styles = makeStyles({
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
 export default function Schedule(props) {
-
   /** 既に登録されている時間割list */
-  const [scheduleList, setScheduleList] = useState([])
+  const [scheduleList, setScheduleList] = useState([]);
   /** 時間割listを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = useState(true)
+  const [needLoad, setNeedLoad] = useState(true);
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /**
    * 既に登録されている時間割を取得している
    */
   useEffect(() => {
     const data = async () => {
-      await getData()
-    }
-    data()
-  }, [needLoad])
+      await getData();
+    };
+    data();
+  }, [needLoad]);
 
   /**
    * firestoreに存在している時間割を取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData() {
-    const colRef = db.collection("schedule")
-    const snapshots = await colRef.get()
-    const docs = snapshots.docs.map(doc => doc.data())
-    const tmp = docs.filter((item) => item.uid === props.user)
-    const result_data = [...tmp]
-    setScheduleList(result_data)
+    const colRef = db.collection("schedule");
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    const tmp = docs.filter((item) => item.uid === props.user);
+    const result_data = [...tmp];
+    setScheduleList(result_data);
   }
 
   /**
@@ -71,7 +70,7 @@ export default function Schedule(props) {
    * 具体的には時間割listを更新するかどうかを管理する状態を変更する
    */
   function handleChange() {
-    setNeedLoad(!needLoad)
+    setNeedLoad(!needLoad);
   }
 
   return (
@@ -86,10 +85,10 @@ export default function Schedule(props) {
         </Grid>
       </Grid>
       <Grid container alignItems="center" justify="center">
-        <Grid  className={classes.content}>
+        <Grid className={classes.content}>
           <Content scheduleList={scheduleList} />
         </Grid>
       </Grid>
     </Grid>
-  )
+  );
 }

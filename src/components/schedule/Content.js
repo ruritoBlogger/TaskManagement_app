@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react"
-import { Scrollbars } from "react-custom-scrollbars"
+import React, { useState, useEffect } from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 
-import ShowSchedule from "./showSchedule"
-import DeleteDialog from "../deleteDialog"
+import ShowSchedule from "./showSchedule";
+import DeleteDialog from "../deleteDialog";
 
-import { makeStyles } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -40,7 +40,7 @@ const styles = makeStyles({
     "max-height": "500px",
   },
   FocusScheduleContentGraph: {
-    "margin": "20px 30px",
+    margin: "20px 30px",
   },
   OtherScheduleTitle: {
     "text-align": "center",
@@ -48,29 +48,29 @@ const styles = makeStyles({
   },
   OtherScheduleContent: {
     "background-color": "#CBCBCB",
-    "height": "425px",
+    height: "425px",
   },
   OtherScheduleList: {
-    "margin": "20px 30px",
+    margin: "20px 30px",
     "min-height": "50px",
-    "position": "relative",
+    position: "relative",
   },
   OtherScheduleButton: {
     "min-height": "50px",
-    "width": "300px",
+    width: "300px",
   },
   OtherScheduleListText: {
     "text-align": "center",
-    "margin": "0px",
-    "overflow": "hidden",
+    margin: "0px",
+    overflow: "hidden",
     "white-space": "nowrap",
     "text-overflow": "ellipsis",
-    "position": "absolute",
-    "top": "50%",
-    "left": "50%",
-    "transform": "translate(-50%, -50%)",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
-})
+});
 
 /**
  * 時間割一覧ページの内容を表示する関数
@@ -78,25 +78,24 @@ const styles = makeStyles({
  * @param {list} props.scheduleList - 時間割list
  */
 export default function Content(props) {
-
   /** メインで表示する時間割を管理 */
-  const [focusSchedule, setFocusSchedule] = useState(null)
+  const [focusSchedule, setFocusSchedule] = useState(null);
 
   /** メインで表示する時間割の更新を管理 */
-  const [needLoad, setNeedLoad] = useState(false)
+  const [needLoad, setNeedLoad] = useState(false);
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /**
    * メインで表示する時間割を切り替える
    */
 
   useEffect(() => {
-    if( !focusSchedule ) {
-      setFocusSchedule(props.scheduleList[0])
+    if (!focusSchedule) {
+      setFocusSchedule(props.scheduleList[0]);
     }
-  }, [props || needLoad])
+  }, [props || needLoad]);
 
   /**
    * 呼び出されると時間割を削除する
@@ -109,36 +108,47 @@ export default function Content(props) {
    * 呼び出されるとメインで表示する時間割を変更する
    */
   function ChangeFocusSchedule(schedule) {
-    setFocusSchedule(schedule)
-    setNeedLoad(!needLoad)
+    setFocusSchedule(schedule);
+    setNeedLoad(!needLoad);
   }
-
 
   return (
     <Grid container row alignItems="center" justify="center">
-      <Grid container item direction="column" xs={6} className={classes.FocusSchedule}>
-        {
-          (() => {
-            if (focusSchedule) {
-              return(
-                <Grid container item direction="row">
-                  <Grid item className={classes.FocusScheduleTitle}>
-                    <h2 className={classes.FocusScheduleTitleText}>{focusSchedule.title}</h2>
-                  </Grid>
-                  <Grid item className={classes.FocusScheduleButton}>
-                    <DeleteDialog Button="削除" msg={focusSchedule.title} handleSubmit={deleteSchedule} />
-                  </Grid>
+      <Grid
+        container
+        item
+        direction="column"
+        xs={6}
+        className={classes.FocusSchedule}
+      >
+        {(() => {
+          if (focusSchedule) {
+            return (
+              <Grid container item direction="row">
+                <Grid item className={classes.FocusScheduleTitle}>
+                  <h2 className={classes.FocusScheduleTitleText}>
+                    {focusSchedule.title}
+                  </h2>
                 </Grid>
-              )
-            } else {
-              return(
-                <Grid>
-                  <h2 className={classes.FocusScheduleTitleText}>読み込めてない</h2>
+                <Grid item className={classes.FocusScheduleButton}>
+                  <DeleteDialog
+                    Button="削除"
+                    msg={focusSchedule.title}
+                    handleSubmit={deleteSchedule}
+                  />
                 </Grid>
-              )
-            }
-          })()
-        }
+              </Grid>
+            );
+          } else {
+            return (
+              <Grid>
+                <h2 className={classes.FocusScheduleTitleText}>
+                  読み込めてない
+                </h2>
+              </Grid>
+            );
+          }
+        })()}
         <Grid item className={classes.FocusScheduleContent}>
           <Paper elevation={3} className={classes.FocusScheduleContentGraph}>
             <ShowSchedule schedule={focusSchedule} needLoad={needLoad} />
@@ -150,20 +160,27 @@ export default function Content(props) {
         <Grid item>
           <h2 className={classes.OtherScheduleTitle}>他の時間割</h2>
         </Grid>
-        <Grid item direction="column" alignItems="center" justify="center" className={classes.OtherScheduleContent}>
+        <Grid
+          item
+          direction="column"
+          alignItems="center"
+          justify="center"
+          className={classes.OtherScheduleContent}
+        >
           <Scrollbars className={classes.OtherScheduleContent}>
-            {
-              props.scheduleList.map(item => (
-                <Paper elevation={3} className={classes.OtherScheduleList}>
-                  <Button onClick={() => ChangeFocusSchedule(item)} className={classes.OtherScheduleButton}>
-                    <p className={classes.OtherScheduleListText}>{item.title}</p>
-                  </Button>
-                </Paper>
-              ))
-            }
+            {props.scheduleList.map((item) => (
+              <Paper elevation={3} className={classes.OtherScheduleList}>
+                <Button
+                  onClick={() => ChangeFocusSchedule(item)}
+                  className={classes.OtherScheduleButton}
+                >
+                  <p className={classes.OtherScheduleListText}>{item.title}</p>
+                </Button>
+              </Paper>
+            ))}
           </Scrollbars>
         </Grid>
       </Grid>
     </Grid>
-  )
+  );
 }

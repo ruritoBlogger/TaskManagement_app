@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 
-import firebase, { db } from "../../firebase"
+import firebase, { db } from "../../firebase";
 
-import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import FormControl from "@material-ui/core/FormControl"
-import InputLabel from "@material-ui/core/InputLabel"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
-import { useRadioGroup } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import { useRadioGroup } from "@material-ui/core";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   button: {
-    "width": "119px",
-    "height": "50px",
-    "margin" : "0px",
-    "background": "#FFFFFF",
+    width: "119px",
+    height: "50px",
+    margin: "0px",
+    background: "#FFFFFF",
   },
   Content: {
     "margin-bottom": "20px",
@@ -33,8 +33,7 @@ const styles = makeStyles({
     color: "#FFFFFF",
     background: "#EDC124",
   },
-})
-
+});
 
 /**
  * 新しく授業を登録するダイアログを表示する関数
@@ -44,50 +43,48 @@ const styles = makeStyles({
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
 export default function CreateLessonDialog(props) {
-
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = useState([])
+  const [colors, setColors] = useState([]);
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = useState("")
+  const [color, setColor] = useState("");
 
   /** react hook formで用意された変数群 */
-  const { register, handleSubmit, control, errors } = useForm()
+  const { register, handleSubmit, control, errors } = useForm();
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /**
    * firestoreに存在する色データを取得している
    */
   useEffect(() => {
     const data = async () => {
-      await getData()
-    }
-    data()
-  }, [open])
+      await getData();
+    };
+    data();
+  }, [open]);
 
   /**
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
   async function getData() {
-    const colRef = db.collection("color")
-    const snapshots = await colRef.get()
-    const docs = snapshots.docs.map(doc => doc.data())
-    setColors(docs)
+    const colRef = db.collection("color");
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    setColors(docs);
   }
-
 
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
   function handleOpen() {
-    setOpen(true)
+    setOpen(true);
   }
 
   /**
@@ -95,15 +92,15 @@ export default function CreateLessonDialog(props) {
    * ダイアログを閉じる
    */
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   /**
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function  handleChange(event) {
-    setColor(event.target.value)
+  function handleChange(event) {
+    setColor(event.target.value);
   }
 
   /**
@@ -115,16 +112,24 @@ export default function CreateLessonDialog(props) {
    */
   function Submit(value) {
     if (value.title && props.schedule) {
-      const docId = db.collection("schedule").doc(props.schedule.docId).collection("lesson").doc().id
-      db.collection("schedule").doc(props.schedule.docId).collection("lesson").doc(docId).set({
-        docId: docId,
-        title: value.title,
-        classroom: value.classroom,
-        color: color,
-        date: props.date,
-      })
-      props.handleSubmit()
-      handleClose()
+      const docId = db
+        .collection("schedule")
+        .doc(props.schedule.docId)
+        .collection("lesson")
+        .doc().id;
+      db.collection("schedule")
+        .doc(props.schedule.docId)
+        .collection("lesson")
+        .doc(docId)
+        .set({
+          docId: docId,
+          title: value.title,
+          classroom: value.classroom,
+          color: color,
+          date: props.date,
+        });
+      props.handleSubmit();
+      handleClose();
     }
   }
 
@@ -144,10 +149,20 @@ export default function CreateLessonDialog(props) {
           <DialogContent>
             <Grid direction="column">
               <Grid className={classes.Content}>
-                <TextField name="title" label="授業名" defaultValue="数学Ⅲ" inputRef={register} />
+                <TextField
+                  name="title"
+                  label="授業名"
+                  defaultValue="数学Ⅲ"
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
-                <TextField name="classroom" label="教室名" defaultValue="C301" inputRef={register} />
+                <TextField
+                  name="classroom"
+                  label="教室名"
+                  defaultValue="C301"
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
                 <FormControl>
@@ -157,13 +172,9 @@ export default function CreateLessonDialog(props) {
                     value={color}
                     onChange={handleChange}
                   >
-                    {
-                      colors.map(item => (
-                        <MenuItem value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))
-                    }
+                    {colors.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -172,10 +183,16 @@ export default function CreateLessonDialog(props) {
 
           <DialogActions>
             <Button onClick={handleClose}>中止</Button>
-            <Button onClick={Submit} type="submit" className={classes.SubmitButton}>登録</Button>
+            <Button
+              onClick={Submit}
+              type="submit"
+              className={classes.SubmitButton}
+            >
+              登録
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
     </div>
-  )
+  );
 }

@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react"
-import { Scrollbars } from "react-custom-scrollbars"
+import React, { useState, useEffect } from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 
-import firebase, { db } from "../../firebase"
+import firebase, { db } from "../../firebase";
 
-import { makeStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import Paper from "@material-ui/core/Paper"
-import DeleteButton from "@material-ui/icons/Delete"
-import DoneButton from "@material-ui/icons/Done"
-import Accordion from "@material-ui/core/Accordion"
-import AccordionSummary from "@material-ui/core/AccordionSummary"
-import AccordionDetails from "@material-ui/core/AccordionDetails"
-import Typography from "@material-ui/core/Typography"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import DeleteButton from "@material-ui/icons/Delete";
+import DoneButton from "@material-ui/icons/Done";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import DateFnsUtils from "@date-io/date-fns"
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from "@material-ui/pickers"
+} from "@material-ui/pickers";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -31,27 +31,27 @@ const styles = makeStyles({
   },
   ListBlock: {
     "background-color": "#CBCBCB",
-    "height": "600px",
-    "width": "500px",
+    height: "600px",
+    width: "500px",
   },
   ListContent: {
-    "margin": "20px 30px",
+    margin: "20px 30px",
   },
   ListContentTextBlock: {
-    "width": "280px",
-    "margin": "10px",
+    width: "280px",
+    margin: "10px",
   },
   ListContentTextTitle: {
-    "margin": "0px 0px 30px 10px",
+    margin: "0px 0px 30px 10px",
   },
   ListContentTextContent: {
-    "margin": "0px",
+    margin: "0px",
   },
   ListContentButtonBlock: {
-    "width": "50px",
-    "margin": "0px",
+    width: "50px",
+    margin: "0px",
   },
-})
+});
 
 /**
  * todoListを表示する関数
@@ -63,10 +63,10 @@ const styles = makeStyles({
  */
 export default function ShowTodoList(props) {
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /** Todoの重さを定義している */
-  const heavy_list = ["とても軽い", "軽い", "普通", "重い","とても重い"]
+  const heavy_list = ["とても軽い", "軽い", "普通", "重い", "とても重い"];
 
   /**
    * 削除ボタンがクリックされると発火する
@@ -76,15 +76,16 @@ export default function ShowTodoList(props) {
    * @param {object} data.lesson - 削除したいtodoが登録されている授業
    * @param {object} data.todo - 削除したいtodo
    */
-  async function DeleteTodo(data){
-    await db.collection("schedule")
+  async function DeleteTodo(data) {
+    await db
+      .collection("schedule")
       .doc(data.schedule.docId)
       .collection("lesson")
       .doc(data.lesson.docId)
       .collection("todo")
       .doc(data.todo.docId)
-      .delete()
-    props.handleChange()
+      .delete();
+    props.handleChange();
   }
 
   /**
@@ -95,8 +96,9 @@ export default function ShowTodoList(props) {
    * @param {object} data.lesson - 更新したいtodoが登録されている授業
    * @param {object} data.todo - 更新したいtodo
    */
-  async function DoneTodo(data){
-    await db.collection("schedule")
+  async function DoneTodo(data) {
+    await db
+      .collection("schedule")
       .doc(data.schedule.docId)
       .collection("lesson")
       .doc(data.lesson.docId)
@@ -104,18 +106,18 @@ export default function ShowTodoList(props) {
       .doc(data.todo.docId)
       .update({
         done: true,
-      })
-    props.handleChange()
+      });
+    props.handleChange();
   }
 
   /**
    * 引数の時間を日時に変更する
    * @param {int} secs - 1970年0月1日からの経過時間
    */
-  function toDateTime(secs){
-    let t = new Date(1970, 0, 1)
-    t.setSeconds(secs)
-    return t.toISOString()
+  function toDateTime(secs) {
+    let t = new Date(1970, 0, 1);
+    t.setSeconds(secs);
+    return t.toISOString();
   }
 
   return (
@@ -123,46 +125,66 @@ export default function ShowTodoList(props) {
       <Grid item>
         <h2 className={classes.TitleText}>{props.msg}</h2>
       </Grid>
-      <Grid item alignItems="center" justify="center" className={classes.ListBlock}>
-        <Scrollbars >
-          {
-            props.todoList.map(item => (
-              <Paper elevation={3} className={classes.ListContent}>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <Grid container direction="row">
-                        <Grid item className={classes.ListContentTextBlock}>
-                          <h2 className={classes.ListContentTextTitle}>{item.todo.title}</h2>
-                          <p className={classes.ListContentTextContent}>重さ: {heavy_list[item.todo.heavy]}</p>
-                          <p className={classes.ListContentTextContent}>{toDateTime(item.todo.limit.seconds)}</p>
+      <Grid
+        item
+        alignItems="center"
+        justify="center"
+        className={classes.ListBlock}
+      >
+        <Scrollbars>
+          {props.todoList.map((item) => (
+            <Paper elevation={3} className={classes.ListContent}>
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>
+                    <Grid container direction="row">
+                      <Grid item className={classes.ListContentTextBlock}>
+                        <h2 className={classes.ListContentTextTitle}>
+                          {item.todo.title}
+                        </h2>
+                        <p className={classes.ListContentTextContent}>
+                          重さ: {heavy_list[item.todo.heavy]}
+                        </p>
+                        <p className={classes.ListContentTextContent}>
+                          {toDateTime(item.todo.limit.seconds)}
+                        </p>
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        direction="column"
+                        className={classes.ListContentButtonBlock}
+                      >
+                        <Grid item>
+                          <Button onClick={() => DoneTodo(item)}>
+                            <DoneButton />
+                          </Button>
                         </Grid>
-                        <Grid item container direction="column" className={classes.ListContentButtonBlock}>
-                          <Grid item>
-                            <Button onClick={() => DoneTodo(item)}><DoneButton /></Button>
-                          </Grid>
-                          <Grid item>
-                            <Button onClick={() => DeleteTodo(item)}><DeleteButton /></Button>
-                          </Grid>
+                        <Grid item>
+                          <Button onClick={() => DeleteTodo(item)}>
+                            <DeleteButton />
+                          </Button>
                         </Grid>
                       </Grid>
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid item>
-                      <p className={classes.ListContentTextContent}>{item.todo.content}</p>
                     </Grid>
-                  </AccordionDetails>
-                </Accordion>
-              </Paper>
-            ))
-          }
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid item>
+                    <p className={classes.ListContentTextContent}>
+                      {item.todo.content}
+                    </p>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            </Paper>
+          ))}
         </Scrollbars>
       </Grid>
     </Grid>
-  )
+  );
 }

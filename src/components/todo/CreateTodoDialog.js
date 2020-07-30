@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 
-import firebase, { db } from "../../firebase"
+import firebase, { db } from "../../firebase";
 
-import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import FormControl from "@material-ui/core/FormControl"
-import InputLabel from "@material-ui/core/InputLabel"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
-import DateFnsUtils from "@date-io/date-fns"
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from "@material-ui/pickers"
+} from "@material-ui/pickers";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
   button: {
-    "padding" : "7px 40px",
-    "margin" : "30px",
+    padding: "7px 40px",
+    margin: "30px",
     color: "#FFFFFF",
     background: "#EDC124",
     "text-align": "center",
@@ -40,8 +40,7 @@ const styles = makeStyles({
     color: "#FFFFFF",
     background: "#EDC124",
   },
-})
-
+});
 
 /**
  * 新しくtodoを登録するダイアログを表示する関数
@@ -50,44 +49,43 @@ const styles = makeStyles({
  * @param {string} props.user - user_id
  */
 export default function CreateTodoDialog(props) {
-
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   /** firestoreから持ってきた授業データを管理する */
-  const [lessons, setLessons] = useState([])
+  const [lessons, setLessons] = useState([]);
 
   /** firestoreから持ってきた時間割データ */
-  const [schedules, setSchedules] = useState([])
+  const [schedules, setSchedules] = useState([]);
 
   /** dialogの課題の重さの状態 */
-  const [heavy, setHeavy] = useState(null)
+  const [heavy, setHeavy] = useState(null);
 
   /** 選択された時間割 */
-  const [schedule, setSchedule] = useState(null)
+  const [schedule, setSchedule] = useState(null);
   /** 選択された授業 */
-  const [lesson, setLesson] = useState(null)
+  const [lesson, setLesson] = useState(null);
   /** 選択された日時 */
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   /** react hook formで用意された変数群 */
-  const { register, handleSubmit, control, errors } = useForm()
+  const { register, handleSubmit, control, errors } = useForm();
 
   /** Todoの重さを定義している */
-  const heavy_list = ["とても軽い", "軽い", "普通", "重い","とても重い"]
+  const heavy_list = ["とても軽い", "軽い", "普通", "重い", "とても重い"];
 
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
 
   /**
    * firestoreに存在する色データを取得している
    */
   useEffect(() => {
     const data = async () => {
-      await getData()
-    }
-    data()
-  }, [open])
+      await getData();
+    };
+    data();
+  }, [open]);
 
   /**
    * firestoreに存在している授業データを取得している
@@ -95,31 +93,34 @@ export default function CreateTodoDialog(props) {
 
   useEffect(() => {
     const data = async () => {
-      await getLessonData()
-    }
-    data()
-  }, [schedule])
+      await getLessonData();
+    };
+    data();
+  }, [schedule]);
 
   /**
    * firestoreに存在している時間割データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
   async function getData() {
-    const colRef = db.collection("schedule")
-    const snapshots = await colRef.get()
-    const docs = snapshots.docs.map(doc => doc.data())
-    const schedules = docs.filter(item => item.uid === props.user)
-    setSchedules(schedules)
+    const colRef = db.collection("schedule");
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    const schedules = docs.filter((item) => item.uid === props.user);
+    setSchedules(schedules);
   }
 
-  async function  getLessonData() {
-    if( schedule && schedule.docId != undefined ){
-      const lesson_list = []
-      const otherRef = db.collection("schedule").doc(schedule.docId).collection("lesson")
-      const lesson_snapshots = await otherRef.get()
-      const lesson_docs = lesson_snapshots.docs.map(doc => doc.data())
-      lesson_docs.map(item => lesson_list.push(item))
-      setLessons(lesson_list)
+  async function getLessonData() {
+    if (schedule && schedule.docId != undefined) {
+      const lesson_list = [];
+      const otherRef = db
+        .collection("schedule")
+        .doc(schedule.docId)
+        .collection("lesson");
+      const lesson_snapshots = await otherRef.get();
+      const lesson_docs = lesson_snapshots.docs.map((doc) => doc.data());
+      lesson_docs.map((item) => lesson_list.push(item));
+      setLessons(lesson_list);
     }
   }
 
@@ -128,7 +129,7 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示する
    */
   function handleOpen() {
-    setOpen(true)
+    setOpen(true);
   }
 
   /**
@@ -136,38 +137,38 @@ export default function CreateTodoDialog(props) {
    * ダイアログを閉じる
    */
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   /**
    * ダイアログを表示している時に重さ選択部分で状態が変化発火する
    * 選択された重さを状態に登録する
    */
-  function  handleHeavyChange(event) {
-    setHeavy(event.target.value)
+  function handleHeavyChange(event) {
+    setHeavy(event.target.value);
   }
 
   /**
    * ダイアログを表示している時に時間割選択部分で状態が変化発火する
    * 選択された時間割を状態に登録する
    */
-  function  handleScheduleChange(event) {
-    setSchedule(event.target.value)
+  function handleScheduleChange(event) {
+    setSchedule(event.target.value);
   }
 
   /**
    * ダイアログを表示している時に授業選択部分で状態が変化発火する
    * 選択された授業を状態に登録する
    */
-  function  handleLessonChange(event) {
-    setLesson(event.target.value)
+  function handleLessonChange(event) {
+    setLesson(event.target.value);
   }
 
   /**
    * 期限の入力が行われた時発火する
    */
   function handleDateChange(date) {
-    setSelectedDate(date)
+    setSelectedDate(date);
   }
 
   /**
@@ -179,23 +180,37 @@ export default function CreateTodoDialog(props) {
    */
   function Submit(value) {
     if (value.title) {
-      const docId = db.collection("schedule").doc(schedule.docId).collection("lesson").doc(lesson.docId).collection("todo").doc().id
-      db.collection("schedule").doc(schedule.docId).collection("lesson").doc(lesson.docId).collection("todo").doc(docId).set({
-        docId: docId,
-        title: value.title,
-        content: value.content,
-        heavy: heavy,
-        limit: selectedDate,
-        done: false,
-      })
-      props.handleSubmit()
-      handleClose()
+      const docId = db
+        .collection("schedule")
+        .doc(schedule.docId)
+        .collection("lesson")
+        .doc(lesson.docId)
+        .collection("todo")
+        .doc().id;
+      db.collection("schedule")
+        .doc(schedule.docId)
+        .collection("lesson")
+        .doc(lesson.docId)
+        .collection("todo")
+        .doc(docId)
+        .set({
+          docId: docId,
+          title: value.title,
+          content: value.content,
+          heavy: heavy,
+          limit: selectedDate,
+          done: false,
+        });
+      props.handleSubmit();
+      handleClose();
     }
   }
 
   return (
     <div>
-      <Button onClick={handleOpen} className={classes.button}>追加</Button>
+      <Button onClick={handleOpen} className={classes.button}>
+        追加
+      </Button>
       <Dialog
         open={open}
         fullWidth={true}
@@ -209,10 +224,20 @@ export default function CreateTodoDialog(props) {
           <DialogContent>
             <Grid direction="column">
               <Grid className={classes.Content}>
-                <TextField name="title" label="Todo名" defaultValue="進捗" inputRef={register} />
+                <TextField
+                  name="title"
+                  label="Todo名"
+                  defaultValue="進捗"
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
-                <TextField name="content" label="内容" defaultValue="進捗出して、どうぞ" inputRef={register} />
+                <TextField
+                  name="content"
+                  label="内容"
+                  defaultValue="進捗出して、どうぞ"
+                  inputRef={register}
+                />
               </Grid>
               <Grid className={classes.Content}>
                 <FormControl className={classes.Content}>
@@ -222,19 +247,15 @@ export default function CreateTodoDialog(props) {
                     value={heavy}
                     onChange={handleHeavyChange}
                   >
-                    {
-                      (() => {
-                        const return_list = []
-                        for (let i = 0;i < heavy_list.length; i++){
-                          return_list.push(
-                            <MenuItem value={i}>
-                              {heavy_list[i]}
-                            </MenuItem>
-                          )
-                        }
-                        return return_list
-                      })()
-                    }
+                    {(() => {
+                      const return_list = [];
+                      for (let i = 0; i < heavy_list.length; i++) {
+                        return_list.push(
+                          <MenuItem value={i}>{heavy_list[i]}</MenuItem>
+                        );
+                      }
+                      return return_list;
+                    })()}
                   </Select>
                 </FormControl>
               </Grid>
@@ -246,19 +267,17 @@ export default function CreateTodoDialog(props) {
                     value={schedule}
                     onChange={handleScheduleChange}
                   >
-                    {
-                      (() => {
-                        const return_list = []
-                        for (let i = 0;i < schedules.length; i++){
-                          return_list.push(
-                            <MenuItem value={schedules[i]}>
-                              {schedules[i].title}
-                            </MenuItem>
-                          )
-                        }
-                        return return_list
-                      })()
-                    }
+                    {(() => {
+                      const return_list = [];
+                      for (let i = 0; i < schedules.length; i++) {
+                        return_list.push(
+                          <MenuItem value={schedules[i]}>
+                            {schedules[i].title}
+                          </MenuItem>
+                        );
+                      }
+                      return return_list;
+                    })()}
                   </Select>
                 </FormControl>
               </Grid>
@@ -270,19 +289,17 @@ export default function CreateTodoDialog(props) {
                     value={lesson}
                     onChange={handleLessonChange}
                   >
-                    {
-                      (() => {
-                        const return_list = []
-                        for (let i = 0;i < lessons.length; i++){
-                          return_list.push(
-                            <MenuItem value={lessons[i]}>
-                              {lessons[i].title}
-                            </MenuItem>
-                          )
-                        }
-                        return return_list
-                      })()
-                    }
+                    {(() => {
+                      const return_list = [];
+                      for (let i = 0; i < lessons.length; i++) {
+                        return_list.push(
+                          <MenuItem value={lessons[i]}>
+                            {lessons[i].title}
+                          </MenuItem>
+                        );
+                      }
+                      return return_list;
+                    })()}
                   </Select>
                 </FormControl>
               </Grid>
@@ -310,10 +327,16 @@ export default function CreateTodoDialog(props) {
 
           <DialogActions>
             <Button onClick={handleClose}>中止</Button>
-            <Button onClick={Submit} type="submit" className={classes.SubmitButton}>登録</Button>
+            <Button
+              onClick={Submit}
+              type="submit"
+              className={classes.SubmitButton}
+            >
+              登録
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
     </div>
-  )
+  );
 }
