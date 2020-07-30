@@ -6,13 +6,18 @@ import firebase from "../../firebase";
 
 import Content from "./Content";
 
+interface IIntroductionIndexProps {
+  user: string | null;
+  setUser: () => void;
+}
+
 /**
  * 紹介画面の内容を表示する関数
  * @param {Object} props - userの状態が格納されている
- *                       - {user} Google認証後にはuseridが、そうでない場合はnull
- *                       - {setUser} userを更新する際に用いる
+ * @param {string} props.user - {user} Google認証後にはuseridが、そうでない場合はnull
+ * @param {function} props.setUser - {setUser} userを更新する際に用いる
  */
-export default function Introduction(props) {
+export const Introduction: React.FC<IIntroductionIndexProps> = props => {
   /** 画面遷移を担当 */
   const history = useHistory();
 
