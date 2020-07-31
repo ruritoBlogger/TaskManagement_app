@@ -72,12 +72,24 @@ const styles = makeStyles({
   },
 });
 
+interface IScheduleData {
+  docId: string;
+  title: string;
+  classroom: string;
+  color: number;
+  date: Date;
+}
+
+interface IScheduleContentProps {
+  scheduleList: IScheduleData[];
+}
+
 /**
  * 時間割一覧ページの内容を表示する関数
  * @param {Object} props - 時間割listが格納されている
  * @param {list} props.scheduleList - 時間割list
  */
-export default function Content(props) {
+export const Content: React.FC<IScheduleContentProps> = props => {
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null);
 
@@ -100,14 +112,14 @@ export default function Content(props) {
   /**
    * 呼び出されると時間割を削除する
    */
-  function deleteSchedule() {
+  function deleteSchedule(): void {
     //setNeedLoad(!needLoad)
   }
 
   /**
    * 呼び出されるとメインで表示する時間割を変更する
    */
-  function ChangeFocusSchedule(schedule) {
+  function ChangeFocusSchedule(schedule): void {
     setFocusSchedule(schedule);
     setNeedLoad(!needLoad);
   }

@@ -35,6 +35,20 @@ const styles = makeStyles({
   },
 });
 
+interface IScheduleData {
+  docId: string;
+  title: string;
+  classroom: string;
+  color: number;
+  date: Date;
+}
+
+interface ICreateLessonDialogProps {
+  schedule: IScheduleData;
+  date: Date;
+  handleSubmit: () => void;
+}
+
 /**
  * 新しく授業を登録するダイアログを表示する関数
  * @param {Object} props - 時間割や時間割を更新するイベントを管理
@@ -42,7 +56,7 @@ const styles = makeStyles({
  * @param {int} props.date - クリックされた授業がどの時間帯か
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
-export default function CreateLessonDialog(props) {
+export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = props => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -72,7 +86,7 @@ export default function CreateLessonDialog(props) {
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData() {
+  async function getData(): void {
     const colRef = db.collection("color");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -83,7 +97,7 @@ export default function CreateLessonDialog(props) {
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
@@ -91,7 +105,7 @@ export default function CreateLessonDialog(props) {
    * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
    * ダイアログを閉じる
    */
-  function handleClose() {
+  function handleClose(): void {
     setOpen(false);
   }
 
@@ -99,7 +113,7 @@ export default function CreateLessonDialog(props) {
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function handleChange(event) {
+  function handleChange(event: any): void {
     setColor(event.target.value);
   }
 
@@ -110,7 +124,7 @@ export default function CreateLessonDialog(props) {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value) {
+  function Submit(value: any): void {
     if (value.title && props.schedule) {
       const docId = db
         .collection("schedule")

@@ -29,13 +29,18 @@ const styles = makeStyles({
   },
 });
 
+interface IScheduleDialogProps {
+  user: string;
+  handleSubmit: () => void;
+}
+
 /**
  * 新しく時間割を登録するダイアログを表示する関数
  * @param {Object} props - ユーザーの情報や時間割を更新するイベントを管理
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  * @param {function} props.handleSubmit - 呼び出すと時間割listを取得し直す
  */
-export default function ScheduleDialog(props) {
+export const ScheduleDialog: React.FC<IScheduleDialogProps> = props => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
   /** react hook formで用意された変数群 */
@@ -47,7 +52,7 @@ export default function ScheduleDialog(props) {
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
@@ -55,7 +60,7 @@ export default function ScheduleDialog(props) {
    * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
    * ダイアログを閉じる
    */
-  function handleClose() {
+  function handleClose(): void {
     setOpen(false);
   }
 
@@ -66,7 +71,7 @@ export default function ScheduleDialog(props) {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value) {
+  function Submit(value: any): void {
     if (value.title && props.user) {
       const docId = db.collection("schedule").doc().id;
       db.collection("schedule").doc(docId).set({

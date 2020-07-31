@@ -9,7 +9,7 @@ import Header from "../Header";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { getDefaultNormalizer } from "@testing-library/react";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -28,12 +28,16 @@ const styles = makeStyles({
   },
 });
 
+interface IScheduleProps {
+  user: string;
+}
+
 /**
  * 時間割ページを表示する関数
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export default function Schedule(props) {
+export const Schedule: React.FC<IScheduleProps> = props => {
   /** 既に登録されている時間割list */
   const [scheduleList, setScheduleList] = useState([]);
   /** 時間割listを取得しにいくべきかどうか */
@@ -56,7 +60,7 @@ export default function Schedule(props) {
    * firestoreに存在している時間割を取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData() {
+  async function getData(): void {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -69,7 +73,7 @@ export default function Schedule(props) {
    * 呼び出されると時間割listを更新する
    * 具体的には時間割listを更新するかどうかを管理する状態を変更する
    */
-  function handleChange() {
+  function handleChange(): void {
     setNeedLoad(!needLoad);
   }
 

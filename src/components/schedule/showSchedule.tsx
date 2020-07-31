@@ -8,6 +8,7 @@ import firebase, { db } from "../../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -37,13 +38,25 @@ const styles = makeStyles({
   },
 });
 
+interface IScheduleData {
+  docId: string;
+  uid: string;
+  title: string;
+  is_default: boolean;
+}
+
+interface IShowScheduleProps {
+  schedule: IScheduleData;
+  needLoad: boolean;
+}
+
 /**
  * 時間割の内容を表示する関数
  * @param {Object} props - 表示したい時間割などが格納されている
  * @param {list} props.schedule - 表示したい時間割
  * @param {boolean} props.needLoad - メイン時間割を更新するflag
  */
-export default function ShowSchedule(props) {
+export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
   /** 時間割に登録されている授業list */
   const [lessonList, setLessonList] = useState([]);
 
@@ -81,7 +94,7 @@ export default function ShowSchedule(props) {
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData() {
+  async function getData(): void {
     let colRef = db.collection("lesson");
     if (props.schedule) {
       colRef = db
@@ -92,7 +105,7 @@ export default function ShowSchedule(props) {
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
 
-    let tmp_list = new Array(30).fill(null);
+    const tmp_list = new Array(30).fill(null);
     for (let i = 0; i < 30; i++) {
       let tmp_lesson = {};
       tmp_lesson.title = "   ";
@@ -112,7 +125,7 @@ export default function ShowSchedule(props) {
    * 呼び出されると授業listを更新する
    * 具体的には授業listを更新するかどうかを管理する状態を変更する
    */
-  async function handleChange() {
+  async function handleChange(): void {
     await getData();
   }
 

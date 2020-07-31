@@ -19,6 +19,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import MenuItem from "@material-ui/core/MenuItem";
 import Icon from "@material-ui/core/Icon";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -47,6 +48,20 @@ const styles = makeStyles({
   },
 });
 
+interface ILessonData {
+  docId: string;
+  title: string;
+  classroom: string;
+  color: number;
+  date: Date;
+}
+
+interface IEditLessonDialogProps {
+  schedule_docId: string;
+  lesson: ILessonData;
+  handleSubmit: () => void;
+}
+
 /**
  * 授業情報を編集・todoを表示するダイアログを表示する関数
  * @param {Object} props - 時間割や授業情報や時間割を更新するイベントを管理
@@ -56,7 +71,7 @@ const styles = makeStyles({
  * @param {int} props.lesson.date - クリックされた授業がどの時間帯か
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
-export default function EditLessonDialog(props) {
+export const EditLessonDialog: React.FC<IEditLessonDialogProps> = props => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
