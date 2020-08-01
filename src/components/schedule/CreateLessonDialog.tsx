@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import firebase, { db } from "../../firebase";
@@ -60,13 +60,13 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
   props
 ) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = React.useState([]);
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = useState("");
+  const [color, setColor] = React.useState("");
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -77,7 +77,7 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
   /**
    * firestoreに存在する色データを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };

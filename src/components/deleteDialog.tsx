@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -24,7 +24,7 @@ interface IDeleteDialogProps {
  */
 export const DeleteDialog: React.FC<IDeleteDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   /**
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する

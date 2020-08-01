@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 /**
  * 未定義部分のページにアクセスされた場合に表示する部分

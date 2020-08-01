@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import firebase, { db } from "../../firebase";
@@ -42,7 +42,7 @@ interface IScheduleDialogProps {
  */
 export const ScheduleDialog: React.FC<IScheduleDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
 

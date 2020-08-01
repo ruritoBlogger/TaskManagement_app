@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 
-import CreateLessonDialog from "./CreateLessonDialog";
-import EditLessonDialog from "./EditLessonDialog";
-import DeleteDialog from "../deleteDialog";
+import { CreateLessonDialog } from "./CreateLessonDialog";
+import { EditLessonDialog } from "./EditLessonDialog";
+import { DeleteDialog } from "../deleteDialog";
 import firebase, { db } from "../../firebase";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -57,10 +57,10 @@ interface IShowScheduleProps {
  */
 export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
   /** 時間割に登録されている授業list */
-  const [lessonList, setLessonList] = useState([]);
+  const [lessonList, setLessonList] = React.useState([]);
 
   /** 授業listを更新するかどうかの状態 */
-  const [needLoad, setNeedLoad] = useState(false);
+  const [needLoad, setNeedLoad] = React.useState(false);
 
   /** 時間割の時間部分 */
   const TimeList = [
@@ -82,7 +82,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
   /**
    * firestoreに存在する色データを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };

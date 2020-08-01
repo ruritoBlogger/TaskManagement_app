@@ -1,12 +1,12 @@
-import React from "react";
+import * as React from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Undefined from "./undefined";
-import Introduction from "./components/introduction/index";
-import Main from "./components/main/index";
-import Schedule from "./components/schedule/index";
-import Todo from "./components/todo/index";
+import { Undefined } from "./undefined";
+import { Introduction } from "./components/introduction/index";
+import { Main } from "./components/main/index";
+import { Schedule } from "./components/schedule/index";
+import { Todo } from "./components/todo/index";
 
 interface IRootProps {
   user: string | null;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 
 import firebase, { db } from "../../firebase";
 
-import ScheduleDialog from "./ScheduleDialog";
-import Content from "./Content";
-import Header from "../Header";
+import { ScheduleDialog } from "./ScheduleDialog";
+import { Content } from "./Content";
+import { Header } from "../Header";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -38,9 +38,9 @@ interface IScheduleProps {
  */
 export const Schedule: React.FC<IScheduleProps> = (props) => {
   /** 既に登録されている時間割list */
-  const [scheduleList, setScheduleList] = useState([]);
+  const [scheduleList, setScheduleList] = React.useState([]);
   /** 時間割listを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = useState(true);
+  const [needLoad, setNeedLoad] = React.useState(true);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -48,7 +48,7 @@ export const Schedule: React.FC<IScheduleProps> = (props) => {
   /**
    * 既に登録されている時間割を取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };

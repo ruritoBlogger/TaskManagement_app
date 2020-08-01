@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import firebase, { db } from "../../firebase";
@@ -55,23 +55,23 @@ interface ICreateTodoDialogProps {
  */
 export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   /** firestoreから持ってきた授業データを管理する */
-  const [lessons, setLessons] = useState([]);
+  const [lessons, setLessons] = React.useState([]);
 
   /** firestoreから持ってきた時間割データ */
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = React.useState([]);
 
   /** dialogの課題の重さの状態 */
-  const [heavy, setHeavy] = useState(null);
+  const [heavy, setHeavy] = React.useState(null);
 
   /** 選択された時間割 */
-  const [schedule, setSchedule] = useState(null);
+  const [schedule, setSchedule] = React.useState(null);
   /** 選択された授業 */
-  const [lesson, setLesson] = useState(null);
+  const [lesson, setLesson] = React.useState(null);
   /** 選択された日時 */
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -85,7 +85,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   /**
    * firestoreに存在する色データを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };
@@ -96,7 +96,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * firestoreに存在している授業データを取得している
    */
 
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getLessonData();
     };

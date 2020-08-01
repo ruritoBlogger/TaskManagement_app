@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-import Header from "./Header.js";
-import Footer from "./Footer.js";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";

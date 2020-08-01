@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 
 import firebase, { db } from "../../firebase";
-import Header from "../Header";
-import ShowTodoList from "../todo/ShowTodoList";
-import ShowSchedule from "../schedule/showSchedule";
+import { Header } from "../Header";
+import { ShowTodoList } from "../todo/ShowTodoList";
+import { ShowSchedule } from "../schedule/showSchedule";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -36,18 +36,18 @@ interface IMainProps {
  */
 export const Main: React.FC<IMainProps> = (props) => {
   /** メイン表示する時間割 */
-  const [schedule, setSchedule] = useState(null);
+  const [schedule, setSchedule] = React.useState(null);
   /** 既に登録されているtodolist */
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = React.useState([]);
   /** todolistを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = useState(true);
+  const [needLoad, setNeedLoad] = React.useState(true);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
   /**
    * 既に登録されている時間割を取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };
@@ -57,7 +57,7 @@ export const Main: React.FC<IMainProps> = (props) => {
   /**
    * 既に登録されているtodoを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getTotalTodoData();
     };

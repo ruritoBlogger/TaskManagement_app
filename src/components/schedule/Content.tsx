@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 
-import ShowSchedule from "./showSchedule";
-import DeleteDialog from "../deleteDialog";
+import { ShowSchedule } from "./showSchedule";
+import { DeleteDialog } from "../deleteDialog";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -91,10 +91,10 @@ interface IScheduleContentProps {
  */
 export const Content: React.FC<IScheduleContentProps> = (props) => {
   /** メインで表示する時間割を管理 */
-  const [focusSchedule, setFocusSchedule] = useState(null);
+  const [focusSchedule, setFocusSchedule] = React.useState(null);
 
   /** メインで表示する時間割の更新を管理 */
-  const [needLoad, setNeedLoad] = useState(false);
+  const [needLoad, setNeedLoad] = React.useState(false);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -103,7 +103,7 @@ export const Content: React.FC<IScheduleContentProps> = (props) => {
    * メインで表示する時間割を切り替える
    */
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!focusSchedule) {
       setFocusSchedule(props.scheduleList[0]);
     }

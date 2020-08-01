@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
 
 import firebase from "../../firebase";
 
-import Content from "./Content";
+import { Content } from "./Content";
 
 interface IIntroductionIndexProps {
   user: string | null;
@@ -25,7 +25,7 @@ export const Introduction: React.FC<IIntroductionIndexProps> = (props) => {
    * ユーザーの状態を監視している
    * Google認証に成功してユーザーの情報を更新出来た場合/main/に遷移させる
    */
-  useEffect(() => {
+  React.useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         props.setUser(user.uid);

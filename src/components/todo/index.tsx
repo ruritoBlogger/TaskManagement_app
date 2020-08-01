@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 
 import firebase, { db } from "../../firebase";
 
-import Header from "../Header";
-import CreateTodoDialog from "./CreateTodoDialog";
-import ShowTodoList from "./ShowTodoList";
+import { Header } from "../Header";
+import { CreateTodoDialog } from "./CreateTodoDialog";
+import { ShowTodoList } from "./ShowTodoList";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -30,9 +30,9 @@ interface ITodoProps {
  */
 export const Todo: React.FC<ITodoProps> = (props) => {
   /** 既に登録されているtodolist */
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = React.useState([]);
   /** todolistを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = useState(true);
+  const [needLoad, setNeedLoad] = React.useState(true);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -40,7 +40,7 @@ export const Todo: React.FC<ITodoProps> = (props) => {
   /**
    * 既に登録されているtodoを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };

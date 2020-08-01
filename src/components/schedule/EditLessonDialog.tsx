@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import firebase, { db } from "../../firebase";
-import DeleteDialog from "../deleteDialog";
+import { DeleteDialog } from "../deleteDialog";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -72,13 +72,13 @@ interface IEditLessonDialogProps {
  */
 export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = React.useState([]);
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = useState(props.lesson.color);
+  const [color, setColor] = React.useState(props.lesson.color);
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -89,7 +89,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   /**
    * firestoreに存在する色データを取得している
    */
-  useEffect(() => {
+  React.useEffect(() => {
     const data = async () => {
       await getData();
     };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
 
 import firebase from "../firebase";
@@ -48,7 +48,7 @@ const styles = makeStyles({
  */
 export const Header: React.FC = () => {
   /** setting部分のMenuがOpenかそうでないかを管理している */
-  const [anchorEL, setAnchorEL] = useState(null);
+  const [anchorEL, setAnchorEL] = React.useState(null);
   /** CSSを用いたスタイル定義 */
   const classes = styles();
   /** 画面遷移を担当 */
