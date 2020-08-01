@@ -9,6 +9,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+interface IDeleteDialogProps {
+  Button: string;
+  msg: string;
+  handleSubmit: () => void;
+  isIcon: boolean;
+}
+
 /**
  * 何かを削除するダイアログを表示する関数
  * @param {Object} props - UI部分に関係する情報や削除後に発火させたいイベントを管理している
@@ -17,7 +24,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
  * @param {function} props.handleSubmit - 削除した後に発火させたいイベント
  * @param {boolean} props.isIcon - ボタンをIconを用いて表示するかどうか
  */
-export default function DeleteDialog(props) {
+export const DeleteDialog: React.FC<IDeleteDialogProps> = props => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -25,7 +32,7 @@ export default function DeleteDialog(props) {
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
@@ -33,7 +40,7 @@ export default function DeleteDialog(props) {
    * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
    * ダイアログを閉じる
    */
-  function handleClose() {
+  function handleClose(): void {
     setOpen(false);
   }
 
@@ -41,7 +48,7 @@ export default function DeleteDialog(props) {
    * ダイアログを表示している時に削除ボタンがクリックされた時に発火する
    * 該当のものを削除してダイアログを閉じる
    */
-  function Submit() {
+  function Submit(): void {
     props.handleSubmit();
     handleClose();
   }

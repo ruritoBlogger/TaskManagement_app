@@ -10,6 +10,7 @@ import Container from "@material-ui/core/Container";
 import SettingsButton from "@material-ui/icons/Settings";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -46,7 +47,7 @@ const styles = makeStyles({
 /**
  * ログイン後のページのHeaderを表示する関数
  */
-export default function Header() {
+export const Header: React.FC = () => {
   /** setting部分のMenuがOpenかそうでないかを管理している */
   const [anchorEL, setAnchorEL] = useState(null);
   /** CSSを用いたスタイル定義 */
@@ -58,7 +59,7 @@ export default function Header() {
    * settingがクリックされた時に発火する
    * MenuをOpenにする
    */
-  function handleClick(event) {
+  function handleClick(event: any): void {
     setAnchorEL(event.currentTarget);
   }
 
@@ -66,7 +67,7 @@ export default function Header() {
    * settingがOpenの時に、setting以外の部分をクリックされた時に発火する
    * MenuをCloseにする
    */
-  function handleClose() {
+  function handleClose(): void {
     setAnchorEL(null);
   }
 
@@ -75,7 +76,7 @@ export default function Header() {
    * ログアウトを行い紹介画面に遷移させる
    * MenuをCloseにする
    */
-  function Logout() {
+  function Logout(): void {
     handleClose();
     firebase.auth().signOut();
     history.push("/");
@@ -85,7 +86,7 @@ export default function Header() {
    * Logoボタンをクリックされた時に発火する
    * ホームページに遷移する
    */
-  function MoveHomePage() {
+  function MoveHomePage(): void {
     history.push("/main");
   }
 
@@ -93,7 +94,7 @@ export default function Header() {
    * 時間割ボタンをクリックされた時に発火する
    * 時間割ページに遷移する
    */
-  function MoveSchedulePage() {
+  function MoveSchedulePage(): void {
     history.push("/schedule");
   }
 
@@ -101,7 +102,7 @@ export default function Header() {
    * Todoボタンをクリックされた時に発火する
    * Todoページに遷移する
    */
-  function MoveTodoPage() {
+  function MoveTodoPage(): void {
     history.push("/todo");
   }
 
