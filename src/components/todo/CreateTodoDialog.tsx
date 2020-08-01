@@ -149,7 +149,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に重さ選択部分で状態が変化発火する
    * 選択された重さを状態に登録する
    */
-  function handleHeavyChange(event: any): void {
+  function handleHeavyChange(event: React.MouseEvent<HTMLInputElement>): void {
     setHeavy(event.target.value);
   }
 
@@ -157,7 +157,9 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に時間割選択部分で状態が変化発火する
    * 選択された時間割を状態に登録する
    */
-  function handleScheduleChange(event: any): void {
+  function handleScheduleChange(
+    event: React.MouseEvent<HTMLInputElement>
+  ): void {
     setSchedule(event.target.value);
   }
 
@@ -165,15 +167,19 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に授業選択部分で状態が変化発火する
    * 選択された授業を状態に登録する
    */
-  function handleLessonChange(event: any): void {
+  function handleLessonChange(event: React.MouseEvent<HTMLInputElement>): void {
     setLesson(event.target.value);
   }
 
   /**
    * 期限の入力が行われた時発火する
    */
-  function handleDateChange(date: Date): any {
+  function handleDateChange(date: Date): void {
     setSelectedDate(date);
+  }
+
+  interface ISubmitProps {
+    title: string;
   }
 
   /**
@@ -183,7 +189,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value: any): void {
+  function Submit(value: ISubmitProps): void {
     if (value.title) {
       const docId = db
         .collection("schedule")

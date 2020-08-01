@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { getDefaultNormalizer } from "@testing-library/react";
-import * as React from "react";
+import { Schedule } from "../schedule";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -47,17 +47,62 @@ export const Todo: React.FC<ITodoProps> = (props) => {
     data();
   }, [needLoad]);
 
+  interface ITodoData {
+    docId: string;
+    title: string;
+    content: string;
+    heavy: number;
+    limit: Date;
+    done: boolean;
+  }
+
+  interface ILessonData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
+
+  interface IScheduleData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
   /**
    * firestoreに存在しているtodoを取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData(): void {
-    const result_list = [];
+    setTodoList([]);
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
     const schedules = docs.filter((item) => item.uid === props.user);
 
+    const lesson_promise_list = schedules.map((schedule) => {
+      return GetLessonsData(Schedule);
+    });
+
+    const lessons: ILessonData[] = Promise.all(lesson_promise_list)
+      .then((lesson_list) => {
+        return lesson_list;
+      })
+      .catch((err) => console.log(err));
+
+    const todo_promise_list = lessons.map((lesson) => {
+      return GetTodosData(schedule, lesson);
+    });
+
+    Promise.all(todo_promise_list)
+      .then((todo_list) => {
+        return setTodoList([...todo_list]);
+      })
+      .catch((err) => console.log(err));
+
+    /*
     for (let i = 0; i < schedules.length; i++) {
       const subRef = db
         .collection("schedule")
@@ -85,8 +130,40 @@ export const Todo: React.FC<ITodoProps> = (props) => {
         });
       }
     }
-    setTodoList([]);
     setTodoList([...result_list]);
+    */
+  }
+
+  /**
+   * 引数として渡された時間割に所属している授業の情報を取得する
+   * @param {Object} schedule - 授業一覧を取得したい時間割
+   */
+  async function GetLessonsData(schedule: IScheduleData): void {
+    const subRef = db
+      .collection("schedule")
+      .doc(schedule.docId)
+      .collection("lesson");
+    const subSnapshots = await subRef.get();
+    return subSnapshots.docs.map((doc) => doc.data());
+  }
+
+  /**
+   * 引数として渡された授業に所属しているTodoの情報を取得する
+   * @param {Object} schedule - Todoを取得したい授業が所属している時間割
+   * @param {Object} lesson - Todoを取得したい授業
+   */
+  async function GetTodosData(
+    schedule: IScheduleData,
+    lesson: ILessonData
+  ): void {
+    const subRef = db
+      .collection("schedule")
+      .doc(schedule.docId)
+      .collection("lesson")
+      .doc(lesson.docId)
+      .collection("todo");
+    const subSnapshots = await subRef.get();
+    return subSnapshots.docs.map((doc) => doc.data());
   }
 
   /**

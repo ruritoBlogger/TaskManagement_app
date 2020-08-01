@@ -115,8 +115,12 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function handleChange(event: any): void {
+  function handleChange(event: React.MouseEvent<HTMLInputElement>): void {
     setColor(event.target.value);
+  }
+
+  interface ISubmitProps {
+    title: string;
   }
 
   /**
@@ -126,7 +130,7 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value: any): void {
+  function Submit(value: ISubmitProps): void {
     if (value.title && props.schedule) {
       const docId = db
         .collection("schedule")

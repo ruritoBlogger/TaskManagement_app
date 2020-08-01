@@ -19,7 +19,6 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import MenuItem from "@material-ui/core/MenuItem";
 import Icon from "@material-ui/core/Icon";
-import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({

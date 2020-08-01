@@ -90,6 +90,37 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
     "とても重い",
   ];
 
+  interface ITodoData {
+    docId: string;
+    title: string;
+    content: string;
+    heavy: number;
+    limit: Date;
+    done: boolean;
+  }
+
+  interface ILessonData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
+
+  interface IScheduleData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
+
+  interface IDeleteTodoProps {
+    schedule: IScheduleData;
+    lesson: ILessonData;
+    todo: ITodoData;
+  }
+
   /**
    * 削除ボタンがクリックされると発火する
    * クリックされたTodoを削除する
@@ -98,7 +129,7 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
    * @param {object} data.lesson - 削除したいtodoが登録されている授業
    * @param {object} data.todo - 削除したいtodo
    */
-  async function DeleteTodo(data: any): void {
+  async function DeleteTodo(data: IDeleteTodoProps): void {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)
@@ -110,6 +141,12 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
     props.handleChange();
   }
 
+  interface IDoneTodoProps {
+    schedule: IScheduleData;
+    lesson: ILessonData;
+    todo: ITodoData;
+  }
+
   /**
    * 完了ボタンがクリックされると発火する
    * クリックされたTodoを更新する
@@ -118,7 +155,7 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
    * @param {object} data.lesson - 更新したいtodoが登録されている授業
    * @param {object} data.todo - 更新したいtodo
    */
-  async function DoneTodo(data: any): void {
+  async function DoneTodo(data: IDoneTodoProps): void {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)

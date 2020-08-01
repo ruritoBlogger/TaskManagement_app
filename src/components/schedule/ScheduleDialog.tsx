@@ -64,6 +64,9 @@ export const ScheduleDialog: React.FC<IScheduleDialogProps> = (props) => {
     setOpen(false);
   }
 
+  interface ISubmitProps {
+    title: string;
+  }
   /**
    * ダイアログを表示している時に登録ボタンがクリックされた時に発火する
    * 入力された情報を元に時間割を追加してダイアログを閉じる
@@ -71,7 +74,7 @@ export const ScheduleDialog: React.FC<IScheduleDialogProps> = (props) => {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value: any): void {
+  function Submit(value: ISubmitProps): void {
     if (value.title && props.user) {
       const docId = db.collection("schedule").doc().id;
       db.collection("schedule").doc(docId).set({

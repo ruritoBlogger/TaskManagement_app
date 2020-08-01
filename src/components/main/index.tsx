@@ -91,6 +91,7 @@ export const Main: React.FC<IMainProps> = (props) => {
     color: number;
     date: Date;
   }
+
   interface IScheduleData {
     docId: string;
     title: string;
@@ -113,7 +114,6 @@ export const Main: React.FC<IMainProps> = (props) => {
     setTodoList([]);
 
     if (schedule) {
-      const result_list: ITodoData[] = [];
       const subRef = db
         .collection("schedule")
         .doc(schedule.docId)
@@ -125,8 +125,11 @@ export const Main: React.FC<IMainProps> = (props) => {
         return getTodoData(schedule, lesson);
       });
 
-      await promise_list;
-      setTodoList([...result_list]);
+      Promise.all(promise_list)
+        .then((todo_list) => {
+          return setTodoList([...todo_list]);
+        })
+        .catch((err) => console.log(err));
       /*
       for (let j = 0; j < lessons.length; j++) {
         const subsubRef = db

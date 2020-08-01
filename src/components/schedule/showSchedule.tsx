@@ -8,7 +8,6 @@ import firebase, { db } from "../../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -185,7 +184,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
               );
             }
             return result_data;
-          }
+          } else return <div></div>;
         })()}
       </Grid>
     </Grid>
