@@ -64,7 +64,7 @@ interface ITodoData {
 
 interface IShowTodoListProps {
   user: string;
-  todoList: ITodoData[];
+  todoList: firebase.firestore.DocumentData[];
   msg: string;
   handleChange: () => void;
 }

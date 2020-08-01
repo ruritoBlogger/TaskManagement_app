@@ -35,17 +35,9 @@ const styles = makeStyles({
   },
 });
 
-interface IScheduleData {
-  docId: string;
-  title: string;
-  classroom: string;
-  color: number;
-  date: Date;
-}
-
 interface ICreateLessonDialogProps {
-  schedule: IScheduleData;
-  date: Date;
+  schedule: firebase.firestore.DocumentData | null;
+  date: number;
   handleSubmit: () => void;
 }
 
@@ -60,13 +52,15 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
   props
 ) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = React.useState([]);
+  const [colors, setColors] = React.useState<firebase.firestore.DocumentData[]>(
+    []
+  );
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = React.useState("");
+  const [color, setColor] = React.useState<string>("");
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -88,7 +82,7 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     const colRef = db.collection("color");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -115,12 +109,8 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
    * ダイアログを表示している時に色選択部分で状態が変化発火する
    * 選択された色を状態に登録する
    */
-  function handleChange(event: React.MouseEvent<HTMLInputElement>): void {
+  function handleChange(event: any): void {
     setColor(event.target.value);
-  }
-
-  interface ISubmitProps {
-    title: string;
   }
 
   /**
@@ -128,9 +118,10 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
    * 入力された情報を元に授業を追加してダイアログを閉じる
    *
    * @param {Object} value - 入力された情報を保持している
-   * @param {string} value.title - 時間割のタイトル
+   * @param {string} value.title - 授業名
+   * @param {string} value.classroom - 授業が行われる教室名
    */
-  function Submit(value: ISubmitProps): void {
+  function Submit(value: any): void {
     if (value.title && props.schedule) {
       const docId = db
         .collection("schedule")

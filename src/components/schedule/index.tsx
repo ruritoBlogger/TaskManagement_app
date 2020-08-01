@@ -38,9 +38,11 @@ interface IScheduleProps {
  */
 export const Schedule: React.FC<IScheduleProps> = (props) => {
   /** 既に登録されている時間割list */
-  const [scheduleList, setScheduleList] = React.useState([]);
+  const [scheduleList, setScheduleList] = React.useState<
+    firebase.firestore.DocumentData[]
+  >([]);
   /** 時間割listを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = React.useState(true);
+  const [needLoad, setNeedLoad] = React.useState<boolean>(true);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -59,7 +61,7 @@ export const Schedule: React.FC<IScheduleProps> = (props) => {
    * firestoreに存在している時間割を取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
