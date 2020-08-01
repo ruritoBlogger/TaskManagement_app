@@ -6,7 +6,6 @@ import firebase from "../firebase";
 import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
 import SettingsButton from "@material-ui/icons/Settings";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -58,7 +57,7 @@ export const Header: React.FC = () => {
    * settingがクリックされた時に発火する
    * MenuをOpenにする
    */
-  function handleClick(event: React.MouseEvent<HTMLInputElement>): void {
+  function handleClick(event: any): void {
     setAnchorEL(event.currentTarget);
   }
 
@@ -112,7 +111,7 @@ export const Header: React.FC = () => {
       justify="center"
       className={classes.root}
     >
-      <Container item xs={8} className={classes.container}>
+      <Grid item xs={8} className={classes.container}>
         <Grid container direction="row">
           <Grid item xs={6}>
             <Button onClick={MoveHomePage} className={classes.logo_button}>
@@ -145,7 +144,7 @@ export const Header: React.FC = () => {
             </Menu>
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     </Grid>
   );
 };
