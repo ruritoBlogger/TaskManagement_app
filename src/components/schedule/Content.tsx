@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Scrollbars } from "react-custom-scrollbars";
+import Scrollbars from "react-custom-scrollbars";
 
 import { ShowSchedule } from "./showSchedule";
 import { DeleteDialog } from "../deleteDialog";
@@ -72,16 +72,8 @@ const styles = makeStyles({
   },
 });
 
-interface IScheduleData {
-  docId: string;
-  title: string;
-  classroom: string;
-  color: number;
-  date: Date;
-}
-
 interface IScheduleContentProps {
-  scheduleList: IScheduleData[];
+  scheduleList: firebase.firestore.DocumentData[];
 }
 
 /**
@@ -91,7 +83,10 @@ interface IScheduleContentProps {
  */
 export const Content: React.FC<IScheduleContentProps> = (props) => {
   /** メインで表示する時間割を管理 */
-  const [focusSchedule, setFocusSchedule] = React.useState(null);
+  const [
+    focusSchedule,
+    setFocusSchedule,
+  ] = React.useState<firebase.firestore.DocumentData | null>(null);
 
   /** メインで表示する時間割の更新を管理 */
   const [needLoad, setNeedLoad] = React.useState(false);
@@ -119,13 +114,15 @@ export const Content: React.FC<IScheduleContentProps> = (props) => {
   /**
    * 呼び出されるとメインで表示する時間割を変更する
    */
-  function ChangeFocusSchedule(schedule): void {
+  function ChangeFocusSchedule(
+    schedule: firebase.firestore.DocumentData
+  ): void {
     setFocusSchedule(schedule);
     setNeedLoad(!needLoad);
   }
 
   return (
-    <Grid container row alignItems="center" justify="center">
+    <Grid container direction="row" alignItems="center" justify="center">
       <Grid
         container
         item

@@ -11,7 +11,6 @@ interface IDeleteDialogProps {
   Button: string;
   msg: string;
   handleSubmit: () => void;
-  isIcon: boolean;
 }
 
 /**
@@ -20,7 +19,6 @@ interface IDeleteDialogProps {
  * @param {string} props.Button - ダイアログを表示するかどうかを管理するボタンのtext
  * @param {string} props.msg - 削除する時間割の名前
  * @param {function} props.handleSubmit - 削除した後に発火させたいイベント
- * @param {boolean} props.isIcon - ボタンをIconを用いて表示するかどうか
  */
 export const DeleteDialog: React.FC<IDeleteDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
