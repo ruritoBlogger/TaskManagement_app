@@ -44,6 +44,7 @@
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.10.0",
     "@types/react": "^16.9.43",
+    "@types/react-custom-scrollbars": "^4.0.6",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
