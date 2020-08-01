@@ -26,7 +26,7 @@ const styles = makeStyles({
 });
 
 interface IMainProps {
-  user: string | null;
+  user: string;
 }
 
 /**
@@ -36,9 +36,14 @@ interface IMainProps {
  */
 export const Main: React.FC<IMainProps> = (props) => {
   /** メイン表示する時間割 */
-  const [schedule, setSchedule] = React.useState(null);
+  const [
+    schedule,
+    setSchedule,
+  ] = React.useState<firebase.firestore.DocumentData | null>(null);
   /** 既に登録されているtodolist */
-  const [todoList, setTodoList] = React.useState([]);
+  const [todoList, setTodoList] = React.useState<
+    firebase.firestore.DocumentData[]
+  >([]);
   /** todolistを取得しにいくべきかどうか */
   const [needLoad, setNeedLoad] = React.useState(true);
 
@@ -67,7 +72,7 @@ export const Main: React.FC<IMainProps> = (props) => {
    * firestoreに存在しているtodoを取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -75,42 +80,15 @@ export const Main: React.FC<IMainProps> = (props) => {
     setSchedule(schedules[0]);
   }
 
-  interface ITodoData {
-    docId: string;
-    title: string;
-    content: string;
-    heavy: number;
-    limit: Date;
-    done: boolean;
-  }
-
-  interface ILessonData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
-
-  interface IScheduleData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
-
   interface ITodoList {
-    todo: ITodoData;
-    lesson: ILessonData;
-    schedule: IScheduleData;
+    [name: string]: firebase.firestore.DocumentData | null;
   }
 
   /**
    * firestoreに存在しているtodoを取得している
    * メイン時間割が更新されると発火する
    */
-  async function getTotalTodoData(): void {
+  async function getTotalTodoData(): Promise<void> {
     setTodoList([]);
 
     if (schedule) {
@@ -127,7 +105,7 @@ export const Main: React.FC<IMainProps> = (props) => {
 
       Promise.all(promise_list)
         .then((todo_list) => {
-          return setTodoList([...todo_list]);
+          return setTodoList(todo_list);
         })
         .catch((err) => console.log(err));
       /*
@@ -157,9 +135,9 @@ export const Main: React.FC<IMainProps> = (props) => {
    * 受け取った時間割からTodoの情報を取得する
    */
   async function getTodoData(
-    schedule: IScheduleData,
-    lesson: ILessonData
-  ): void {
+    schedule: firebase.firestore.DocumentData,
+    lesson: firebase.firestore.DocumentData
+  ): Promise<firebase.firestore.DocumentData[]> {
     const subRef = db
       .collection("schedule")
       .doc(schedule.docId)
@@ -167,10 +145,10 @@ export const Main: React.FC<IMainProps> = (props) => {
       .doc(lesson.docId)
       .collection("todo");
     const snapshots = await subRef.get();
-    const result_list: ITodoData[] = snapshots.docs
+    const result_list: firebase.firestore.DocumentData[] = snapshots.docs
       .filter((doc) => !doc.data().done)
       .map((doc) => {
-        const tmp: ITodoData = {};
+        const tmp: ITodoList = {};
         tmp.todo = doc.data();
         tmp.lesson = lesson;
         tmp.schedule = schedule;
