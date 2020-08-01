@@ -53,7 +53,7 @@ interface ICreateTodoDialogProps {
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  * @param {string} props.user - user_id
  */
-export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = props => {
+export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -344,4 +344,4 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = props => {
       </Dialog>
     </div>
   );
-}
+};

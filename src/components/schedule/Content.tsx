@@ -89,7 +89,7 @@ interface IScheduleContentProps {
  * @param {Object} props - 時間割listが格納されている
  * @param {list} props.scheduleList - 時間割list
  */
-export const Content: React.FC<IScheduleContentProps> = props => {
+export const Content: React.FC<IScheduleContentProps> = (props) => {
   /** メインで表示する時間割を管理 */
   const [focusSchedule, setFocusSchedule] = useState(null);
 
@@ -195,4 +195,4 @@ export const Content: React.FC<IScheduleContentProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

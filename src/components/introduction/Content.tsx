@@ -48,7 +48,7 @@ interface IIntroductionContentProps {
  * @param {Object} props Google認証にまつわるものが格納されている
  * @param {function} props.Login - Google認証を行う関数
  */
-export const Content: React.FC<IIntroductionContentProps> = props => {
+export const Content: React.FC<IIntroductionContentProps> = (props) => {
   /** CSSを用いたスタイル定義 */
   const classes = styles();
   return (
@@ -83,4 +83,4 @@ export const Content: React.FC<IIntroductionContentProps> = props => {
       </Box>
     </Box>
   );
-}
+};

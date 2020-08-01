@@ -28,7 +28,7 @@ interface ITodoProps {
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export const Todo: React.FC<ITodoProps> = props => {
+export const Todo: React.FC<ITodoProps> = (props) => {
   /** 既に登録されているtodolist */
   const [todoList, setTodoList] = useState([]);
   /** todolistを取得しにいくべきかどうか */
@@ -76,7 +76,7 @@ export const Todo: React.FC<ITodoProps> = props => {
         const subsubSnapshots = await subsubRef.get();
         subsubSnapshots.docs.map((doc) => {
           if (!doc.data().done) {
-            let tmp = {};
+            const tmp = {};
             tmp.todo = doc.data();
             tmp.lesson = lessons[j];
             tmp.schedule = schedules[i];
@@ -147,4 +147,4 @@ export const Todo: React.FC<ITodoProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

@@ -35,7 +35,7 @@ interface IMainProps {
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export const Main: React.FC<IMainProps> = props => {
+export const Main: React.FC<IMainProps> = (props) => {
   /** メイン表示する時間割 */
   const [schedule, setSchedule] = useState(null);
   /** 既に登録されているtodolist */
@@ -87,7 +87,7 @@ export const Main: React.FC<IMainProps> = props => {
    */
   async function getTodoData(): void {
     if (schedule) {
-      const result_list: ITodoData[]  = [];
+      const result_list: ITodoData[] = [];
       const subRef = db
         .collection("schedule")
         .doc(schedule.docId)
@@ -105,7 +105,7 @@ export const Main: React.FC<IMainProps> = props => {
         const subsubSnapshots = await subsubRef.get();
         subsubSnapshots.docs.map((doc) => {
           if (!doc.data().done) {
-            let tmp: ITodoData = {};
+            const tmp: ITodoData = {};
             tmp.todo = doc.data();
             tmp.lesson = lessons[j];
             tmp.schedule = schedule;
@@ -175,4 +175,4 @@ export const Main: React.FC<IMainProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

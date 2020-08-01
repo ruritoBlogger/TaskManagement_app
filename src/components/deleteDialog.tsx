@@ -24,7 +24,7 @@ interface IDeleteDialogProps {
  * @param {function} props.handleSubmit - 削除した後に発火させたいイベント
  * @param {boolean} props.isIcon - ボタンをIconを用いて表示するかどうか
  */
-export const DeleteDialog: React.FC<IDeleteDialogProps> = props => {
+export const DeleteDialog: React.FC<IDeleteDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -81,4 +81,4 @@ export const DeleteDialog: React.FC<IDeleteDialogProps> = props => {
       </Dialog>
     </div>
   );
-}
+};

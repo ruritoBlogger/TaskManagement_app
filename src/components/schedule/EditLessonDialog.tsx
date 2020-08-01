@@ -71,7 +71,7 @@ interface IEditLessonDialogProps {
  * @param {int} props.lesson.date - クリックされた授業がどの時間帯か
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
-export const EditLessonDialog: React.FC<IEditLessonDialogProps> = props => {
+export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -241,4 +241,4 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = props => {
       </Dialog>
     </div>
   );
-}
+};

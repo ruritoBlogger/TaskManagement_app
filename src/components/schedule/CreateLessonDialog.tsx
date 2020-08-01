@@ -56,7 +56,9 @@ interface ICreateLessonDialogProps {
  * @param {int} props.date - クリックされた授業がどの時間帯か
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  */
-export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = props => {
+export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = (
+  props
+) => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -209,4 +211,4 @@ export const CreateLessonDialog: React.FC<ICreateLessonDialogProps> = props => {
       </Dialog>
     </div>
   );
-}
+};

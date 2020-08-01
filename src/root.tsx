@@ -20,7 +20,7 @@ interface IRootProps {
  * @param {Object} props.setUser - userを更新する際に用いる
  */
 
-export const Root: React.FC<IRootProps> = props => {
+export const Root: React.FC<IRootProps> = (props) => {
   return (
     <Router>
       <Switch>
@@ -42,4 +42,4 @@ export const Root: React.FC<IRootProps> = props => {
       </Switch>
     </Router>
   );
-}
+};

@@ -17,7 +17,7 @@ interface IIntroductionIndexProps {
  * @param {string} props.user - {user} Google認証後にはuseridが、そうでない場合はnull
  * @param {function} props.setUser - {setUser} userを更新する際に用いる
  */
-export const Introduction: React.FC<IIntroductionIndexProps> = props => {
+export const Introduction: React.FC<IIntroductionIndexProps> = (props) => {
   /** 画面遷移を担当 */
   const history = useHistory();
 
@@ -44,4 +44,4 @@ export const Introduction: React.FC<IIntroductionIndexProps> = props => {
   }
 
   return <Content Login={Login}></Content>;
-}
+};

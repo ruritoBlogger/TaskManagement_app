@@ -50,4 +50,4 @@ export const Header: React.FC = () => {
       </Grid>
     </Container>
   );
-}
+};

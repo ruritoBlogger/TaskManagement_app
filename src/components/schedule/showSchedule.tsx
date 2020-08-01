@@ -56,7 +56,7 @@ interface IShowScheduleProps {
  * @param {list} props.schedule - 表示したい時間割
  * @param {boolean} props.needLoad - メイン時間割を更新するflag
  */
-export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
+export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
   /** 時間割に登録されている授業list */
   const [lessonList, setLessonList] = useState([]);
 
@@ -107,7 +107,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
 
     const tmp_list = new Array(30).fill(null);
     for (let i = 0; i < 30; i++) {
-      let tmp_lesson = {};
+      const tmp_lesson = {};
       tmp_lesson.title = "   ";
       tmp_lesson.classroom = "   ";
       tmp_lesson.color = "#FFFFFF";
@@ -134,8 +134,8 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
       <Grid container>
         {(() => {
           if (lessonList[29]) {
-            let result_data = [];
-            let guide_data = [];
+            const result_data = [];
+            const guide_data = [];
             for (let i = 0; i < 7; i++) {
               guide_data.push(
                 <Paper elevation={1} className={classes.GuideBlock}>
@@ -149,7 +149,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
               </Grid>
             );
             for (let i = 0; i < 5; i++) {
-              let day_data = [];
+              const day_data = [];
               day_data.push(
                 <Paper elevation={3} className={classes.LessonBlock}>
                   <p className={classes.GuideBlockText}>{DayList[i]}</p>
@@ -190,4 +190,4 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

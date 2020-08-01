@@ -40,7 +40,7 @@ interface IScheduleDialogProps {
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  * @param {function} props.handleSubmit - 呼び出すと時間割listを取得し直す
  */
-export const ScheduleDialog: React.FC<IScheduleDialogProps> = props => {
+export const ScheduleDialog: React.FC<IScheduleDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
   /** react hook formで用意された変数群 */
@@ -131,4 +131,4 @@ export const ScheduleDialog: React.FC<IScheduleDialogProps> = props => {
       </Dialog>
     </div>
   );
-}
+};

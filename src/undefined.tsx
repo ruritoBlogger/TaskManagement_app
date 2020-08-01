@@ -9,4 +9,4 @@ export const Undefined: React.FC = () => {
       <h1>未定義ページです</h1>
     </div>
   );
-}
+};

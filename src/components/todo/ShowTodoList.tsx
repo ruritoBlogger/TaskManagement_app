@@ -77,12 +77,18 @@ interface IShowTodoListProps {
  * @param {string} props.msg - 期限順 or 重さ順
  * @param {function} props.handleChange - TodoListを更新する時に呼び出す
  */
-export const ShowTodoList: React.FC<IShowTodoListProps> = props => {
+export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
   /** CSSを用いたスタイル定義 */
   const classes = styles();
 
   /** Todoの重さを定義している */
-  const heavy_list: string[] = ["とても軽い", "軽い", "普通", "重い", "とても重い"];
+  const heavy_list: string[] = [
+    "とても軽い",
+    "軽い",
+    "普通",
+    "重い",
+    "とても重い",
+  ];
 
   /**
    * 削除ボタンがクリックされると発火する
@@ -131,7 +137,7 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = props => {
    * @param {int} secs - 1970年0月1日からの経過時間
    */
   function toDateTime(secs: number): string {
-    let t = new Date(1970, 0, 1);
+    const t = new Date(1970, 0, 1);
     t.setSeconds(secs);
     return t.toISOString();
   }
@@ -203,4 +209,4 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

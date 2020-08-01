@@ -37,7 +37,7 @@ interface IScheduleProps {
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export const Schedule: React.FC<IScheduleProps> = props => {
+export const Schedule: React.FC<IScheduleProps> = (props) => {
   /** 既に登録されている時間割list */
   const [scheduleList, setScheduleList] = useState([]);
   /** 時間割listを取得しにいくべきかどうか */
@@ -95,4 +95,4 @@ export const Schedule: React.FC<IScheduleProps> = props => {
       </Grid>
     </Grid>
   );
-}
+};

@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import ReactDOM from "react-dom"
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-import Root from "./root"
+import Root from "./root";
 
 /**
  * 所謂神クラス
@@ -9,17 +9,13 @@ import Root from "./root"
  */
 export const App: React.FC = () => {
   /** userの状態を管理 */
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   return (
     <div>
-      <Root
-        user={user}
-        setUser={setUser} />
+      <Root user={user} setUser={setUser} />
     </div>
-  )
-}
+  );
+};
 
-const app = document.getElementById("app")
-ReactDOM.render(
-  <App />,
-  app)
+const app = document.getElementById("app");
+ReactDOM.render(<App />, app);

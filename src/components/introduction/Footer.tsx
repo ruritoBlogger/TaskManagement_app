@@ -113,4 +113,4 @@ export const Footer: React.FC = () => {
       </Grid>
     </Container>
   );
-}
+};
