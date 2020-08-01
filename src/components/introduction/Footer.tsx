@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
