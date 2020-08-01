@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { getDefaultNormalizer } from "@testing-library/react";
+import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -19,12 +20,15 @@ const styles = makeStyles({
   },
 });
 
+interface ITodoProps {
+  user: string;
+}
 /**
  * todoページを表示する関数
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
-export default function Todo(props) {
+export const Todo: React.FC<ITodoProps> = props => {
   /** 既に登録されているtodolist */
   const [todoList, setTodoList] = useState([]);
   /** todolistを取得しにいくべきかどうか */
@@ -47,7 +51,7 @@ export default function Todo(props) {
    * firestoreに存在しているtodoを取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData() {
+  async function getData(): void {
     const result_list = [];
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
@@ -89,7 +93,7 @@ export default function Todo(props) {
    * 呼び出されるとtodolistを更新する
    * 具体的にはtodolistを更新するかどうかを管理する状態を変更する
    */
-  function handleChange() {
+  function handleChange(): void {
     setNeedLoad(!needLoad);
   }
 

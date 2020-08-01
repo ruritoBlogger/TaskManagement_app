@@ -53,6 +53,22 @@ const styles = makeStyles({
   },
 });
 
+interface ITodoData {
+  docId: string;
+  title: string;
+  content: string;
+  heavy: number;
+  limit: Date;
+  done: boolean;
+}
+
+interface IShowTodoListProps {
+  user: string;
+  todoList: ITodoData[];
+  msg: string;
+  handleChange: () => void;
+}
+
 /**
  * todoListを表示する関数
  * @param {Object} props - ユーザーやTodoListの情報やTodoListの更新条件を保持している
@@ -61,12 +77,12 @@ const styles = makeStyles({
  * @param {string} props.msg - 期限順 or 重さ順
  * @param {function} props.handleChange - TodoListを更新する時に呼び出す
  */
-export default function ShowTodoList(props) {
+export const ShowTodoList: React.FC<IShowTodoListProps> = props => {
   /** CSSを用いたスタイル定義 */
   const classes = styles();
 
   /** Todoの重さを定義している */
-  const heavy_list = ["とても軽い", "軽い", "普通", "重い", "とても重い"];
+  const heavy_list: string[] = ["とても軽い", "軽い", "普通", "重い", "とても重い"];
 
   /**
    * 削除ボタンがクリックされると発火する
@@ -76,7 +92,7 @@ export default function ShowTodoList(props) {
    * @param {object} data.lesson - 削除したいtodoが登録されている授業
    * @param {object} data.todo - 削除したいtodo
    */
-  async function DeleteTodo(data) {
+  async function DeleteTodo(data: any): void {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)
@@ -96,7 +112,7 @@ export default function ShowTodoList(props) {
    * @param {object} data.lesson - 更新したいtodoが登録されている授業
    * @param {object} data.todo - 更新したいtodo
    */
-  async function DoneTodo(data) {
+  async function DoneTodo(data: any): void {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)
@@ -114,7 +130,7 @@ export default function ShowTodoList(props) {
    * 引数の時間を日時に変更する
    * @param {int} secs - 1970年0月1日からの経過時間
    */
-  function toDateTime(secs) {
+  function toDateTime(secs: number): string {
     let t = new Date(1970, 0, 1);
     t.setSeconds(secs);
     return t.toISOString();

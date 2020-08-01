@@ -42,13 +42,18 @@ const styles = makeStyles({
   },
 });
 
+interface ICreateTodoDialogProps {
+  handleSubmit: () => void;
+  user: string;
+}
+
 /**
  * 新しくtodoを登録するダイアログを表示する関数
  * @param {Object} props - todoを更新するイベントやユーザーデータを管理
  * @param {function} props.handleSubmit - 呼び出すと授業listを取得し直す
  * @param {string} props.user - user_id
  */
-export default function CreateTodoDialog(props) {
+export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = props => {
   /** ダイアログが開かれているかどうかの状態 */
   const [open, setOpen] = useState(false);
 
@@ -102,7 +107,7 @@ export default function CreateTodoDialog(props) {
    * firestoreに存在している時間割データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData() {
+  async function getData(): void {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -110,8 +115,8 @@ export default function CreateTodoDialog(props) {
     setSchedules(schedules);
   }
 
-  async function getLessonData() {
-    if (schedule && schedule.docId != undefined) {
+  async function getLessonData(): void {
+    if (schedule && schedule.docId !== undefined) {
       const lesson_list = [];
       const otherRef = db
         .collection("schedule")
@@ -128,7 +133,7 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
@@ -136,7 +141,7 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
    * ダイアログを閉じる
    */
-  function handleClose() {
+  function handleClose(): void {
     setOpen(false);
   }
 
@@ -144,7 +149,7 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示している時に重さ選択部分で状態が変化発火する
    * 選択された重さを状態に登録する
    */
-  function handleHeavyChange(event) {
+  function handleHeavyChange(event: any): void {
     setHeavy(event.target.value);
   }
 
@@ -152,7 +157,7 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示している時に時間割選択部分で状態が変化発火する
    * 選択された時間割を状態に登録する
    */
-  function handleScheduleChange(event) {
+  function handleScheduleChange(event: any): void {
     setSchedule(event.target.value);
   }
 
@@ -160,14 +165,14 @@ export default function CreateTodoDialog(props) {
    * ダイアログを表示している時に授業選択部分で状態が変化発火する
    * 選択された授業を状態に登録する
    */
-  function handleLessonChange(event) {
+  function handleLessonChange(event: any): void {
     setLesson(event.target.value);
   }
 
   /**
    * 期限の入力が行われた時発火する
    */
-  function handleDateChange(date) {
+  function handleDateChange(date: Date): any {
     setSelectedDate(date);
   }
 
@@ -178,7 +183,7 @@ export default function CreateTodoDialog(props) {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Submit(value) {
+  function Submit(value: any): void {
     if (value.title) {
       const docId = db
         .collection("schedule")
