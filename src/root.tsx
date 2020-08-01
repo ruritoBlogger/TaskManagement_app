@@ -9,14 +9,14 @@ import { Schedule } from "./components/schedule/index";
 import { Todo } from "./components/todo/index";
 
 interface IRootProps {
-  user: string | null;
-  setUser: () => void;
+  user: string;
+  setUser: (active: string) => void;
 }
 
 /**
  * urlによって表示する部分を切り替える部分を担当している
  * @param {Object} props - userの状態が格納されている
- * @param {string} props.user - Google認証後にはuseridが、そうでない場合はnull
+ * @param {string} props.user - Google認証後にはuseridが、そうでない場合は""が格納される
  * @param {Object} props.setUser - userを更新する際に用いる
  */
 

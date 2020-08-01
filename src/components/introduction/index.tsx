@@ -1,20 +1,19 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import LoadingOverlay from "react-loading-overlay";
 
 import firebase from "../../firebase";
 
 import { Content } from "./Content";
 
 interface IIntroductionIndexProps {
-  user: string | null;
-  setUser: () => void;
+  user: string;
+  setUser: (active: string) => void;
 }
 
 /**
  * 紹介画面の内容を表示する関数
  * @param {Object} props - userの状態が格納されている
- * @param {string} props.user - {user} Google認証後にはuseridが、そうでない場合はnull
+ * @param {string} props.user - {user} Google認証後にはuseridが、そうでない場合は""
  * @param {function} props.setUser - {setUser} userを更新する際に用いる
  */
 export const Introduction: React.FC<IIntroductionIndexProps> = (props) => {
