@@ -13,8 +13,8 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --hot --inline --watch-content-base",
     "build": "react-scripts build",
-    "lint": "eslint ./src/",
-    "auto_fix": "eslint --fix ./src/",
+    "lint": "eslint ./src/**/*.tsx",
+    "auto_fix": "eslint --fix ./src/**/*.tsx",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
