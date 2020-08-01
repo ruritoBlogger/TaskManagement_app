@@ -19,6 +19,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import MenuItem from "@material-ui/core/MenuItem";
 import Icon from "@material-ui/core/Icon";
+import { ProgressPlugin } from "webpack";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -47,17 +48,9 @@ const styles = makeStyles({
   },
 });
 
-interface ILessonData {
-  docId: string;
-  title: string;
-  classroom: string;
-  color: number;
-  date: Date;
-}
-
 interface IEditLessonDialogProps {
-  schedule_docId: string;
-  lesson: ILessonData;
+  schedule_docId: string | null;
+  lesson: firebase.firestore.DocumentData;
   handleSubmit: () => void;
 }
 
@@ -72,13 +65,15 @@ interface IEditLessonDialogProps {
  */
 export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   /** firestoreから持ってきた色データを管理する */
-  const [colors, setColors] = React.useState([]);
+  const [colors, setColors] = React.useState<firebase.firestore.DocumentData[]>(
+    []
+  );
 
   /** 選ばれた色を管理 */
-  const [color, setColor] = React.useState(props.lesson.color);
+  const [color, setColor] = React.useState<string>(props.lesson.color);
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -100,7 +95,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData() {
+  async function getData(): Promise<void> {
     const colRef = db.collection("color");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -111,7 +106,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * ダイアログを表示するかどうかを管理するボタンがクリックされた時に発火する
    * ダイアログを表示する
    */
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
@@ -119,7 +114,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * ダイアログを表示している時に中止ボタンがクリックされた時に発火する
    * ダイアログを閉じる
    */
-  function handleClose() {
+  function handleClose(): void {
     setOpen(false);
   }
 
@@ -127,7 +122,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * ダイアログを表示している時に色選択部分で状態が変化すると発火する
    * 選択された色を状態に登録する
    */
-  function handleChange(event) {
+  function handleChange(event: any): void {
     setColor(event.target.value);
   }
 
@@ -135,13 +130,15 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * ダイアログを表示している時に削除ボタンがクリックされた時発火する
    * 選択された授業を削除しダイアログを閉じる
    */
-  function DeleteLesson() {
-    db.collection("schedule")
-      .doc(props.schedule_docId)
-      .collection("lesson")
-      .doc(props.lesson.docId)
-      .delete();
-    props.handleSubmit();
+  function DeleteLesson(): void {
+    if( props.schedule_docId && props.lesson){
+      db.collection("schedule")
+        .doc(props.schedule_docId)
+        .collection("lesson")
+        .doc(props.lesson.docId)
+        .delete();
+      props.handleSubmit();
+    }
     handleClose();
   }
 
@@ -152,8 +149,8 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
    */
-  function Update(value) {
-    if (value.title) {
+  function Update(value: any): void {
+    if (value.title && props.schedule_docId && props.lesson) {
       db.collection("schedule")
         .doc(props.schedule_docId)
         .collection("lesson")
@@ -169,75 +166,81 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   }
 
   return (
-    <div>
-      <Button onClick={handleOpen} className={classes.button}>
-        <p className={classes.ButtonText}>{props.lesson.title}</p>
-        <p className={classes.ButtonText}>{props.lesson.classroom}</p>
-      </Button>
-      <Dialog
-        open={open}
-        fullWidth={true}
-        maxWidth={"xs"}
-        onClose={handleClose}
-        aria-labelledby="common-dialog-title"
-        aria-describedby="common-dialog-description"
-      >
-        <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
-        <form onSubmit={handleSubmit(Update)}>
-          <DialogContent>
-            <Grid direction="column">
-              <Grid className={classes.Content}>
-                <TextField
-                  name="title"
-                  label="授業名"
-                  defaultValue={props.lesson.title}
-                  inputRef={register}
-                />
-              </Grid>
-              <Grid className={classes.Content}>
-                <TextField
-                  name="classroom"
-                  label="教室名"
-                  defaultValue={props.lesson.classroom}
-                  inputRef={register}
-                />
-              </Grid>
-              <Grid className={classes.Content}>
-                <FormControl>
-                  <InputLabel id="color-label">色</InputLabel>
-                  <Select
-                    labelId="color-label"
-                    value={color}
-                    onChange={handleChange}
-                  >
-                    {colors.map((item) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Grid className={classes.DeleteButton}>
-              <DeleteDialog
-                Button="削除"
-                msg={props.lesson.title}
-                handleSubmit={DeleteLesson}
-              />
-            </Grid>
-            <Button onClick={handleClose}>中止</Button>
-            <Button
-              onClick={Update}
-              type="submit"
-              className={classes.SubmitButton}
-            >
-              更新
+    {(() => {
+      if( props.lesson ){
+        return (
+          <div>
+            <Button onClick={handleOpen} className={classes.button}>
+              <p className={classes.ButtonText}>{props.lesson.title}</p>
+              <p className={classes.ButtonText}>{props.lesson.classroom}</p>
             </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-    </div>
+            <Dialog
+              open={open}
+              fullWidth={true}
+              maxWidth={"xs"}
+              onClose={handleClose}
+              aria-labelledby="common-dialog-title"
+              aria-describedby="common-dialog-description"
+            >
+              <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
+              <form onSubmit={handleSubmit(Update)}>
+                <DialogContent>
+                  <Grid direction="column">
+                    <Grid className={classes.Content}>
+                      <TextField
+                        name="title"
+                        label="授業名"
+                        defaultValue={props.lesson.title}
+                        inputRef={register}
+                      />
+                    </Grid>
+                    <Grid className={classes.Content}>
+                      <TextField
+                        name="classroom"
+                        label="教室名"
+                        defaultValue={props.lesson.classroom}
+                        inputRef={register}
+                      />
+                    </Grid>
+                    <Grid className={classes.Content}>
+                      <FormControl>
+                        <InputLabel id="color-label">色</InputLabel>
+                        <Select
+                          labelId="color-label"
+                          value={color}
+                          onChange={handleChange}
+                        >
+                          {colors.map((item) => (
+                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+
+                <DialogActions>
+                  <Grid className={classes.DeleteButton}>
+                    <DeleteDialog
+                      Button="削除"
+                      msg={props.lesson.title}
+                      handleSubmit={DeleteLesson}
+                    />
+                  </Grid>
+                  <Button onClick={handleClose}>中止</Button>
+                  <Button
+                    onClick={Update}
+                    type="submit"
+                    className={classes.SubmitButton}
+                  >
+                    更新
+                  </Button>
+                </DialogActions>
+              </form>
+            </Dialog>
+          </div>
+        )
+      } else return <div>読み込み中</div>
+    })()}
   );
 };

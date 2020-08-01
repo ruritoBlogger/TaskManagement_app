@@ -37,15 +37,8 @@ const styles = makeStyles({
   },
 });
 
-interface IScheduleData {
-  docId: string;
-  uid: string;
-  title: string;
-  is_default: boolean;
-}
-
 interface IShowScheduleProps {
-  schedule: IScheduleData;
+  schedule: firebase.firestore.DocumentData | null;
   needLoad: boolean;
 }
 
@@ -57,13 +50,15 @@ interface IShowScheduleProps {
  */
 export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
   /** 時間割に登録されている授業list */
-  const [lessonList, setLessonList] = React.useState([]);
+  const [lessonList, setLessonList] = React.useState<
+    firebase.firestore.DocumentData[]
+  >([]);
 
   /** 授業listを更新するかどうかの状態 */
-  const [needLoad, setNeedLoad] = React.useState(false);
+  const [needLoad, setNeedLoad] = React.useState<boolean>(false);
 
   /** 時間割の時間部分 */
-  const TimeList = [
+  const TimeList: string[] = [
     "   ",
     "1限目",
     "2限目",
@@ -74,7 +69,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
   ];
 
   /** 時間割の曜日部分 */
-  const DayList = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
+  const DayList: string[] = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -89,11 +84,15 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
     data();
   }, [needLoad || props]);
 
+  interface ILessonProps {
+    [name: string]: number | string;
+  }
+
   /**
    * firestoreに存在している色データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     let colRef = db.collection("lesson");
     if (props.schedule) {
       colRef = db
@@ -104,15 +103,15 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
 
-    const tmp_list = new Array(30).fill(null);
+    const tmp_list: ILessonProps[] = [];
     for (let i = 0; i < 30; i++) {
-      const tmp_lesson = {};
+      const tmp_lesson: ILessonProps = {};
       tmp_lesson.title = "   ";
       tmp_lesson.classroom = "   ";
       tmp_lesson.color = "#FFFFFF";
       tmp_lesson.date = i;
       tmp_lesson.docId = -1;
-      tmp_list[i] = tmp_lesson;
+      tmp_list.push(tmp_lesson);
     }
 
     docs.map((item) => (tmp_list[item.date] = item));
@@ -124,7 +123,7 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
    * 呼び出されると授業listを更新する
    * 具体的には授業listを更新するかどうかを管理する状態を変更する
    */
-  async function handleChange(): void {
+  async function handleChange(): Promise<void> {
     await getData();
   }
 
