@@ -7,7 +7,6 @@ import ShowSchedule from "../schedule/showSchedule";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import * as React from "react";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -60,7 +59,7 @@ export const Main: React.FC<IMainProps> = (props) => {
    */
   useEffect(() => {
     const data = async () => {
-      await getTodoData();
+      await getTotalTodoData();
     };
     data();
   }, [schedule]);
@@ -75,17 +74,44 @@ export const Main: React.FC<IMainProps> = (props) => {
     const schedules = docs.filter((item) => item.uid === props.user);
     setSchedule(schedules[0]);
   }
+
   interface ITodoData {
-    todo: any;
-    lesson: any;
-    schedule: any;
+    docId: string;
+    title: string;
+    content: string;
+    heavy: number;
+    limit: Date;
+    done: boolean;
+  }
+
+  interface ILessonData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
+  interface IScheduleData {
+    docId: string;
+    title: string;
+    classroom: string;
+    color: number;
+    date: Date;
+  }
+
+  interface ITodoList {
+    todo: ITodoData;
+    lesson: ILessonData;
+    schedule: IScheduleData;
   }
 
   /**
    * firestoreに存在しているtodoを取得している
    * メイン時間割が更新されると発火する
    */
-  async function getTodoData(): void {
+  async function getTotalTodoData(): void {
+    setTodoList([]);
+
     if (schedule) {
       const result_list: ITodoData[] = [];
       const subRef = db
@@ -95,6 +121,13 @@ export const Main: React.FC<IMainProps> = (props) => {
       const subSnapshots = await subRef.get();
       const lessons = subSnapshots.docs.map((doc) => doc.data());
 
+      const promise_list = lessons.map((lesson) => {
+        return getTodoData(schedule, lesson);
+      });
+
+      await promise_list;
+      setTodoList([...result_list]);
+      /*
       for (let j = 0; j < lessons.length; j++) {
         const subsubRef = db
           .collection("schedule")
@@ -103,21 +136,44 @@ export const Main: React.FC<IMainProps> = (props) => {
           .doc(lessons[j].docId)
           .collection("todo");
         const subsubSnapshots = await subsubRef.get();
-        subsubSnapshots.docs.map((doc) => {
-          if (!doc.data().done) {
+        subsubSnapshots.docs
+          .filter(doc => !doc.data().done)
+          .map((doc) => {
             const tmp: ITodoData = {};
             tmp.todo = doc.data();
             tmp.lesson = lessons[j];
             tmp.schedule = schedule;
             result_list.push(tmp);
-          }
         });
       }
-      setTodoList([]);
-      setTodoList([...result_list]);
-    } else {
-      setTodoList([]);
+      */
     }
+  }
+
+  /**
+   * 受け取った時間割からTodoの情報を取得する
+   */
+  async function getTodoData(
+    schedule: IScheduleData,
+    lesson: ILessonData
+  ): void {
+    const subRef = db
+      .collection("schedule")
+      .doc(schedule.docId)
+      .collection("lesson")
+      .doc(lesson.docId)
+      .collection("todo");
+    const snapshots = await subRef.get();
+    const result_list: ITodoData[] = snapshots.docs
+      .filter((doc) => !doc.data().done)
+      .map((doc) => {
+        const tmp: ITodoData = {};
+        tmp.todo = doc.data();
+        tmp.lesson = lesson;
+        tmp.schedule = schedule;
+        return tmp;
+      });
+    return result_list;
   }
 
   /**
