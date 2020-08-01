@@ -3,14 +3,13 @@ import { useHistory } from "react-router-dom";
 
 import firebase from "../firebase";
 
-import { makeStyles } from "@material-ui/styles";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import SettingsButton from "@material-ui/icons/Settings";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import * as React from "react";
+import { makeStyles } from "@material-ui/styles"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import Button from "@material-ui/core/Button"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import Grid from "@material-ui/core/Grid"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import Container from "@material-ui/core/Container"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import SettingsButton from "@material-ui/icons/Settings"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import Menu from "@material-ui/core/Menu"; // eslint-disable-line @typescript-eslint/no-unused-vars
+import MenuItem from "@material-ui/core/MenuItem"; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -59,7 +58,7 @@ export const Header: React.FC = () => {
    * settingがクリックされた時に発火する
    * MenuをOpenにする
    */
-  function handleClick(event: any): void {
+  function handleClick(event: React.MouseEvent<HTMLInputElement>): void {
     setAnchorEL(event.currentTarget);
   }
 
