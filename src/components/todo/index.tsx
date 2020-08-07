@@ -74,7 +74,7 @@ export const Todo: React.FC<ITodoProps> = (props) => {
     const schedules = docs.filter((item) => item.uid === props.user);
 
     const lesson_promise_list = schedules.map((schedule) => {
-      return GetLessonsData(Schedule);
+      return GetLessonsData(schedule);
     });
 
     Promise.all(lesson_promise_list)
@@ -94,37 +94,6 @@ export const Todo: React.FC<ITodoProps> = (props) => {
         );
       })
       .catch((err) => console.log(err));
-
-    /*
-    for (let i = 0; i < schedules.length; i++) {
-      const subRef = db
-        .collection("schedule")
-        .doc(schedules[i].docId)
-        .collection("lesson");
-      const subSnapshots = await subRef.get();
-      const lessons = subSnapshots.docs.map((doc) => doc.data());
-
-      for (let j = 0; j < lessons.length; j++) {
-        const subsubRef = db
-          .collection("schedule")
-          .doc(schedules[i].docId)
-          .collection("lesson")
-          .doc(lessons[j].docId)
-          .collection("todo");
-        const subsubSnapshots = await subsubRef.get();
-        subsubSnapshots.docs.map((doc) => {
-          if (!doc.data().done) {
-            const tmp = {};
-            tmp.todo = doc.data();
-            tmp.lesson = lessons[j];
-            tmp.schedule = schedules[i];
-            result_list.push(tmp);
-          }
-        });
-      }
-    }
-    setTodoList([...result_list]);
-    */
   }
 
   /**
