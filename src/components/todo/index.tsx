@@ -23,16 +23,30 @@ const styles = makeStyles({
 interface ITodoProps {
   user: string;
 }
+
+interface ITodoData {
+  schedule: firebase.firestore.DocumentData;
+  lesson: firebase.firestore.DocumentData;
+  todo: firebase.firestore.DocumentData;
+}
+
+interface ILessonData {
+  schedule: firebase.firestore.DocumentData;
+  lesson: firebase.firestore.DocumentData;
+}
+
 /**
  * todoページを表示する関数
  * @param {Object} props - ユーザーの情報を保持している
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
 export const Todo: React.FC<ITodoProps> = (props) => {
+  /** 既に登録されている授業list */
+  const [lessonList, setLessonList] = React.useState<ILessonData[]>([]);
   /** 既に登録されているtodolist */
-  const [todoList, setTodoList] = React.useState([]);
+  const [todoList, setTodoList] = React.useState<ITodoData[]>([]);
   /** todolistを取得しにいくべきかどうか */
-  const [needLoad, setNeedLoad] = React.useState(true);
+  const [needLoad, setNeedLoad] = React.useState<boolean>(true);
 
   /** CSSを用いたスタイル定義 */
   const classes = styles();
@@ -47,36 +61,13 @@ export const Todo: React.FC<ITodoProps> = (props) => {
     data();
   }, [needLoad]);
 
-  interface ITodoData {
-    docId: string;
-    title: string;
-    content: string;
-    heavy: number;
-    limit: Date;
-    done: boolean;
-  }
-
-  interface ILessonData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
-
-  interface IScheduleData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
   /**
    * firestoreに存在しているtodoを取得している
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     setTodoList([]);
+    setLessonList([]);
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -86,19 +77,21 @@ export const Todo: React.FC<ITodoProps> = (props) => {
       return GetLessonsData(Schedule);
     });
 
-    const lessons: ILessonData[] = Promise.all(lesson_promise_list)
+    Promise.all(lesson_promise_list)
       .then((lesson_list) => {
-        return lesson_list;
+        return setLessonList(lesson_list);
       })
       .catch((err) => console.log(err));
 
-    const todo_promise_list = lessons.map((lesson) => {
-      return GetTodosData(schedule, lesson);
+    const todo_promise_list = lessonList.map((data) => {
+      return GetTodosData(data.schedule, data.lesson);
     });
 
     Promise.all(todo_promise_list)
-      .then((todo_list) => {
-        return setTodoList([...todo_list]);
+      .then((total_result) => {
+        return total_result.map((result) =>
+          result.map((data) => todoList.push(data))
+        );
       })
       .catch((err) => console.log(err));
 
@@ -138,13 +131,20 @@ export const Todo: React.FC<ITodoProps> = (props) => {
    * 引数として渡された時間割に所属している授業の情報を取得する
    * @param {Object} schedule - 授業一覧を取得したい時間割
    */
-  async function GetLessonsData(schedule: IScheduleData): void {
+  async function GetLessonsData(
+    schedule: firebase.firestore.DocumentData
+  ): Promise<ILessonData> {
     const subRef = db
       .collection("schedule")
       .doc(schedule.docId)
       .collection("lesson");
     const subSnapshots = await subRef.get();
-    return subSnapshots.docs.map((doc) => doc.data());
+    subSnapshots.docs.map((doc) => doc.data());
+    const return_object: ILessonData = {
+      schedule: schedule,
+      lesson: subSnapshots.docs,
+    };
+    return return_object;
   }
 
   /**
@@ -153,9 +153,9 @@ export const Todo: React.FC<ITodoProps> = (props) => {
    * @param {Object} lesson - Todoを取得したい授業
    */
   async function GetTodosData(
-    schedule: IScheduleData,
-    lesson: ILessonData
-  ): void {
+    schedule: firebase.firestore.DocumentData,
+    lesson: firebase.firestore.DocumentData
+  ): Promise<ITodoData[]> {
     const subRef = db
       .collection("schedule")
       .doc(schedule.docId)
@@ -163,7 +163,16 @@ export const Todo: React.FC<ITodoProps> = (props) => {
       .doc(lesson.docId)
       .collection("todo");
     const subSnapshots = await subRef.get();
-    return subSnapshots.docs.map((doc) => doc.data());
+    const return_list: ITodoData[] = [];
+    subSnapshots.docs.map((doc) => {
+      const obj: ITodoData = {
+        schedule: schedule,
+        lesson: lesson,
+        todo: doc.data(),
+      };
+      return return_list.push(obj);
+    });
+    return return_list;
   }
 
   /**
@@ -177,7 +186,7 @@ export const Todo: React.FC<ITodoProps> = (props) => {
   return (
     <Grid direction="column">
       <Header />
-      <Grid item container row alignItems="center" justify="center">
+      <Grid item container direction="row" alignItems="center" justify="center">
         <Grid item xs={8}>
           <h1 className={classes.TitleText}>Todo</h1>
         </Grid>
@@ -188,7 +197,7 @@ export const Todo: React.FC<ITodoProps> = (props) => {
       <Grid
         item
         container
-        row
+        direction="row"
         spacing={10}
         alignItems="center"
         justify="center"

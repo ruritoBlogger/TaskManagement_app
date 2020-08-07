@@ -55,23 +55,34 @@ interface ICreateTodoDialogProps {
  */
 export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   /** ダイアログが開かれているかどうかの状態 */
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   /** firestoreから持ってきた授業データを管理する */
-  const [lessons, setLessons] = React.useState([]);
+  const [lessons, setLessons] = React.useState<
+    firebase.firestore.DocumentData[]
+  >([]);
 
   /** firestoreから持ってきた時間割データ */
-  const [schedules, setSchedules] = React.useState([]);
+  const [schedules, setSchedules] = React.useState<
+    firebase.firestore.DocumentData[]
+  >([]);
 
   /** dialogの課題の重さの状態 */
-  const [heavy, setHeavy] = React.useState(null);
+  const [heavy, setHeavy] = React.useState<number>(0);
 
   /** 選択された時間割 */
-  const [schedule, setSchedule] = React.useState(null);
+  const [
+    schedule,
+    setSchedule,
+  ] = React.useState<firebase.firestore.DocumentData | null>(null);
+
   /** 選択された授業 */
-  const [lesson, setLesson] = React.useState(null);
+  const [
+    lesson,
+    setLesson,
+  ] = React.useState<firebase.firestore.DocumentData | null>(null);
   /** 選択された日時 */
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
 
   /** react hook formで用意された変数群 */
   const { register, handleSubmit, control, errors } = useForm();
@@ -107,7 +118,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * firestoreに存在している時間割データを取得している
    * ダイアログが開いた時に取得するようにしている
    */
-  async function getData(): void {
+  async function getData(): Promise<void> {
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -115,17 +126,15 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
     setSchedules(schedules);
   }
 
-  async function getLessonData(): void {
+  async function getLessonData(): Promise<void> {
     if (schedule && schedule.docId !== undefined) {
-      const lesson_list = [];
       const otherRef = db
         .collection("schedule")
         .doc(schedule.docId)
         .collection("lesson");
       const lesson_snapshots = await otherRef.get();
       const lesson_docs = lesson_snapshots.docs.map((doc) => doc.data());
-      lesson_docs.map((item) => lesson_list.push(item));
-      setLessons(lesson_list);
+      setLessons(lesson_docs);
     }
   }
 
@@ -149,7 +158,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に重さ選択部分で状態が変化発火する
    * 選択された重さを状態に登録する
    */
-  function handleHeavyChange(event: React.MouseEvent<HTMLInputElement>): void {
+  function handleHeavyChange(event: any): void {
     setHeavy(event.target.value);
   }
 
@@ -157,9 +166,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に時間割選択部分で状態が変化発火する
    * 選択された時間割を状態に登録する
    */
-  function handleScheduleChange(
-    event: React.MouseEvent<HTMLInputElement>
-  ): void {
+  function handleScheduleChange(event: any): void {
     setSchedule(event.target.value);
   }
 
@@ -167,7 +174,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * ダイアログを表示している時に授業選択部分で状態が変化発火する
    * 選択された授業を状態に登録する
    */
-  function handleLessonChange(event: React.MouseEvent<HTMLInputElement>): void {
+  function handleLessonChange(event: any): void {
     setLesson(event.target.value);
   }
 
@@ -180,6 +187,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
 
   interface ISubmitProps {
     title: string;
+    content: string;
   }
 
   /**
@@ -188,9 +196,10 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    *
    * @param {Object} value - 入力された情報を保持している
    * @param {string} value.title - 時間割のタイトル
+   * @param {string} value.content - todoの内容
    */
   function Submit(value: ISubmitProps): void {
-    if (value.title) {
+    if (value.title && value.content && schedule !== null && lesson !== null) {
       const docId = db
         .collection("schedule")
         .doc(schedule.docId)
@@ -282,9 +291,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
                       const return_list = [];
                       for (let i = 0; i < schedules.length; i++) {
                         return_list.push(
-                          <MenuItem value={schedules[i]}>
-                            {schedules[i].title}
-                          </MenuItem>
+                          <MenuItem value={i}>{schedules[i].title}</MenuItem>
                         );
                       }
                       return return_list;
@@ -304,9 +311,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
                       const return_list = [];
                       for (let i = 0; i < lessons.length; i++) {
                         return_list.push(
-                          <MenuItem value={lessons[i]}>
-                            {lessons[i].title}
-                          </MenuItem>
+                          <MenuItem value={i}>{lessons[i].title}</MenuItem>
                         );
                       }
                       return return_list;
@@ -338,11 +343,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
 
           <DialogActions>
             <Button onClick={handleClose}>中止</Button>
-            <Button
-              onClick={Submit}
-              type="submit"
-              className={classes.SubmitButton}
-            >
+            <Button type="submit" className={classes.SubmitButton}>
               登録
             </Button>
           </DialogActions>

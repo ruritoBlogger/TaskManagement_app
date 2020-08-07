@@ -54,17 +54,14 @@ const styles = makeStyles({
 });
 
 interface ITodoData {
-  docId: string;
-  title: string;
-  content: string;
-  heavy: number;
-  limit: Date;
-  done: boolean;
+  schedule: firebase.firestore.DocumentData;
+  lesson: firebase.firestore.DocumentData;
+  todo: firebase.firestore.DocumentData;
 }
 
 interface IShowTodoListProps {
   user: string;
-  todoList: firebase.firestore.DocumentData[];
+  todoList: ITodoData[];
   msg: string;
   handleChange: () => void;
 }
@@ -90,35 +87,10 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
     "とても重い",
   ];
 
-  interface ITodoData {
-    docId: string;
-    title: string;
-    content: string;
-    heavy: number;
-    limit: Date;
-    done: boolean;
-  }
-
-  interface ILessonData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
-
-  interface IScheduleData {
-    docId: string;
-    title: string;
-    classroom: string;
-    color: number;
-    date: Date;
-  }
-
   interface IDeleteTodoProps {
-    schedule: IScheduleData;
-    lesson: ILessonData;
-    todo: ITodoData;
+    schedule: firebase.firestore.DocumentData;
+    lesson: firebase.firestore.DocumentData;
+    todo: firebase.firestore.DocumentData;
   }
 
   /**
@@ -129,7 +101,7 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
    * @param {object} data.lesson - 削除したいtodoが登録されている授業
    * @param {object} data.todo - 削除したいtodo
    */
-  async function DeleteTodo(data: IDeleteTodoProps): void {
+  async function DeleteTodo(data: IDeleteTodoProps): Promise<void> {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)
@@ -142,9 +114,9 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
   }
 
   interface IDoneTodoProps {
-    schedule: IScheduleData;
-    lesson: ILessonData;
-    todo: ITodoData;
+    schedule: firebase.firestore.DocumentData;
+    lesson: firebase.firestore.DocumentData;
+    todo: firebase.firestore.DocumentData;
   }
 
   /**
@@ -155,7 +127,7 @@ export const ShowTodoList: React.FC<IShowTodoListProps> = (props) => {
    * @param {object} data.lesson - 更新したいtodoが登録されている授業
    * @param {object} data.todo - 更新したいtodo
    */
-  async function DoneTodo(data: IDoneTodoProps): void {
+  async function DoneTodo(data: IDoneTodoProps): Promise<void> {
     await db
       .collection("schedule")
       .doc(data.schedule.docId)

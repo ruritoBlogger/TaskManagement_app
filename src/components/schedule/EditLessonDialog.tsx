@@ -131,7 +131,7 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
    * 選択された授業を削除しダイアログを閉じる
    */
   function DeleteLesson(): void {
-    if( props.schedule_docId && props.lesson){
+    if (props.schedule_docId && props.lesson) {
       db.collection("schedule")
         .doc(props.schedule_docId)
         .collection("lesson")
@@ -166,81 +166,83 @@ export const EditLessonDialog: React.FC<IEditLessonDialogProps> = (props) => {
   }
 
   return (
-    {(() => {
-      if( props.lesson ){
-        return (
-          <div>
-            <Button onClick={handleOpen} className={classes.button}>
-              <p className={classes.ButtonText}>{props.lesson.title}</p>
-              <p className={classes.ButtonText}>{props.lesson.classroom}</p>
-            </Button>
-            <Dialog
-              open={open}
-              fullWidth={true}
-              maxWidth={"xs"}
-              onClose={handleClose}
-              aria-labelledby="common-dialog-title"
-              aria-describedby="common-dialog-description"
-            >
-              <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
-              <form onSubmit={handleSubmit(Update)}>
-                <DialogContent>
-                  <Grid direction="column">
-                    <Grid className={classes.Content}>
-                      <TextField
-                        name="title"
-                        label="授業名"
-                        defaultValue={props.lesson.title}
-                        inputRef={register}
-                      />
-                    </Grid>
-                    <Grid className={classes.Content}>
-                      <TextField
-                        name="classroom"
-                        label="教室名"
-                        defaultValue={props.lesson.classroom}
-                        inputRef={register}
-                      />
-                    </Grid>
-                    <Grid className={classes.Content}>
-                      <FormControl>
-                        <InputLabel id="color-label">色</InputLabel>
-                        <Select
-                          labelId="color-label"
-                          value={color}
-                          onChange={handleChange}
-                        >
-                          {colors.map((item) => (
-                            <MenuItem value={item.id}>{item.name}</MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </DialogContent>
-
-                <DialogActions>
-                  <Grid className={classes.DeleteButton}>
-                    <DeleteDialog
-                      Button="削除"
-                      msg={props.lesson.title}
-                      handleSubmit={DeleteLesson}
-                    />
-                  </Grid>
-                  <Button onClick={handleClose}>中止</Button>
-                  <Button
-                    onClick={Update}
-                    type="submit"
-                    className={classes.SubmitButton}
+    <div>
+      <Button onClick={handleOpen} className={classes.button}>
+        {(() => {
+          if (props.lesson !== null) {
+            return (
+              <div>
+                <p className={classes.ButtonText}>{props.lesson.title}</p>
+                <p className={classes.ButtonText}>{props.lesson.classroom}</p>
+              </div>
+            );
+          } else return <p className={classes.ButtonText}>読み込み中</p>;
+        })()}
+      </Button>
+      <Dialog
+        open={open}
+        fullWidth={true}
+        maxWidth={"xs"}
+        onClose={handleClose}
+        aria-labelledby="common-dialog-title"
+        aria-describedby="common-dialog-description"
+      >
+        <DialogTitle>{props.lesson.title}を編集する</DialogTitle>
+        <form onSubmit={handleSubmit(Update)}>
+          <DialogContent>
+            <Grid direction="column">
+              <Grid className={classes.Content}>
+                <TextField
+                  name="title"
+                  label="授業名"
+                  defaultValue={props.lesson.title}
+                  inputRef={register}
+                />
+              </Grid>
+              <Grid className={classes.Content}>
+                <TextField
+                  name="classroom"
+                  label="教室名"
+                  defaultValue={props.lesson.classroom}
+                  inputRef={register}
+                />
+              </Grid>
+              <Grid className={classes.Content}>
+                <FormControl>
+                  <InputLabel id="color-label">色</InputLabel>
+                  <Select
+                    labelId="color-label"
+                    value={color}
+                    onChange={handleChange}
                   >
-                    更新
-                  </Button>
-                </DialogActions>
-              </form>
-            </Dialog>
-          </div>
-        )
-      } else return <div>読み込み中</div>
-    })()}
+                    {colors.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </DialogContent>
+
+          <DialogActions>
+            <Grid className={classes.DeleteButton}>
+              <DeleteDialog
+                Button="削除"
+                msg={props.lesson.title}
+                handleSubmit={DeleteLesson}
+              />
+            </Grid>
+            <Button onClick={handleClose}>中止</Button>
+            <Button
+              onClick={Update}
+              type="submit"
+              className={classes.SubmitButton}
+            >
+              更新
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+    </div>
   );
 };

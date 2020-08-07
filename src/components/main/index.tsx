@@ -25,6 +25,11 @@ const styles = makeStyles({
   },
 });
 
+interface ITodoData {
+  schedule: firebase.firestore.DocumentData;
+  lesson: firebase.firestore.DocumentData;
+  todo: firebase.firestore.DocumentData;
+}
 interface IMainProps {
   user: string;
 }
@@ -41,9 +46,7 @@ export const Main: React.FC<IMainProps> = (props) => {
     setSchedule,
   ] = React.useState<firebase.firestore.DocumentData | null>(null);
   /** 既に登録されているtodolist */
-  const [todoList, setTodoList] = React.useState<
-    firebase.firestore.DocumentData[]
-  >([]);
+  const [todoList, setTodoList] = React.useState<ITodoData[]>([]);
   /** todolistを取得しにいくべきかどうか */
   const [needLoad, setNeedLoad] = React.useState(true);
 
@@ -104,8 +107,10 @@ export const Main: React.FC<IMainProps> = (props) => {
       });
 
       Promise.all(promise_list)
-        .then((todo_list) => {
-          return setTodoList(todo_list);
+        .then((total_list) => {
+          return total_list.map((todo_list) =>
+            todo_list.map((todo) => todoList.push(todo))
+          );
         })
         .catch((err) => console.log(err));
       /*
@@ -137,7 +142,7 @@ export const Main: React.FC<IMainProps> = (props) => {
   async function getTodoData(
     schedule: firebase.firestore.DocumentData,
     lesson: firebase.firestore.DocumentData
-  ): Promise<firebase.firestore.DocumentData[]> {
+  ): Promise<ITodoData[]> {
     const subRef = db
       .collection("schedule")
       .doc(schedule.docId)
@@ -145,16 +150,18 @@ export const Main: React.FC<IMainProps> = (props) => {
       .doc(lesson.docId)
       .collection("todo");
     const snapshots = await subRef.get();
-    const result_list: firebase.firestore.DocumentData[] = snapshots.docs
+    const result: ITodoData[] = [];
+    snapshots.docs
       .filter((doc) => !doc.data().done)
       .map((doc) => {
-        const tmp: ITodoList = {};
-        tmp.todo = doc.data();
-        tmp.lesson = lesson;
-        tmp.schedule = schedule;
-        return tmp;
+        const tmp: ITodoData = {
+          todo: doc.data(),
+          lesson: lesson,
+          schedule: schedule,
+        };
+        return result.push(tmp);
       });
-    return result_list;
+    return result;
   }
 
   /**

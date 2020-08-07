@@ -167,11 +167,17 @@ export const ShowSchedule: React.FC<IShowScheduleProps> = (props) => {
                 } else {
                   day_data.push(
                     <Paper elevation={3} className={classes.LessonBlock}>
-                      <EditLessonDialog
-                        schedule_docId={props.schedule.docId}
-                        lesson={lessonList[i * 6 + j]}
-                        handleSubmit={handleChange}
-                      />
+                      {(() => {
+                        if (props.schedule !== null) {
+                          return (
+                            <EditLessonDialog
+                              schedule_docId={props.schedule.docId}
+                              lesson={lessonList[i * 6 + j]}
+                              handleSubmit={handleChange}
+                            />
+                          );
+                        } else return <p>読み込み中</p>;
+                      })()}
                     </Paper>
                   );
                 }
