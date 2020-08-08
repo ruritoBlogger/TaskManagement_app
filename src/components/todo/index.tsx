@@ -64,7 +64,6 @@ export const Todo: React.FC<ITodoProps> = (props) => {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData(): Promise<void> {
-    setTodoList([]);
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -97,6 +96,7 @@ export const Todo: React.FC<ITodoProps> = (props) => {
         });
       })
       .catch((err) => console.log(err));
+    setTodoList([]);
     setTodoList(tmp2);
   }
 
