@@ -202,6 +202,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
       lesson !== -1 &&
       lessons[lesson].docId !== undefined
     ) {
+      /*
       const docId = db
         .collection("schedule")
         .doc(schedules[schedule].docId)
@@ -224,6 +225,7 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
           limit: selectedDate,
           done: false,
         });
+      */
       props.handleSubmit();
       handleClose();
     }
