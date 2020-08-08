@@ -106,33 +106,15 @@ export const Main: React.FC<IMainProps> = (props) => {
         return getTodoData(schedule, lesson);
       });
 
-      Promise.all(promise_list)
+      const tmp: ITodoData[] = [];
+      await Promise.all(promise_list)
         .then((total_list) => {
-          return total_list.map((todo_list) =>
-            todo_list.map((todo) => todoList.push(todo))
-          );
+          return total_list.map((todo_list) => {
+            todo_list.map((todo) => tmp.push(todo))
+          });
         })
         .catch((err) => console.log(err));
-      /*
-      for (let j = 0; j < lessons.length; j++) {
-        const subsubRef = db
-          .collection("schedule")
-          .doc(schedule.docId)
-          .collection("lesson")
-          .doc(lessons[j].docId)
-          .collection("todo");
-        const subsubSnapshots = await subsubRef.get();
-        subsubSnapshots.docs
-          .filter(doc => !doc.data().done)
-          .map((doc) => {
-            const tmp: ITodoData = {};
-            tmp.todo = doc.data();
-            tmp.lesson = lessons[j];
-            tmp.schedule = schedule;
-            result_list.push(tmp);
-        });
-      }
-      */
+      setTodoList(tmp);
     }
   }
 
