@@ -1,15 +1,14 @@
-import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
+import * as React from "react";
+import { useHistory } from "react-router-dom";
 
-import firebase from "../firebase"
+import firebase from "../firebase";
 
-import { makeStyles } from "@material-ui/styles"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import Container from "@material-ui/core/Container"
-import SettingsButton from "@material-ui/icons/Settings"
-import Menu from "@material-ui/core/Menu"
-import MenuItem from "@material-ui/core/MenuItem"
+import { makeStyles } from "@material-ui/styles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import SettingsButton from "@material-ui/icons/Settings";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -24,51 +23,50 @@ const styles = makeStyles({
   headerText: {
     margin: "0px",
     "padding-bottom": "7px",
-    "padding-left" : "10px",
+    "padding-left": "10px",
     "text-align": "left",
   },
   logo_button: {
     "min-height": "65px",
     "font-size": "35px",
-    "padding" : "0px",
+    padding: "0px",
     color: "#FFFFFF",
     textTransform: "none",
   },
   button: {
     "min-height": "65px",
     "font-size": "20px",
-    "padding" : "15px 10px",
+    padding: "15px 10px",
     color: "#FFFFFF",
     textTransform: "none",
-  }
-})
+  },
+});
 
 /**
  * ログイン後のページのHeaderを表示する関数
  */
-export default function Header() {
-
+export const Header: React.FC = () => {
   /** setting部分のMenuがOpenかそうでないかを管理している */
-  const [anchorEL, setAnchorEL] = useState(null)
+  const [anchorEL, setAnchorEL] = React.useState(null);
   /** CSSを用いたスタイル定義 */
-  const classes = styles()
+  const classes = styles();
   /** 画面遷移を担当 */
-  const history = useHistory()
+  const history = useHistory();
 
   /**
    * settingがクリックされた時に発火する
    * MenuをOpenにする
    */
-  function handleClick(event) {
-    setAnchorEL(event.currentTarget)
+  function handleClick(event: any): void {
+    setAnchorEL(event.currentTarget);
   }
 
   /**
    * settingがOpenの時に、setting以外の部分をクリックされた時に発火する
    * MenuをCloseにする
    */
-  function handleClose() {
-    setAnchorEL(null)
+  function handleClose(): void {
+    setAnchorEL(null);
   }
 
   /**
@@ -76,51 +74,64 @@ export default function Header() {
    * ログアウトを行い紹介画面に遷移させる
    * MenuをCloseにする
    */
-  function Logout() {
-    handleClose()
-    firebase.auth().signOut()
-    history.push("/")
+  function Logout(): void {
+    handleClose();
+    firebase.auth().signOut();
+    history.push("/");
   }
 
   /**
    * Logoボタンをクリックされた時に発火する
    * ホームページに遷移する
    */
-  function MoveHomePage() {
-    history.push("/main")
+  function MoveHomePage(): void {
+    history.push("/main");
   }
 
   /**
    * 時間割ボタンをクリックされた時に発火する
    * 時間割ページに遷移する
    */
-  function MoveSchedulePage() {
-    history.push("/schedule")
+  function MoveSchedulePage(): void {
+    history.push("/schedule");
   }
 
   /**
    * Todoボタンをクリックされた時に発火する
    * Todoページに遷移する
    */
-  function MoveTodoPage() {
-    history.push("/todo")
+  function MoveTodoPage(): void {
+    history.push("/todo");
   }
 
   return (
-    <Grid container alignItems="center" justify="center" className={classes.root}>
-      <Container item xs={8} className={classes.container}>
+    <Grid
+      container
+      alignItems="center"
+      justify="center"
+      className={classes.root}
+    >
+      <Grid item xs={8} className={classes.container}>
         <Grid container direction="row">
           <Grid item xs={6}>
-            <Button onClick={MoveHomePage} className={classes.logo_button}>Todos</Button>
+            <Button onClick={MoveHomePage} className={classes.logo_button}>
+              Todos
+            </Button>
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={MoveSchedulePage} className={classes.button}>時間割</Button>
+            <Button onClick={MoveSchedulePage} className={classes.button}>
+              時間割
+            </Button>
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={MoveTodoPage} className={classes.button}>todo</Button>
+            <Button onClick={MoveTodoPage} className={classes.button}>
+              todo
+            </Button>
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={handleClick} className={classes.button}><SettingsButton /></Button>
+            <Button onClick={handleClick} className={classes.button}>
+              <SettingsButton />
+            </Button>
             <Menu
               anchorEl={anchorEL}
               keepMounted
@@ -133,7 +144,7 @@ export default function Header() {
             </Menu>
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     </Grid>
-  )
-}
+  );
+};
