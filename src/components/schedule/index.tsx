@@ -91,7 +91,7 @@ export const Schedule: React.FC<IScheduleProps> = (props) => {
       </Grid>
       <Grid container alignItems="center" justify="center">
         <Grid className={classes.content}>
-          <Content scheduleList={scheduleList} />
+          <Content scheduleList={scheduleList} handleChange={handleChange} />
         </Grid>
       </Grid>
     </Grid>

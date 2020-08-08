@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { db } from "../../firebase";
 
 /** CSSを用いたスタイル定義 */
 const styles = makeStyles({
@@ -74,12 +75,14 @@ const styles = makeStyles({
 
 interface IScheduleContentProps {
   scheduleList: firebase.firestore.DocumentData[];
+  handleChange: () => void;
 }
 
 /**
  * 時間割一覧ページの内容を表示する関数
  * @param {Object} props - 時間割listが格納されている
  * @param {list} props.scheduleList - 時間割list
+ * @param {function} props.handleChange - scheduleListを更新する時に呼び出す
  */
 export const Content: React.FC<IScheduleContentProps> = (props) => {
   /** メインで表示する時間割を管理 */
@@ -108,7 +111,12 @@ export const Content: React.FC<IScheduleContentProps> = (props) => {
    * 呼び出されると時間割を削除する
    */
   function deleteSchedule(): void {
-    //setNeedLoad(!needLoad)
+    if (focusSchedule) {
+      db.collection("schedule").doc(focusSchedule.docId).delete();
+      props.handleChange();
+      setFocusSchedule(null);
+      setNeedLoad(!needLoad);
+    }
   }
 
   /**
