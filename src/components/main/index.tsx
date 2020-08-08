@@ -92,8 +92,6 @@ export const Main: React.FC<IMainProps> = (props) => {
    * メイン時間割が更新されると発火する
    */
   async function getTotalTodoData(): Promise<void> {
-    setTodoList([]);
-
     if (schedule) {
       const subRef = db
         .collection("schedule")
@@ -110,10 +108,11 @@ export const Main: React.FC<IMainProps> = (props) => {
       await Promise.all(promise_list)
         .then((total_list) => {
           return total_list.map((todo_list) => {
-            todo_list.map((todo) => tmp.push(todo))
+            todo_list.map((todo) => tmp.push(todo));
           });
         })
         .catch((err) => console.log(err));
+      setTodoList([]);
       setTodoList(tmp);
     }
   }
