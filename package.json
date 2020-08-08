@@ -8,7 +8,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --hot --inline --watch-content-base",
@@ -46,6 +48,7 @@
     "@types/react": "^16.9.43",
     "@types/react-custom-scrollbars": "^4.0.6",
     "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
