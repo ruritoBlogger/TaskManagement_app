@@ -186,7 +186,6 @@ export const Main: React.FC<IMainProps> = (props) => {
         <Grid item container direction="column" className={classes.Schedule}>
           <Grid item>
             {(() => {
-              console.log(schedule);
               if (schedule) {
                 return (
                   <h2 className={classes.ScheduleTitle}>{schedule.title}</h2>

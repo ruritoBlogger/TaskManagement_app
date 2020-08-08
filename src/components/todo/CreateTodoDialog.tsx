@@ -71,16 +71,10 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   const [heavy, setHeavy] = React.useState<number>(0);
 
   /** 選択された時間割 */
-  const [
-    schedule,
-    setSchedule,
-  ] = React.useState<firebase.firestore.DocumentData | null>(null);
+  const [schedule, setSchedule] = React.useState<number>(-1);
 
   /** 選択された授業 */
-  const [
-    lesson,
-    setLesson,
-  ] = React.useState<firebase.firestore.DocumentData | null>(null);
+  const [lesson, setLesson] = React.useState<number>(-1);
   /** 選択された日時 */
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
 
@@ -127,10 +121,11 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
   }
 
   async function getLessonData(): Promise<void> {
-    if (schedule && schedule.docId !== undefined) {
+    if (schedule !== -1 && schedules[schedule].docId !== undefined) {
+      console.log("test");
       const otherRef = db
         .collection("schedule")
-        .doc(schedule.docId)
+        .doc(schedules[schedule].docId)
         .collection("lesson");
       const lesson_snapshots = await otherRef.get();
       const lesson_docs = lesson_snapshots.docs.map((doc) => doc.data());
@@ -199,18 +194,26 @@ export const CreateTodoDialog: React.FC<ICreateTodoDialogProps> = (props) => {
    * @param {string} value.content - todoの内容
    */
   function Submit(value: ISubmitProps): void {
-    if (value.title && value.content && schedule !== null && lesson !== null) {
+    if (
+      value.title &&
+      value.content &&
+      schedule !== -1 &&
+      schedules[schedule].docId !== undefined &&
+      lesson !== -1 &&
+      lessons[lesson].docId !== undefined
+    ) {
       const docId = db
         .collection("schedule")
-        .doc(schedule.docId)
+        .doc(schedules[schedule].docId)
         .collection("lesson")
-        .doc(lesson.docId)
+        .doc(lessons[lesson].docId)
         .collection("todo")
         .doc().id;
+
       db.collection("schedule")
-        .doc(schedule.docId)
+        .doc(schedules[schedule].docId)
         .collection("lesson")
-        .doc(lesson.docId)
+        .doc(lessons[lesson].docId)
         .collection("todo")
         .doc(docId)
         .set({

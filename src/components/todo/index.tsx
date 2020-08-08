@@ -41,8 +41,6 @@ interface ILessonData {
  * @param {string} props.user - Google認証した際に得られるuseridを保持している
  */
 export const Todo: React.FC<ITodoProps> = (props) => {
-  /** 既に登録されている授業list */
-  const [lessonList, setLessonList] = React.useState<ILessonData[]>([]);
   /** 既に登録されているtodolist */
   const [todoList, setTodoList] = React.useState<ITodoData[]>([]);
   /** todolistを取得しにいくべきかどうか */
@@ -66,8 +64,6 @@ export const Todo: React.FC<ITodoProps> = (props) => {
    * 取得した時間割の中で、ログイン中のユーザーが登録した時間割のみ時間割listに追加している
    */
   async function getData(): Promise<void> {
-    setTodoList([]);
-    setLessonList([]);
     const colRef = db.collection("schedule");
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
@@ -77,9 +73,14 @@ export const Todo: React.FC<ITodoProps> = (props) => {
       return GetLessonsData(schedule);
     });
 
-    Promise.all(lesson_promise_list)
-      .then((lesson_list) => {
-        return setLessonList(lesson_list);
+    const lessonList: ILessonData[] = [];
+    await Promise.all(lesson_promise_list)
+      .then((total_list) => {
+        return total_list.map((lesson_list) => {
+          return lesson_list.map((data) => {
+            return lessonList.push(data);
+          });
+        });
       })
       .catch((err) => console.log(err));
 
@@ -87,13 +88,16 @@ export const Todo: React.FC<ITodoProps> = (props) => {
       return GetTodosData(data.schedule, data.lesson);
     });
 
-    Promise.all(todo_promise_list)
+    const tmp2: ITodoData[] = [];
+    await Promise.all(todo_promise_list)
       .then((total_result) => {
-        return total_result.map((result) =>
-          result.map((data) => todoList.push(data))
-        );
+        return total_result.map((result) => {
+          return result.map((data) => tmp2.push(data));
+        });
       })
       .catch((err) => console.log(err));
+    setTodoList([]);
+    setTodoList(tmp2);
   }
 
   /**
@@ -102,18 +106,18 @@ export const Todo: React.FC<ITodoProps> = (props) => {
    */
   async function GetLessonsData(
     schedule: firebase.firestore.DocumentData
-  ): Promise<ILessonData> {
+  ): Promise<ILessonData[]> {
     const subRef = db
       .collection("schedule")
       .doc(schedule.docId)
       .collection("lesson");
     const subSnapshots = await subRef.get();
-    subSnapshots.docs.map((doc) => doc.data());
-    const return_object: ILessonData = {
-      schedule: schedule,
-      lesson: subSnapshots.docs,
-    };
-    return return_object;
+    const result_data: ILessonData[] = [];
+    subSnapshots.docs.map((doc) => {
+      const tmp: ILessonData = { schedule: schedule, lesson: doc.data() };
+      return result_data.push(tmp);
+    });
+    return result_data;
   }
 
   /**
